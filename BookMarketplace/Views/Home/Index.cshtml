@@ -1,8 +1,114 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model HomeIndexViewModel
+@{
+    ViewData["Title"] = "Početna";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- ===== HERO ===== -->
+<section class="hero">
+    <h1>Pronađite ili prodajte knjige i društvene igre</h1>
+    <p>Vaš lokalni oglasnik za rabljene knjige i društvene igre.</p>
+</section>
+
+<!-- ===== SPLIT: KNJIGE / IGRE ===== -->
+<section class="split-section">
+    <!-- Lijevo – knjige -->
+    <div class="split-panel split-knjige">
+        <div class="split-header">
+            <a asp-controller="Knjiga" asp-action="Index"><h2>Knjige</h2></a>
+            <span class="split-count">@Model.Knjige.Count dostupnih</span>
+        </div>
+        <div class="card-grid card-grid-2">
+            @foreach (var k in Model.Knjige.Take(4))
+            {
+                <a class="card card-knjiga" asp-controller="Knjiga" asp-action="Details" asp-route-id="@k.Id">
+                    <div class="book-cover">
+                        <div class="book-cover-inner">
+                            <span class="book-cover-title">@k.Naziv</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-title">@k.Naziv</span>
+                        <span class="card-subtitle">@k.Autor</span>
+                    </div>
+                </a>
+            }
+        </div>
+        <a class="btn btn-knjiga split-btn" asp-controller="Knjiga" asp-action="Index">Sve knjige &rarr;</a>
+    </div>
+
+    <!-- Desno – igre -->
+    <div class="split-panel split-igre">
+        <div class="split-header">
+            <a asp-controller="DrustvenaIgra" asp-action="Index"><h2>Društvene igre</h2></a>
+            <span class="split-count">@Model.Igre.Count dostupnih</span>
+        </div>
+        <div class="card-grid card-grid-2">
+            @foreach (var ig in Model.Igre.Take(4))
+            {
+                <a class="card card-igra" asp-controller="DrustvenaIgra" asp-action="Details" asp-route-id="@ig.Id">
+                    <div class="game-cover">
+                        <div class="game-dots">
+                            <span></span><span></span><span></span><span></span>
+                            <span></span><span></span><span></span><span></span>
+                            <span></span><span></span><span></span><span></span>
+                            <span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-title">@ig.Naziv</span>
+                        <span class="card-subtitle">@ig.MinBrojIgraca–@ig.MaxBrojIgraca igrača · @ig.TrajanjeMins min</span>
+                    </div>
+                </a>
+            }
+        </div>
+        <a class="btn btn-igra split-btn" asp-controller="DrustvenaIgra" asp-action="Index">Sve igre &rarr;</a>
+    </div>
+</section>
+
+<!-- ===== NAJNOVIJI OGLASI ===== -->
+<section class="section-najnoviji">
+    <div class="page-heading">
+        <h1>Najnoviji oglasi</h1>
+        <p>Najnovije objavljeno na BookMarketplace</p>
+    </div>
+
+    <div class="card-grid">
+        @foreach (var o in Model.NajnovijiOglasi)
+        {
+            var isKnjiga = o.TipOglasa == TipOglasa.Knjiga;
+            var cardClass = isKnjiga ? "card-knjiga" : "card-igra";
+
+            <a class="card @cardClass" asp-controller="Oglas" asp-action="Details" asp-route-id="@o.Id">
+                @if (isKnjiga)
+                {
+                    <div class="book-cover">
+                        <div class="book-cover-inner">
+                            <span class="book-cover-title">@o.Naslov</span>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="game-cover">
+                        <div class="game-dots">
+                            <span></span><span></span><span></span><span></span>
+                            <span></span><span></span><span></span><span></span>
+                            <span></span><span></span><span></span><span></span>
+                            <span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+                }
+                <div class="card-body">
+                    <div>
+                        <span class="badge @(isKnjiga ? "badge-knjiga" : "badge-igra")">
+                            @(isKnjiga ? "Knjiga" : "Igra")
+                        </span>
+                    </div>
+                    <span class="card-title">@o.Naslov</span>
+                    <span class="card-subtitle">@o.Opis</span>
+                    <span class="card-price">@o.Cijena.ToString("N2") &euro;</span>
+                </div>
+            </a>
+        }
+    </div>
+</section>

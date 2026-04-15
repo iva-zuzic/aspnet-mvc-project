@@ -1,0 +1,63 @@
+@model Oglas
+@{
+    ViewData["Title"] = Model.Knjiga?.Naziv ?? Model.Naslov;
+}
+
+<nav class="breadcrumb">
+    <a asp-controller="Knjiga" asp-action="Index">Knjige</a>
+    <span class="breadcrumb-sep">&rsaquo;</span>
+    <span>@Model.Knjiga?.Zanr</span>
+    <span class="breadcrumb-sep">&rsaquo;</span>
+    <span class="breadcrumb-current">@Model.Knjiga?.Naziv</span>
+</nav>
+
+<div class="detail-card detail-card-full">
+    <div class="detail-layout">
+        <div class="detail-cover">
+            <div class="book-cover book-cover-portrait">
+                <div class="book-cover-inner">
+                    <span class="book-cover-title">@Model.Knjiga?.Naziv</span>
+                </div>
+            </div>
+        </div>
+        <div class="detail-info">
+            <div class="detail-grid">
+                <span class="detail-label">Naslov</span>
+                <span class="detail-value">@Model.Knjiga?.Naziv</span>
+
+                <span class="detail-label">Autor</span>
+                <span class="detail-value">@Model.Knjiga?.Autor</span>
+
+                <span class="detail-label">ISBN</span>
+                <span class="detail-value">@Model.Knjiga?.ISBN</span>
+
+                <span class="detail-label">Izdava&#269;</span>
+                <span class="detail-value">@Model.Knjiga?.Izdavac</span>
+
+                <span class="detail-label">Godina izdanja</span>
+                <span class="detail-value">@Model.Knjiga?.GodinaIzdanja</span>
+
+                <span class="detail-label">Jezik</span>
+                <span class="detail-value">@Model.Knjiga?.Jezik</span>
+
+                <span class="detail-label">&#381;anr</span>
+                <span class="detail-value">@Model.Knjiga?.Zanr</span>
+
+                <span class="detail-label">Cijena</span>
+                <span class="detail-value card-price">@Model.Cijena.ToString("N2") &euro;</span>
+
+                <span class="detail-label">Stanje artikla</span>
+                <span class="detail-value">@Model.StanjeArtikla</span>
+
+                <span class="detail-label">Opis</span>
+                <span class="detail-value">@Model.Opis</span>
+
+                <span class="detail-label">Grad</span>
+                <span class="detail-value">@Model.Grad?.Naziv</span>
+
+                <span class="detail-label">Prodava&#269;</span>
+                <span class="detail-value">@Model.Korisnik?.ImeIPrezime</span>
+            </div>
+        </div>
+    </div>
+</div>
