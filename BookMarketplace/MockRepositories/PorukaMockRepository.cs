@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BookGameMarketplace.Models;
+using BookMarketplace.Models;
 
-namespace BookGameMarketplace.MockRepositories
+namespace BookMarketplace.MockRepositories
 {
     public class PorukaMockRepository
     {

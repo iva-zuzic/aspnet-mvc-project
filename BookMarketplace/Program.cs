@@ -1,7 +1,15 @@
+using BookMarketplace.MockRepositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<KnjigaMockRepository>();
+builder.Services.AddSingleton<DrustvenaIgraMockRepository>();
+builder.Services.AddSingleton<GradMockRepository>();
+builder.Services.AddSingleton<OglasMockRepository>();
+builder.Services.AddSingleton<KorisnikMockRepository>();
+builder.Services.AddSingleton<PorukaMockRepository>();
 
 var app = builder.Build();
 
