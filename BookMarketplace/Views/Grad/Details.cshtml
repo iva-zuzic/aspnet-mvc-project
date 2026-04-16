@@ -22,7 +22,10 @@
             var isKnjiga = oglas.TipOglasa == TipOglasa.Knjiga;
             var cardClass = isKnjiga ? "card-knjiga" : "card-igra";
 
-            <a class="card @cardClass" asp-controller="Oglas" asp-action="Details" asp-route-id="@oglas.Id">
+            <a class="card @cardClass"
+               asp-controller="@(isKnjiga ? "Knjiga" : "DrustvenaIgra")"
+               asp-action="Details"
+               asp-route-id="@oglas.Id">
                 @if (isKnjiga)
                 {
                     <div class="book-cover">

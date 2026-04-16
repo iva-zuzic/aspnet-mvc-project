@@ -20,7 +20,7 @@
         <div class="card-grid card-grid-2">
             @foreach (var k in Model.Knjige.Take(4))
             {
-                <a class="card card-knjiga" asp-controller="Knjiga" asp-action="Details" asp-route-id="@k.Id">
+                <a class="card card-knjiga" asp-controller="Knjiga" asp-action="Details" asp-route-id="@k.OglasId">
                     <div class="book-cover">
                         <div class="book-cover-inner">
                             <span class="book-cover-title">@k.Naziv</span>
@@ -45,7 +45,7 @@
         <div class="card-grid card-grid-2">
             @foreach (var ig in Model.Igre.Take(4))
             {
-                <a class="card card-igra" asp-controller="DrustvenaIgra" asp-action="Details" asp-route-id="@ig.Id">
+                <a class="card card-igra" asp-controller="DrustvenaIgra" asp-action="Details" asp-route-id="@ig.OglasId">
                     <div class="game-cover">
                         <div class="game-dots">
                             <span></span><span></span><span></span><span></span>
@@ -78,7 +78,10 @@
             var isKnjiga = o.TipOglasa == TipOglasa.Knjiga;
             var cardClass = isKnjiga ? "card-knjiga" : "card-igra";
 
-            <a class="card @cardClass" asp-controller="Oglas" asp-action="Details" asp-route-id="@o.Id">
+            <a class="card @cardClass"
+               asp-controller="@(isKnjiga ? "Knjiga" : "DrustvenaIgra")"
+               asp-action="Details"
+               asp-route-id="@o.Id">
                 @if (isKnjiga)
                 {
                     <div class="book-cover">
