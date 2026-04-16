@@ -1,0 +1,31 @@
+@model List<Grad>
+@{
+    ViewData["Title"] = "Gradovi";
+}
+
+<div class="page-heading">
+    <h1>Gradovi</h1>
+    <p>@Model.Count gradova</p>
+</div>
+
+@if (Model.Count == 0)
+{
+    <div class="empty-state">
+        <p>Nema dostupnih gradova.</p>
+    </div>
+}
+else
+{
+    <div class="card-grid">
+        @foreach (var grad in Model)
+        {
+            <a class="card card-grad" asp-controller="Grad" asp-action="Details" asp-route-id="@grad.Id">
+                <div class="card-body">
+                    <span class="card-title">@grad.Naziv</span>
+                    <span class="card-subtitle">@grad.PostanskiBroj</span>
+                    <span class="card-count">@grad.Oglasi.Count @(grad.Oglasi.Count == 1 ? "oglas" : "oglasa")</span>
+                </div>
+            </a>
+        }
+    </div>
+}

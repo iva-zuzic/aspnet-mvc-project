@@ -1,0 +1,64 @@
+@model Grad
+@{
+    ViewData["Title"] = Model.Naziv;
+}
+
+<nav class="breadcrumb">
+    <a asp-controller="Grad" asp-action="Index">Gradovi</a>
+    <span class="breadcrumb-sep">&rsaquo;</span>
+    <span class="breadcrumb-current">@Model.Naziv</span>
+</nav>
+
+<div class="page-heading">
+    <h1>Oglasi u gradu @Model.Naziv</h1>
+    <p>@Model.Oglasi.Count @(Model.Oglasi.Count == 1 ? "oglas" : "oglasa")</p>
+</div>
+
+@if (Model.Oglasi.Count > 0)
+{
+    <div class="card-grid">
+        @foreach (var oglas in Model.Oglasi)
+        {
+            var isKnjiga = oglas.TipOglasa == TipOglasa.Knjiga;
+            var cardClass = isKnjiga ? "card-knjiga" : "card-igra";
+
+            <a class="card @cardClass" asp-controller="Oglas" asp-action="Details" asp-route-id="@oglas.Id">
+                @if (isKnjiga)
+                {
+                    <div class="book-cover">
+                        <div class="book-cover-inner">
+                            <span class="book-cover-title">@oglas.Naslov</span>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="game-cover">
+                        <div class="game-dots">
+                            <span></span><span></span><span></span><span></span>
+                            <span></span><span></span><span></span><span></span>
+                            <span></span><span></span><span></span><span></span>
+                            <span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+                }
+                <div class="card-body">
+                    <div>
+                        <span class="badge @(isKnjiga ? "badge-knjiga" : "badge-igra")">
+                            @(isKnjiga ? "Knjiga" : "Igra")
+                        </span>
+                    </div>
+                    <span class="card-title">@oglas.Naslov</span>
+                    <span class="card-subtitle">@oglas.Opis</span>
+                    <span class="card-price">@oglas.Cijena.ToString("N2") &euro;</span>
+                </div>
+            </a>
+        }
+    </div>
+}
+else
+{
+    <div class="empty-state">
+        <p>Nema oglasa u ovom gradu.</p>
+    </div>
+}

@@ -442,6 +442,22 @@ a:hover {
 }
 
 /* --- Badges --- */
+
+/* --- Grad card --- */
+.card-grad .card-body {
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem 1rem;
+}
+
+.card-count {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6B4226;
+    margin-top: auto;
+    padding-top: 0.5rem;
+}
+
 .badge {
     display: inline-block;
     padding: 0.2rem 0.6rem;
