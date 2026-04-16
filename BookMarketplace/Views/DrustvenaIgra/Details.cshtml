@@ -1,0 +1,61 @@
+@model Oglas
+@{
+    ViewData["Title"] = Model.DrustvenaIgra?.Naziv ?? Model.Naslov;
+}
+
+<nav class="breadcrumb">
+    <a asp-controller="DrustvenaIgra" asp-action="Index">Igre</a>
+    <span class="breadcrumb-sep">&rsaquo;</span>
+    <span>@Model.DrustvenaIgra?.Zanr</span>
+    <span class="breadcrumb-sep">&rsaquo;</span>
+    <span class="breadcrumb-current">@Model.DrustvenaIgra?.Naziv</span>
+</nav>
+
+<div class="detail-card detail-card-full">
+    <div class="detail-layout">
+        <div class="detail-cover">
+            <div class="game-cover game-cover-portrait">
+                <div class="game-dots game-dots-lg">
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+        <div class="detail-info">
+            <div class="detail-grid">
+                <span class="detail-label">Naziv</span>
+                <span class="detail-value">@Model.DrustvenaIgra?.Naziv</span>
+
+                <span class="detail-label">Broj igra&#269;a</span>
+                <span class="detail-value">@Model.DrustvenaIgra?.MinBrojIgraca–@Model.DrustvenaIgra?.MaxBrojIgraca</span>
+
+                <span class="detail-label">Minimalna dob</span>
+                <span class="detail-value">@Model.DrustvenaIgra?.MinimalnasDob+</span>
+
+                <span class="detail-label">Trajanje</span>
+                <span class="detail-value">@Model.DrustvenaIgra?.TrajanjeMins min</span>
+
+                <span class="detail-label">&#381;anr</span>
+                <span class="detail-value">@Model.DrustvenaIgra?.Zanr</span>
+
+                <span class="detail-label">Cijena</span>
+                <span class="detail-value card-price">@Model.Cijena.ToString("N2") &euro;</span>
+
+                <span class="detail-label">Stanje artikla</span>
+                <span class="detail-value">@Model.StanjeArtikla</span>
+
+                <span class="detail-label">Opis</span>
+                <span class="detail-value">@Model.Opis</span>
+
+                <span class="detail-label">Grad</span>
+                <span class="detail-value">@Model.Grad?.Naziv</span>
+
+                <span class="detail-label">Prodava&#269;</span>
+                <span class="detail-value">@Model.Korisnik?.ImeIPrezime</span>
+            </div>
+        </div>
+    </div>
+</div>

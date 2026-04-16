@@ -1,0 +1,41 @@
+@model List<Oglas>
+@{
+    ViewData["Title"] = "Društvene igre";
+}
+
+<div class="page-heading">
+    <h1>Društvene igre</h1>
+    <p>@Model.Count oglasa za društvene igre</p>
+</div>
+
+@if (Model.Count == 0)
+{
+    <div class="empty-state">
+        <p>Trenutno nema oglasa za društvene igre.</p>
+    </div>
+}
+else
+{
+    <div class="card-grid">
+        @foreach (var oglas in Model)
+        {
+            <a class="card card-igra" asp-controller="DrustvenaIgra" asp-action="Details" asp-route-id="@oglas.Id">
+                <div class="game-cover">
+                    <div class="game-dots">
+                        <span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <span class="card-title">@oglas.DrustvenaIgra?.Naziv</span>
+                    <span class="card-subtitle">@oglas.DrustvenaIgra?.MinBrojIgraca–@oglas.DrustvenaIgra?.MaxBrojIgraca igra&#269;a · @oglas.DrustvenaIgra?.TrajanjeMins min</span>
+                    <span class="card-subtitle">@oglas.DrustvenaIgra?.Zanr</span>
+                    <span class="card-subtitle">@oglas.Grad?.Naziv</span>
+                    <span class="card-price">@oglas.Cijena.ToString("N2") &euro;</span>
+                </div>
+            </a>
+        }
+    </div>
+}

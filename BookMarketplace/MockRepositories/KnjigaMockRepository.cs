@@ -34,7 +34,7 @@ namespace BookMarketplace.MockRepositories
                     GodinaIzdanja = 1996,
                     Jezik = "Engleski",
                     Zanr = ZanrKnjige.Fantastika,
-                    OglasId = 2
+                    OglasId = 11
                 },
                 new Knjiga
                 {
@@ -58,7 +58,7 @@ namespace BookMarketplace.MockRepositories
                     GodinaIzdanja = 2003,
                     Jezik = "Engleski",
                     Zanr = ZanrKnjige.Triler,
-                    OglasId = 4
+                    OglasId = 12
                 },
                 new Knjiga
                 {
@@ -82,7 +82,7 @@ namespace BookMarketplace.MockRepositories
                     GodinaIzdanja = 1950,
                     Jezik = "Engleski",
                     Zanr = ZanrKnjige.ZnanstvenaFantastika,
-                    OglasId = 6
+                    OglasId = 13
                 },
                 new Knjiga
                 {
@@ -106,7 +106,7 @@ namespace BookMarketplace.MockRepositories
                     GodinaIzdanja = 1943,
                     Jezik = "Hrvatski",
                     Zanr = ZanrKnjige.Drama,
-                    OglasId = 8
+                    OglasId = 14
                 },
                 new Knjiga
                 {
@@ -130,7 +130,7 @@ namespace BookMarketplace.MockRepositories
                     GodinaIzdanja = 1902,
                     Jezik = "Engleski",
                     Zanr = ZanrKnjige.Krimi,
-                    OglasId = 10
+                    OglasId = 15
                 }
             };
 

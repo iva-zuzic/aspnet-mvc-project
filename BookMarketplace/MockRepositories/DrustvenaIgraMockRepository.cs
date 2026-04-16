@@ -66,7 +66,7 @@ namespace BookMarketplace.MockRepositories
                     MinimalnasDob = 8,
                     TrajanjeMins = 45,
                     Zanr = ZanrIgre.Kooperativna,
-                    OglasId = 11
+                    OglasId = 10
                 },
                 new DrustvenaIgra
                 {
@@ -77,7 +77,7 @@ namespace BookMarketplace.MockRepositories
                     MinimalnasDob = 10,
                     TrajanjeMins = 30,
                     Zanr = ZanrIgre.Strategija,
-                    OglasId = 12
+                    OglasId = 16
                 },
                 new DrustvenaIgra
                 {
@@ -88,7 +88,7 @@ namespace BookMarketplace.MockRepositories
                     MinimalnasDob = 10,
                     TrajanjeMins = 15,
                     Zanr = ZanrIgre.Zabavna,
-                    OglasId = 13
+                    OglasId = 17
                 },
                 new DrustvenaIgra
                 {
@@ -99,7 +99,7 @@ namespace BookMarketplace.MockRepositories
                     MinimalnasDob = 8,
                     TrajanjeMins = 45,
                     Zanr = ZanrIgre.Apstraktna,
-                    OglasId = 14
+                    OglasId = 18
                 },
                 new DrustvenaIgra
                 {
@@ -110,7 +110,7 @@ namespace BookMarketplace.MockRepositories
                     MinimalnasDob = 7,
                     TrajanjeMins = 15,
                     Zanr = ZanrIgre.Zabavna,
-                    OglasId = 15
+                    OglasId = 19
                 },
                 new DrustvenaIgra
                 {
@@ -121,7 +121,7 @@ namespace BookMarketplace.MockRepositories
                     MinimalnasDob = 6,
                     TrajanjeMins = 10,
                     Zanr = ZanrIgre.Zabavna,
-                    OglasId = 16
+                    OglasId = 20
                 }
             };
         }
