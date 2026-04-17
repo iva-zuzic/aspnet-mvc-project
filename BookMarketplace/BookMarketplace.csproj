@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include=".github\hooks\settings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include=".github\ux-agent.md" />
   </ItemGroup>
 
