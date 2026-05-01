@@ -46,7 +46,7 @@ namespace BookMarketplace.MockRepositories
                     GodinaIzdanja = 1934,
                     Jezik = "Engleski",
                     Zanr = ZanrKnjige.Krimi,
-                    OglasId = 3
+                    OglasId = 7
                 },
                 new Knjiga
                 {
@@ -87,14 +87,14 @@ namespace BookMarketplace.MockRepositories
                 new Knjiga
                 {
                     Id = 7,
-                    Naziv = "Zločin i kazna",
-                    Autor = "Fjodor Dostojevski",
-                    ISBN = "978-0140449136",
-                    Izdavac = "Penguin Classics",
-                    GodinaIzdanja = 1866,
-                    Jezik = "Hrvatski",
-                    Zanr = ZanrKnjige.Drama,
-                    OglasId = 7
+                    Naziv = "Dune",
+                    Autor = "Frank Herbert",
+                    ISBN = "978-0441013593",
+                    Izdavac = "Ace Books",
+                    GodinaIzdanja = 1965,
+                    Jezik = "Engleski",
+                    Zanr = ZanrKnjige.ZnanstvenaFantastika,
+                    OglasId = 3
                 },
                 new Knjiga
                 {

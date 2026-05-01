@@ -406,6 +406,24 @@ a:hover {
     border-radius: 6px;
 }
 
+.game-cover-portrait {
+    width: 220px;
+    height: 320px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.game-dots-lg {
+    grid-template-columns: repeat(5, 14px);
+    grid-template-rows: repeat(5, 14px);
+    gap: 10px;
+}
+
+.game-dots-lg span {
+    width: 14px;
+    height: 14px;
+}
+
 .detail-info {
     flex: 1;
     min-width: 0;
@@ -419,6 +437,22 @@ a:hover {
     .book-cover-portrait {
         width: 160px;
         height: 230px;
+    }
+
+    .game-cover-portrait {
+        width: 160px;
+        height: 230px;
+    }
+
+    .game-dots-lg {
+        grid-template-columns: repeat(5, 10px);
+        grid-template-rows: repeat(5, 10px);
+        gap: 7px;
+    }
+
+    .game-dots-lg span {
+        width: 10px;
+        height: 10px;
     }
 }
 
