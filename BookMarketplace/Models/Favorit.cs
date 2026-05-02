@@ -1,13 +1,16 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace BookMarketplace.Models;
 
-// Predstavlja N-N vezu između Korisnika i Oglasa
 public class Favorit
 {
+    [ForeignKey("Korisnik")]
     public int KorisnikId { get; set; }
-    public Korisnik Korisnik { get; set; } = null!;
+    public virtual Korisnik Korisnik { get; set; } = null!;
 
+    [ForeignKey("Oglas")]
     public int OglasId { get; set; }
-    public Oglas Oglas { get; set; } = null!;
+    public virtual Oglas Oglas { get; set; } = null!;
 
     public DateTime DatumDodavanja { get; set; }
 }

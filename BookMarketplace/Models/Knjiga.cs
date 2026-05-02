@@ -1,7 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace BookMarketplace.Models;
 
 public class Knjiga
 {
+    [Key]
     public int Id { get; set; }
     public string Naziv { get; set; } = string.Empty;
     public string Autor { get; set; } = string.Empty;
@@ -11,7 +15,8 @@ public class Knjiga
     public string Jezik { get; set; } = string.Empty;
     public ZanrKnjige Zanr { get; set; }
 
-    // N-strana veze s Oglasom (1-1)
+
+    [ForeignKey("Oglas")]
     public int OglasId { get; set; }
-    public Oglas Oglas { get; set; } = null!;
+    public virtual Oglas Oglas { get; set; } = null!;
 }
