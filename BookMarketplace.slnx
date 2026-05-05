@@ -1,3 +1,7 @@
 <Solution>
-  <Project Path="BookMarketplace/BookMarketplace.csproj" />
+  <Folder Name="/BookMarketplace.Web/">
+    <Project Path="BookMarketplace.Web/BookMarketplace.csproj" />
+  </Folder>
+  <Project Path="BookMarketplace.DAL/BookMarketplace.DAL.csproj" />
+  <Project Path="BookMarketplace.Model/BookMarketplace.Model.csproj" />
 </Solution>
