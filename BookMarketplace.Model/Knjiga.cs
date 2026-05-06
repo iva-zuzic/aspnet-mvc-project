@@ -12,6 +12,7 @@ public class Knjiga
     public string ISBN { get; set; } = string.Empty;
     public string Izdavac { get; set; } = string.Empty;
     public int GodinaIzdanja { get; set; }
+    public int BrojStrana { get; set; }
     public string Jezik { get; set; } = string.Empty;
     public ZanrKnjige Zanr { get; set; }
 

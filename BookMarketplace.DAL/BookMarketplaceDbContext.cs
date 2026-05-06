@@ -103,16 +103,16 @@ public class BookMarketplaceDbContext : DbContext
         );
 
         modelBuilder.Entity<Knjiga>().HasData(
-            new Knjiga { Id = 1, Naziv = "Harry Potter i Kamen mudraca", Autor = "J.K. Rowling", ISBN = "978-0545010221", Izdavac = "Scholastic", GodinaIzdanja = 2007, Jezik = "Engleski", Zanr = ZanrKnjige.Fantastika, OglasId = 1 },
-            new Knjiga { Id = 2, Naziv = "Igra prijestolja", Autor = "George R.R. Martin", ISBN = "978-0553103540", Izdavac = "Bantam Books", GodinaIzdanja = 1996, Jezik = "Engleski", Zanr = ZanrKnjige.Fantastika, OglasId = 11 },
-            new Knjiga { Id = 3, Naziv = "Ubojstvo u Orijent Expressu", Autor = "Agatha Christie", ISBN = "978-0062073488", Izdavac = "HarperCollins", GodinaIzdanja = 1934, Jezik = "Engleski", Zanr = ZanrKnjige.Krimi, OglasId = 7 },
-            new Knjiga { Id = 4, Naziv = "Da Vincijev kod", Autor = "Dan Brown", ISBN = "978-0307474278", Izdavac = "Doubleday", GodinaIzdanja = 2003, Jezik = "Engleski", Zanr = ZanrKnjige.Triler, OglasId = 12 },
-            new Knjiga { Id = 5, Naziv = "Ponos i predrasude", Autor = "Jane Austen", ISBN = "978-1503290563", Izdavac = "CreateSpace Independent Publishing Platform", GodinaIzdanja = 1813, Jezik = "Engleski", Zanr = ZanrKnjige.Romansa, OglasId = 5 },
-            new Knjiga { Id = 6, Naziv = "Fondacija", Autor = "Isaac Asimov", ISBN = "978-0553293357", Izdavac = "Bantam Books", GodinaIzdanja = 1950, Jezik = "Engleski", Zanr = ZanrKnjige.ZnanstvenaFantastika, OglasId = 13 },
-            new Knjiga { Id = 7, Naziv = "Dune", Autor = "Frank Herbert", ISBN = "978-0441013593", Izdavac = "Ace Books", GodinaIzdanja = 1965, Jezik = "Engleski", Zanr = ZanrKnjige.ZnanstvenaFantastika, OglasId = 3 },
-            new Knjiga { Id = 8, Naziv = "Mali princ", Autor = "Antoine de Saint-Exupéry", ISBN = "978-0156012195", Izdavac = "Harcourt", GodinaIzdanja = 1943, Jezik = "Hrvatski", Zanr = ZanrKnjige.Drama, OglasId = 14 },
-            new Knjiga { Id = 9, Naziv = "Sto godina samoće", Autor = "Gabriel García Márquez", ISBN = "978-0060883287", Izdavac = "Harper & Row", GodinaIzdanja = 1967, Jezik = "Hrvatski", Zanr = ZanrKnjige.Romansa, OglasId = 9 },
-            new Knjiga { Id = 10, Naziv = "Pas Baskervillea", Autor = "Arthur Conan Doyle", ISBN = "978-0141034355", Izdavac = "Penguin Classics", GodinaIzdanja = 1902, Jezik = "Engleski", Zanr = ZanrKnjige.Krimi, OglasId = 15 }
+            new Knjiga { Id = 1, Naziv = "Harry Potter i Kamen mudraca", Autor = "J.K. Rowling", ISBN = "978-0545010221", Izdavac = "Scholastic", GodinaIzdanja = 2007, Jezik = "Engleski", Zanr = ZanrKnjige.Fantastika, OglasId = 1, BrojStrana = 320 },
+            new Knjiga { Id = 2, Naziv = "Igra prijestolja", Autor = "George R.R. Martin", ISBN = "978-0553103540", Izdavac = "Bantam Books", GodinaIzdanja = 1996, Jezik = "Engleski", Zanr = ZanrKnjige.Fantastika, OglasId = 11, BrojStrana = 694 },
+            new Knjiga { Id = 3, Naziv = "Ubojstvo u Orijent Expressu", Autor = "Agatha Christie", ISBN = "978-0062073488", Izdavac = "HarperCollins", GodinaIzdanja = 1934, Jezik = "Engleski", Zanr = ZanrKnjige.Krimi, OglasId = 7, BrojStrana = 256 },
+            new Knjiga { Id = 4, Naziv = "Da Vincijev kod", Autor = "Dan Brown", ISBN = "978-0307474278", Izdavac = "Doubleday", GodinaIzdanja = 2003, Jezik = "Engleski", Zanr = ZanrKnjige.Triler, OglasId = 12, BrojStrana = 489 },
+            new Knjiga { Id = 5, Naziv = "Ponos i predrasude", Autor = "Jane Austen", ISBN = "978-1503290563", Izdavac = "CreateSpace Independent Publishing Platform", GodinaIzdanja = 1813, Jezik = "Engleski", Zanr = ZanrKnjige.Romansa, OglasId = 5, BrojStrana = 279 },
+            new Knjiga { Id = 6, Naziv = "Fondacija", Autor = "Isaac Asimov", ISBN = "978-0553293357", Izdavac = "Bantam Books", GodinaIzdanja = 1950, Jezik = "Engleski", Zanr = ZanrKnjige.ZnanstvenaFantastika, OglasId = 13, BrojStrana = 255 },
+            new Knjiga { Id = 7, Naziv = "Dune", Autor = "Frank Herbert", ISBN = "978-0441013593", Izdavac = "Ace Books", GodinaIzdanja = 1965, Jezik = "Engleski", Zanr = ZanrKnjige.ZnanstvenaFantastika, OglasId = 3, BrojStrana = 412 },
+            new Knjiga { Id = 8, Naziv = "Mali princ", Autor = "Antoine de Saint-Exupéry", ISBN = "978-0156012195", Izdavac = "Harcourt", GodinaIzdanja = 1943, Jezik = "Hrvatski", Zanr = ZanrKnjige.Drama, OglasId = 14, BrojStrana = 96 },
+            new Knjiga { Id = 9, Naziv = "Sto godina samoće", Autor = "Gabriel García Márquez", ISBN = "978-0060883287", Izdavac = "Harper & Row", GodinaIzdanja = 1967, Jezik = "Hrvatski", Zanr = ZanrKnjige.Romansa, OglasId = 9, BrojStrana = 417 },
+            new Knjiga { Id = 10, Naziv = "Pas Baskervillea", Autor = "Arthur Conan Doyle", ISBN = "978-0141034355", Izdavac = "Penguin Classics", GodinaIzdanja = 1902, Jezik = "Engleski", Zanr = ZanrKnjige.Krimi, OglasId = 15, BrojStrana = 256 }
         );
 
         modelBuilder.Entity<DrustvenaIgra>().HasData(
