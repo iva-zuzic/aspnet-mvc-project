@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookMarketplace.Controllers
 {
+    [Route("gradovi")]
     public class GradController : Controller
     {
         private readonly BookMarketplaceDbContext _context;
@@ -13,6 +14,7 @@ namespace BookMarketplace.Controllers
             _context = context;
         }
 
+        [Route("")]
         public async Task<IActionResult> Index()
         {
             var gradovi = await _context.Gradovi
@@ -22,6 +24,7 @@ namespace BookMarketplace.Controllers
             return View(gradovi);
         }
 
+        [Route("{id}")]
         public async Task<IActionResult> Details(int id)
         {
             var grad = await _context.Gradovi

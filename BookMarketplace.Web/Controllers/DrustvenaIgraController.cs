@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookMarketplace.Controllers
 {
+    [Route("oglasi/igre")]
     public class DrustvenaIgraController : Controller
     {
         private readonly BookMarketplaceDbContext _context;
@@ -14,6 +15,7 @@ namespace BookMarketplace.Controllers
             _context = context;
         }
 
+        [Route("")]
         public async Task<IActionResult> Index()
         {
             var oglasi = await _context.Oglasi
@@ -25,7 +27,8 @@ namespace BookMarketplace.Controllers
 
             return View(oglasi);
         }
-    
+
+        [Route("{id}")]
         public async Task<IActionResult> Details(int id)
         {
             var oglas = await _context.Oglasi
