@@ -258,6 +258,255 @@ a:hover {
     background: linear-gradient(to right, #5A3018 12px, #C97D4E 12px);
 }
 
+/* --- Entity pages --- */
+.entity-page {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.entity-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.entity-card {
+    background: #FFF8F0;
+    border: 1px solid #D4B896;
+    border-radius: 14px;
+    padding: 1.5rem;
+    box-shadow: 0 16px 40px rgba(61, 32, 16, 0.08);
+}
+
+.entity-form-card {
+    max-width: 720px;
+}
+
+.entity-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.form-field label {
+    font-weight: 600;
+    color: #3D2010;
+}
+
+.form-input {
+    width: 100%;
+    min-height: 46px;
+    padding: 0.8rem 0.95rem;
+    border: 1px solid #D4B896;
+    border-radius: 10px;
+    background: #FFFCF8;
+    color: #3D2010;
+    font: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #C97D4E;
+    box-shadow: 0 0 0 4px rgba(201, 125, 78, 0.16);
+}
+
+.form-validation,
+.field-validation {
+    color: #9F2D20;
+    font-size: 0.9rem;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0.7rem 1.1rem;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
+}
+
+.button:hover {
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.button-primary {
+    background: #6B4226;
+    color: #FFF8F0;
+    box-shadow: 0 10px 20px rgba(107, 66, 38, 0.18);
+}
+
+.button-primary:hover {
+    background: #5A3018;
+}
+
+.button-secondary {
+    background: transparent;
+    border-color: #D4B896;
+    color: #6B4226;
+}
+
+.button-secondary:hover {
+    background: #F7F2EA;
+}
+
+.button-danger {
+    background: #9F2D20;
+    color: #FFF8F0;
+    box-shadow: 0 10px 20px rgba(159, 45, 32, 0.18);
+}
+
+.button-danger:hover {
+    background: #872519;
+}
+
+.button-danger-soft {
+    box-shadow: none;
+}
+
+.table-card {
+    padding: 0;
+    overflow: hidden;
+}
+
+.entity-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.entity-table th,
+.entity-table td {
+    text-align: left;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgba(212, 184, 150, 0.65);
+    vertical-align: middle;
+}
+
+.entity-table th {
+    background: #F3E5D5;
+    color: #6B4226;
+    font-size: 0.84rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.entity-table tbody tr:hover {
+    background: rgba(247, 242, 234, 0.8);
+}
+
+.entity-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-actions {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.entity-delete-card {
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.entity-delete-copy h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+}
+
+.entity-delete-copy p {
+    color: #8A6A50;
+}
+
+.entity-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.entity-summary-grid div {
+    padding: 1rem;
+    border: 1px solid #E6D1B6;
+    border-radius: 10px;
+    background: #FFFCF8;
+}
+
+.entity-summary-grid dt {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #8A6A50;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.35rem;
+}
+
+.entity-summary-grid dd {
+    margin: 0;
+    color: #3D2010;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .entity-page-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .entity-card {
+        padding: 1.1rem;
+    }
+
+    .entity-table th,
+    .entity-table td {
+        padding: 0.85rem 0.9rem;
+    }
+
+    .entity-summary-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 560px) {
+    .site-main {
+        padding: 1.2rem;
+    }
+
+    .form-actions,
+    .table-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .button {
+        width: 100%;
+    }
+}
+
 .book-cover-inner {
     flex: 1;
     display: flex;

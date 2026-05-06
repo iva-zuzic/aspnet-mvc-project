@@ -1,0 +1,52 @@
+@model BookMarketplace.Model.Korisnik
+
+<section class="entity-page entity-page-user">
+    <div class="page-heading">
+        <h1>Kreiraj korisnika</h1>
+        <p>Unesite osnovne podatke i dodijelite ulogu novom korisniku.</p>
+    </div>
+
+    <div class="entity-card entity-form-card">
+        <form asp-action="Create" class="entity-form">
+            <div asp-validation-summary="ModelOnly" class="form-validation"></div>
+
+            <div class="form-field">
+                <label asp-for="ImeIPrezime"></label>
+                <input asp-for="ImeIPrezime" class="form-input" />
+                <span asp-validation-for="ImeIPrezime" class="field-validation"></span>
+            </div>
+
+            <div class="form-field">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-input" />
+                <span asp-validation-for="Email" class="field-validation"></span>
+            </div>
+
+            <div class="form-field">
+                <label asp-for="Lozinka"></label>
+                <input asp-for="Lozinka" class="form-input" />
+                <span asp-validation-for="Lozinka" class="field-validation"></span>
+            </div>
+
+            <div class="form-field">
+                <label asp-for="Telefon"></label>
+                <input asp-for="Telefon" class="form-input" />
+                <span asp-validation-for="Telefon" class="field-validation"></span>
+            </div>
+
+            <div class="form-field">
+                <label asp-for="Uloga"></label>
+                <select asp-for="Uloga" class="form-input">
+                    <option value="0">Kupac</option>
+                    <option value="1">Prodavač</option>
+                </select>
+                <span asp-validation-for="Uloga" class="field-validation"></span>
+            </div>
+
+            <div class="form-actions">
+                <a asp-controller="Korisnik" asp-action="Index" class="button button-secondary">Natrag</a>
+                <button type="submit" class="button button-primary">Spremi korisnika</button>
+            </div>
+        </form>
+    </div>
+</section>

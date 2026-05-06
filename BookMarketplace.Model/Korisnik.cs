@@ -6,11 +6,17 @@ public class Korisnik
 {
     [Key]
     public int Id { get; set; }
+    [Display(Name = "Ime i prezime")]
     public string ImeIPrezime { get; set; } = string.Empty;
+    [Display(Name = "Email adresa")]
     public string Email { get; set; } = string.Empty;
+    [Display(Name = "Lozinka")]
     public string Lozinka { get; set; } = string.Empty;
+    [Display(Name = "Broj telefona")]
     public string Telefon { get; set; } = string.Empty;
+    [Display(Name = "Datum registracije")]
     public DateTime DatumRegistracije { get; set; }
+    [Display(Name = "Uloga")]
     public UlogaKorisnika Uloga { get; set; }
 
     // 1-N: jedan korisnik može imati više oglasa
