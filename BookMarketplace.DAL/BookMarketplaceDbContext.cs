@@ -36,7 +36,6 @@ public class BookMarketplaceDbContext : DbContext
             .HasForeignKey(f => f.OglasId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Konfiguracija za Poruku
         modelBuilder.Entity<Poruka>()
             .HasOne(p => p.Posiljatelj)
             .WithMany(k => k.PoslanePoruke)

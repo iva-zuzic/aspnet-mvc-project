@@ -1,13 +1,10 @@
 namespace BookMarketplace.Model;
-
-// Uloga korisnika u sustavu
 public enum UlogaKorisnika
 {
     Korisnik,
     Admin
 }
 
-// Trenutni status oglasa
 public enum StatusOglasa
 {
     Aktivan,
@@ -16,14 +13,12 @@ public enum StatusOglasa
     Izbrisan
 }
 
-// Tip artikla koji se prodaje
 public enum TipOglasa
 {
     Knjiga,
     DrustvenaIgra
 }
 
-// Fizičko stanje artikla
 public enum StanjeArtikla
 {
     Novo,
@@ -33,7 +28,6 @@ public enum StanjeArtikla
     Losije
 }
 
-// Književni žanr knjige
 public enum ZanrKnjige
 {
     Fantastika,
@@ -46,7 +40,6 @@ public enum ZanrKnjige
     Strucna
 }
 
-// Žanr društvene igre
 public enum ZanrIgre
 {
     Strategija,

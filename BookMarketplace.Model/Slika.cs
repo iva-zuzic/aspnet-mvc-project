@@ -9,7 +9,6 @@ public class Slika
     public string Putanja { get; set; } = string.Empty;
     public int RedoslijedPrikaza { get; set; }
 
-    // N-strana veze s Oglasom (1-N)
     [ForeignKey("Oglas")]
     public int OglasId { get; set; }
     public virtual Oglas Oglas { get; set; } = null!;
