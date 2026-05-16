@@ -7,8 +7,6 @@
     var ukupnoFavorita = Model.Favoriti.Count;
     var ukupnoPoslanihPoruka = Model.PoslanePoruke.Count;
     var ukupnoPrimljenihPoruka = Model.PrimljenePoruke.Count;
-    var imaPovezaneStvari = ukupnoOglasa > 0 || ukupnoFavorita > 0
-                         || ukupnoPoslanihPoruka > 0 || ukupnoPrimljenihPoruka > 0;
 }
 
 <div class="page-container">
@@ -18,8 +16,6 @@
             &larr; Natrag na popis
         </a>
     </div>
-
-    <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
 
     <div class="delete-card">
         <p class="delete-warning">
@@ -52,18 +48,29 @@
             <dd>@ukupnoPrimljenihPoruka</dd>
         </dl>
 
-        @if (imaPovezaneStvari)
-        {
-            <div class="alert-warning">
-                <strong>Pažnja:</strong> Ovaj korisnik ima povezane podatke i ne može se obrisati.
-                Korisnik bi prvo trebao obrisati svoje oglase i favorite, ili se njegove poruke trebaju arhivirati.
-            </div>
-        }
+        <div class="alert-warning">
+            <strong>Što se događa brisanjem:</strong>
+            <ul>
+                <li>Korisnički račun više neće biti vidljiv u sustavu</li>
+                @if (ukupnoOglasa > 0)
+                {
+                    <li>@ukupnoOglasa oglas(a) bit će označen(o) kao izbrisan(o) i sakriven(o)</li>
+                }
+                @if (ukupnoFavorita > 0)
+                {
+                    <li>@ukupnoFavorita favorit(a) ostat će u bazi, ali se neće brojati u prikazima</li>
+                }
+                @if (ukupnoPoslanihPoruka > 0 || ukupnoPrimljenihPoruka > 0)
+                {
+                    <li>Poruke ostaju u sandučićima drugih korisnika, ali ime pošiljatelja bit će označeno kao "[Obrisani korisnik]"</li>
+                }
+            </ul>
+        </div>
 
         <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="form-actions">
             @Html.AntiForgeryToken()
 
-            <button type="submit" class="btn-delete" @(imaPovezaneStvari ? "disabled" : "")>
+            <button type="submit" class="btn-delete">
                 Da, obriši
             </button>
             <a class="btn-secondary" asp-area="Admin" asp-controller="Korisnik" asp-action="Index">

@@ -13,6 +13,8 @@ public class Korisnik
     public DateTime DatumRegistracije { get; set; }
     public UlogaKorisnika Uloga { get; set; }
 
+    public DateTime? DeletedAt { get; set; }
+
     public virtual ICollection<Oglas> Oglasi { get; set; } = new List<Oglas>();
 
     public virtual ICollection<Favorit> Favoriti { get; set; } = new List<Favorit>();

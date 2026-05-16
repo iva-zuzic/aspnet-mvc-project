@@ -139,6 +139,8 @@ public class BookMarketplaceDbContext : DbContext
             new Poruka { Id = 9, Sadrzaj = "Imam još jednu kopiju Tolkiena, zanima li te?", Procitano = true, DatumSlanja = new DateTime(2025, 3, 12, 16, 0, 0), PosiljateljId = 3, PrimateljId = 2, OglasId = 9 },
             new Poruka { Id = 10, Sadrzaj = "Hvala, ali već sam nabavio.", Procitano = false, DatumSlanja = new DateTime(2025, 3, 12, 19, 45, 0), PosiljateljId = 2, PrimateljId = 3, OglasId = 9 }
         );
+
+        modelBuilder.Entity<Korisnik>().HasQueryFilter(k => k.DeletedAt == null);
     }    
 
 }

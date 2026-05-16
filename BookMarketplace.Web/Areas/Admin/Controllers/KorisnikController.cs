@@ -49,9 +49,6 @@ public class KorisnikController : Controller
     {
         var korisnik = await _context.Korisnici
             .Include(k => k.Oglasi)
-            .Include(k => k.Favoriti)
-            .Include(k => k.PoslanePoruke)
-            .Include(k => k.PrimljenePoruke)
             .FirstOrDefaultAsync(k => k.Id == id);
 
         if (korisnik == null)
@@ -59,17 +56,13 @@ public class KorisnikController : Controller
             return NotFound();
         }
 
-        if (korisnik.Oglasi.Any() ||
-            korisnik.Favoriti.Any() ||
-            korisnik.PoslanePoruke.Any() ||
-            korisnik.PrimljenePoruke.Any())
+        korisnik.DeletedAt = DateTime.UtcNow;
+
+        foreach (var oglas in korisnik.Oglasi)
         {
-            ModelState.AddModelError("",
-                $"Korisnik '{korisnik.ImeIPrezime}' ne može biti obrisan jer ima povezane oglase, favorite ili poruke.");
-            return View(korisnik);
+            oglas.Status = StatusOglasa.Izbrisan;
         }
 
-        _context.Korisnici.Remove(korisnik);
         await _context.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index), new { area = "Admin" });
