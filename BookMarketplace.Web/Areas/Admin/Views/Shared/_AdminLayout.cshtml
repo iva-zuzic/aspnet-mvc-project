@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin - Books &amp; Games</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BookMarketplace.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="site-header">
+        <nav class="site-nav">
+            <div class="nav-inner">
+                <a class="nav-brand" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                    <span class="nav-brand-icon" aria-hidden="true">&#9881;</span>
+                    Books &amp; Games — Admin
+                </a>
+                <ul class="nav-links">
+                    <li>
+                        <a asp-area="Admin" asp-controller="Home" asp-action="Index">Dashboard</a>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="Grad" asp-action="Index">Gradovi</a>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="Korisnik" asp-action="Index">Korisnici</a>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="Oglas" asp-action="Index">Oglasi</a>
+                    </li>
+                </ul>
+                <ul class="nav-auth">
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Index">&larr; Javna stranica</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="site-main" role="main">
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <span>&copy; 2026 Books &amp; Games — Admin sučelje</span>
+        </div>
+    </footer>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

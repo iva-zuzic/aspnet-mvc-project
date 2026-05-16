@@ -1,0 +1,50 @@
+@model List<Korisnik>
+
+@{
+    ViewData["Title"] = "Korisnici";
+}
+
+<div class="page-container">
+    <div class="page-header">
+        <h1 class="page-title">Korisnici</h1>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <p class="empty-state">Trenutno nema registriranih korisnika.</p>
+    }
+    else
+    {
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Ime i prezime</th>
+                    <th>Email</th>
+                    <th>Telefon</th>
+                    <th>Datum registracije</th>
+                    <th>Uloga</th>
+                    <th class="actions-col">Akcije</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var korisnik in Model)
+                {
+                    <tr>
+                        <td>@korisnik.ImeIPrezime</td>
+                        <td>@korisnik.Email</td>
+                        <td>@korisnik.Telefon</td>
+                        <td>@korisnik.DatumRegistracije.ToString("dd.MM.yyyy")</td>
+                        <td>@korisnik.Uloga</td>
+                        <td class="actions-col">
+                            <a class="btn-delete"
+                               asp-area="Admin" asp-controller="Korisnik"
+                               asp-action="Delete" asp-route-id="@korisnik.Id">
+                                Obriši
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

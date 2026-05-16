@@ -1,0 +1,74 @@
+@model Korisnik
+
+@{
+    ViewData["Title"] = "Brisanje korisnika";
+
+    var ukupnoOglasa = Model.Oglasi.Count;
+    var ukupnoFavorita = Model.Favoriti.Count;
+    var ukupnoPoslanihPoruka = Model.PoslanePoruke.Count;
+    var ukupnoPrimljenihPoruka = Model.PrimljenePoruke.Count;
+    var imaPovezaneStvari = ukupnoOglasa > 0 || ukupnoFavorita > 0
+                         || ukupnoPoslanihPoruka > 0 || ukupnoPrimljenihPoruka > 0;
+}
+
+<div class="page-container">
+    <div class="page-header">
+        <h1 class="page-title">Brisanje korisnika</h1>
+        <a class="btn-secondary" asp-area="Admin" asp-controller="Korisnik" asp-action="Index">
+            &larr; Natrag na popis
+        </a>
+    </div>
+
+    <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+    <div class="delete-card">
+        <p class="delete-warning">
+            Jeste li sigurni da želite obrisati ovog korisnika?
+        </p>
+
+        <dl class="entity-details">
+            <dt>Ime i prezime</dt>
+            <dd>@Model.ImeIPrezime</dd>
+
+            <dt>Email</dt>
+            <dd>@Model.Email</dd>
+
+            <dt>Telefon</dt>
+            <dd>@Model.Telefon</dd>
+
+            <dt>Datum registracije</dt>
+            <dd>@Model.DatumRegistracije.ToString("dd.MM.yyyy")</dd>
+
+            <dt>Broj oglasa</dt>
+            <dd>@ukupnoOglasa</dd>
+
+            <dt>Broj favorita</dt>
+            <dd>@ukupnoFavorita</dd>
+
+            <dt>Poslane poruke</dt>
+            <dd>@ukupnoPoslanihPoruka</dd>
+
+            <dt>Primljene poruke</dt>
+            <dd>@ukupnoPrimljenihPoruka</dd>
+        </dl>
+
+        @if (imaPovezaneStvari)
+        {
+            <div class="alert-warning">
+                <strong>Pažnja:</strong> Ovaj korisnik ima povezane podatke i ne može se obrisati.
+                Korisnik bi prvo trebao obrisati svoje oglase i favorite, ili se njegove poruke trebaju arhivirati.
+            </div>
+        }
+
+        <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="form-actions">
+            @Html.AntiForgeryToken()
+
+            <button type="submit" class="btn-delete" @(imaPovezaneStvari ? "disabled" : "")>
+                Da, obriši
+            </button>
+            <a class="btn-secondary" asp-area="Admin" asp-controller="Korisnik" asp-action="Index">
+                Odustani
+            </a>
+        </form>
+    </div>
+</div>

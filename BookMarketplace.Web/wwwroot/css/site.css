@@ -569,6 +569,344 @@ a:hover {
     margin-bottom: 3rem;
 }
 
+/* --- Admin pages --- */
+
+.page-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.page-title {
+    font-size: 2rem;
+    color: #3D2010;
+    margin-bottom: 0.5rem;
+}
+
+.page-subtitle {
+    color: #8A6A50;
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+}
+
+.admin-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.admin-card {
+    background-color: #FFFFFF;
+    border: 1px solid #D4B896;
+    border-radius: 8px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    color: #3D2010;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+
+.admin-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    border-color: #6B4226;
+    text-decoration: none;
+}
+
+.admin-card-icon {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.admin-card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #6B4226;
+}
+
+.admin-card-desc {
+    color: #8A6A50;
+    font-size: 0.9rem;
+}
+
+/* --- Admin page header --- */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+/* --- Buttons --- */
+
+.btn-primary,
+.btn-edit,
+.btn-delete {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.15s, transform 0.1s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover,
+.btn-edit:hover,
+.btn-delete:hover {
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background-color: #6B4226;
+    color: #FFF8F0;
+}
+
+.btn-primary:hover {
+    background-color: #8B5A3A;
+}
+
+.btn-edit {
+    background-color: #C97D4E;
+    color: #FFFFFF;
+    margin-right: 0.3rem;
+}
+
+.btn-edit:hover {
+    background-color: #B86D3E;
+}
+
+.btn-delete {
+    background-color: #B85450;
+    color: #FFFFFF;
+}
+
+.btn-delete:hover {
+    background-color: #A04440;
+}
+
+/* --- Data table --- */
+
+.data-table {
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid #D4B896;
+    border-radius: 8px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+.data-table thead {
+    background-color: #6B4226;
+    color: #FFF8F0;
+}
+
+.data-table th,
+.data-table td {
+    padding: 0.85rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #E8DCC0;
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+    background-color: #FAF5EA;
+}
+
+.actions-col {
+    width: 200px;
+    text-align: right;
+}
+
+/* --- Empty state --- */
+
+.empty-state {
+    padding: 3rem 2rem;
+    text-align: center;
+    color: #8A6A50;
+    background-color: #FFFFFF;
+    border: 1px dashed #D4B896;
+    border-radius: 8px;
+}
+
+/* --- Form card --- */
+
+.form-card {
+    background-color: #FFFFFF;
+    border: 1px solid #D4B896;
+    border-radius: 8px;
+    padding: 2rem;
+    max-width: 600px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+    color: #3D2010;
+    font-size: 0.95rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid #D4B896;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #3D2010;
+    background-color: #FFFFFF;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #6B4226;
+    box-shadow: 0 0 0 3px rgba(107, 66, 38, 0.15);
+}
+
+.form-input.input-validation-error {
+    border-color: #B85450;
+}
+
+.validation-error {
+    display: block;
+    margin-top: 0.3rem;
+    color: #B85450;
+    font-size: 0.875rem;
+    min-height: 1.2rem;
+}
+
+.validation-summary {
+    background-color: #FBEAE9;
+    border: 1px solid #E5A5A2;
+    border-radius: 5px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+    color: #8C3F3C;
+}
+
+.validation-summary:empty {
+    display: none;
+}
+
+.validation-summary ul {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+/* --- Form actions --- */
+
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #E8DCC0;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    background-color: #E8DCC0;
+    color: #3D2010;
+    border: 1px solid #D4B896;
+    transition: background 0.15s;
+}
+
+.btn-secondary:hover {
+    background-color: #D4B896;
+    text-decoration: none;
+}
+
+/* --- Delete confirmation card --- */
+
+.delete-card {
+    background-color: #FFFFFF;
+    border: 1px solid #D4B896;
+    border-radius: 8px;
+    padding: 2rem;
+    max-width: 600px;
+}
+
+.delete-warning {
+    font-size: 1.05rem;
+    color: #3D2010;
+    margin-bottom: 1.5rem;
+}
+
+.entity-details {
+    background-color: #FAF5EA;
+    border: 1px solid #E8DCC0;
+    border-radius: 5px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.entity-details dt {
+    font-weight: 500;
+    color: #8A6A50;
+    margin-top: 0.6rem;
+    font-size: 0.875rem;
+}
+
+.entity-details dt:first-child {
+    margin-top: 0;
+}
+
+.entity-details dd {
+    color: #3D2010;
+    font-size: 1rem;
+    margin: 0;
+    padding-left: 0;
+}
+
+/* --- Warning alert --- */
+
+.alert-warning {
+    background-color: #FFF4E5;
+    border: 1px solid #F5B765;
+    border-left: 4px solid #C97D4E;
+    border-radius: 5px;
+    padding: 0.85rem 1rem;
+    color: #6B3D10;
+    margin-bottom: 1.5rem;
+}
+
+/* --- Disabled button --- */
+
+.btn-delete:disabled,
+.btn-delete[disabled] {
+    background-color: #D4B896;
+    color: #FFFFFF;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.btn-delete:disabled:hover {
+    transform: none;
+    background-color: #D4B896;
+}
+
 @media (max-width: 768px) {
     .split-section { grid-template-columns: 1fr; }
 }

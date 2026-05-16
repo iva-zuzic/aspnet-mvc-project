@@ -1,0 +1,28 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="page-container">
+    <h1 class="page-title">Admin Dashboard</h1>
+    <p class="page-subtitle">Administracija aplikacije BookMarketplace.</p>
+
+    <div class="admin-cards">
+        <a class="admin-card" asp-area="Admin" asp-controller="Grad" asp-action="Index">
+            <span class="admin-card-icon">🏙️</span>
+            <span class="admin-card-title">Gradovi</span>
+            <span class="admin-card-desc">Upravljanje gradovima</span>
+        </a>
+
+        <a class="admin-card" asp-area="Admin" asp-controller="Korisnik" asp-action="Index">
+            <span class="admin-card-icon">👥</span>
+            <span class="admin-card-title">Korisnici</span>
+            <span class="admin-card-desc">Upravljanje korisnicima</span>
+        </a>
+
+        <a class="admin-card" asp-area="Admin" asp-controller="Oglas" asp-action="Index">
+            <span class="admin-card-icon">📰</span>
+            <span class="admin-card-title">Oglasi</span>
+            <span class="admin-card-desc">Pregled svih oglasa</span>
+        </a>
+    </div>
+</div>
