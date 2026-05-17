@@ -19,8 +19,9 @@
                     <li><a asp-controller="Home" asp-action="Index">Po&#269;etna</a></li>
                     <li><a asp-controller="Grad" asp-action="Index">Gradovi</a></li>
                     <li><a asp-controller="Knjiga" asp-action="Index">Knjige</a></li>
-                    <li><a asp-controller="DrustvenaIgra" asp-action="Index">Igre</a></li>
+                    <li><a asp-controller="DrustvenaIgra" asp-action="Index">Društvene igre</a></li>
                     <li><a asp-controller="Poruka" asp-action="Index">Inbox</a></li>
+                    <li><a asp-controller="Oglas" asp-action="Create" class="nav-cta">+ Objavi oglas</a></li>
                 </ul>
                 <ul class="nav-auth">
                     <li><a href="#">Prijava</a></li>
@@ -41,7 +42,9 @@
         </div>
     </footer>
 
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

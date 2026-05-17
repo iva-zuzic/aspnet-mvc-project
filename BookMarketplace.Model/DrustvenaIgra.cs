@@ -14,6 +14,11 @@ public class DrustvenaIgra
     public int TrajanjeMins { get; set; }
     public ZanrIgre Zanr { get; set; }
 
+    [NotMapped]
+    public string BrojIgracaPrikaz =>
+        MinBrojIgraca == MaxBrojIgraca
+            ? MinBrojIgraca.ToString()
+            : $"{MinBrojIgraca}–{MaxBrojIgraca}";
 
     [ForeignKey("Oglas")]
     public int OglasId { get; set; }
