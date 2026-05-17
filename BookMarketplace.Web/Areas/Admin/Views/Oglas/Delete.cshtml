@@ -1,0 +1,81 @@
+@model Oglas
+
+@{
+    ViewData["Title"] = "Brisanje oglasa";
+}
+
+<div class="page-container">
+    <div class="page-header">
+        <h1 class="page-title">Brisanje oglasa</h1>
+        <a class="btn-secondary" asp-area="Admin" asp-controller="Oglas" asp-action="Index">
+            &larr; Natrag na popis
+        </a>
+    </div>
+
+    <div class="delete-card">
+        <p class="delete-warning">
+            Jeste li sigurni da želite obrisati ovaj oglas?
+        </p>
+
+        <dl class="entity-details">
+            <dt>Naslov</dt>
+            <dd>@Model.Naslov</dd>
+
+            <dt>Opis</dt>
+            <dd>@Model.Opis</dd>
+
+            <dt>Tip oglasa</dt>
+            <dd>@Model.TipOglasa</dd>
+
+            <dt>Stanje artikla</dt>
+            <dd>@Model.StanjeArtikla</dd>
+
+            <dt>Cijena</dt>
+            <dd>@Model.Cijena.ToString("N2") €</dd>
+
+            <dt>Status</dt>
+            <dd>@Model.Status</dd>
+
+            <dt>Vlasnik</dt>
+            <dd>@Model.Korisnik.ImeIPrezime</dd>
+
+            <dt>Grad</dt>
+            <dd>@Model.Grad.Naziv</dd>
+
+            <dt>Datum objave</dt>
+            <dd>@Model.DatumObjave.ToString("dd.MM.yyyy")</dd>
+
+            <dt>Broj poruka</dt>
+            <dd>@Model.Poruke.Count</dd>
+
+            <dt>Broj favorita</dt>
+            <dd>@Model.Favoriti.Count</dd>
+        </dl>
+
+        <div class="alert-warning">
+            <strong>Što se događa brisanjem:</strong>
+            <ul>
+                <li>Oglas će biti označen kao <strong>Izbrisan</strong> i neće biti vidljiv na popisu</li>
+                @if (Model.Poruke.Count > 0)
+                {
+                    <li>@Model.Poruke.Count poruka(e) vezanih za ovaj oglas ostaju u sandučićima korisnika</li>
+                }
+                @if (Model.Favoriti.Count > 0)
+                {
+                    <li>@Model.Favoriti.Count favorit(a) ostaju u bazi, ali se neće prikazivati</li>
+                }
+            </ul>
+        </div>
+
+        <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="form-actions">
+            @Html.AntiForgeryToken()
+
+            <button type="submit" class="btn-delete">
+                Da, obriši
+            </button>
+            <a class="btn-secondary" asp-area="Admin" asp-controller="Oglas" asp-action="Index">
+                Odustani
+            </a>
+        </form>
+    </div>
+</div>

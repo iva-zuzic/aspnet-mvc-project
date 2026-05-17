@@ -1,0 +1,194 @@
+@model Oglas
+
+@{
+    ViewData["Title"] = $"Detalji oglasa - {Model.Naslov}";
+}
+
+<div class="page-container">
+    <div class="page-header">
+        <h1 class="page-title">@Model.Naslov</h1>
+        <div>
+            <a class="btn-secondary" asp-area="Admin" asp-controller="Oglas" asp-action="Index">
+                &larr; Natrag na popis
+            </a>
+            @{
+                var vlasnikObrisan = Model.Korisnik.DeletedAt != null;
+                var oglasIzbrisan = Model.Status == StatusOglasa.Izbrisan;
+            }
+            @if (!oglasIzbrisan)
+            {
+                <a class="btn-delete"
+                asp-area="Admin" asp-controller="Oglas"
+                asp-action="Delete" asp-route-id="@Model.Id">
+                    Obriši
+                </a>
+            }
+            else if (!vlasnikObrisan)
+            {
+                <a class="btn-restore"
+                asp-area="Admin" asp-controller="Oglas"
+                asp-action="Restore" asp-route-id="@Model.Id">
+                    Vrati
+                </a>
+            }
+        </div>
+    </div>
+
+    <div class="details-grid">
+        <!-- LIJEVI STUPAC: Osnovne info -->
+        <div class="details-card">
+            <h2 class="section-title">Osnovne informacije</h2>
+
+            <dl class="entity-details">
+                <dt>Status</dt>
+                <dd>
+                    <span class="status-badge status-@Model.Status.ToString().ToLower()">
+                        @Model.Status
+                    </span>
+                </dd>
+
+                <dt>Tip oglasa</dt>
+                <dd>@Model.TipOglasa</dd>
+
+                <dt>Stanje artikla</dt>
+                <dd>@Model.StanjeArtikla</dd>
+
+                <dt>Cijena</dt>
+                <dd class="price">@Model.Cijena.ToString("N2") €</dd>
+
+                <dt>Datum objave</dt>
+                <dd>@Model.DatumObjave.ToString("dd.MM.yyyy HH:mm")</dd>
+
+                @if (Model.DatumIzmjene.HasValue)
+                {
+                    <dt>Posljednja izmjena</dt>
+                    <dd>@Model.DatumIzmjene.Value.ToString("dd.MM.yyyy HH:mm")</dd>
+                }
+            </dl>
+
+            <h2 class="section-title">Opis</h2>
+            <p class="oglas-opis">@Model.Opis</p>
+        </div>
+
+        <!-- DESNI STUPAC: Vlasnik i lokacija -->
+        <div class="details-sidebar">
+            <div class="details-card">
+                <h2 class="section-title">Vlasnik</h2>
+                <dl class="entity-details">
+                    <dt>Ime i prezime</dt>
+                    <dd>@Model.Korisnik.ImeIPrezime</dd>
+
+                    <dt>Email</dt>
+                    <dd>@Model.Korisnik.Email</dd>
+
+                    <dt>Telefon</dt>
+                    <dd>@Model.Korisnik.Telefon</dd>
+                </dl>
+            </div>
+
+            <div class="details-card">
+                <h2 class="section-title">Lokacija</h2>
+                <dl class="entity-details">
+                    <dt>Grad</dt>
+                    <dd>@Model.Grad.Naziv</dd>
+
+                    <dt>Poštanski broj</dt>
+                    <dd>@Model.Grad.PostanskiBroj</dd>
+                </dl>
+            </div>
+
+            <div class="details-card">
+                <h2 class="section-title">Statistika</h2>
+                <dl class="entity-details">
+                    <dt>Broj poruka</dt>
+                    <dd>@Model.Poruke.Count</dd>
+
+                    <dt>Broj favorita</dt>
+                    <dd>@Model.Favoriti.Count</dd>
+
+                    <dt>Broj slika</dt>
+                    <dd>@Model.Slike.Count</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+
+    @if (Model.TipOglasa == TipOglasa.Knjiga && Model.Knjiga != null)
+    {
+        <div class="details-card mt-3">
+            <h2 class="section-title">📖 Podaci o knjizi</h2>
+            <dl class="entity-details details-grid-2">
+                <div>
+                    <dt>Naziv</dt>
+                    <dd>@Model.Knjiga.Naziv</dd>
+
+                    <dt>Autor</dt>
+                    <dd>@Model.Knjiga.Autor</dd>
+
+                    <dt>ISBN</dt>
+                    <dd>@Model.Knjiga.ISBN</dd>
+
+                    <dt>Izdavač</dt>
+                    <dd>@Model.Knjiga.Izdavac</dd>
+                </div>
+                <div>
+                    <dt>Godina izdanja</dt>
+                    <dd>@Model.Knjiga.GodinaIzdanja</dd>
+
+                    <dt>Broj strana</dt>
+                    <dd>@Model.Knjiga.BrojStrana</dd>
+
+                    <dt>Jezik</dt>
+                    <dd>@Model.Knjiga.Jezik</dd>
+
+                    <dt>Žanr</dt>
+                    <dd>@Model.Knjiga.Zanr</dd>
+                </div>
+            </dl>
+        </div>
+    }
+    else if (Model.TipOglasa == TipOglasa.DrustvenaIgra && Model.DrustvenaIgra != null)
+    {
+        <div class="details-card mt-3">
+            <h2 class="section-title">🎲 Podaci o društvenoj igri</h2>
+            <dl class="entity-details details-grid-2">
+                <div>
+                    <dt>Naziv</dt>
+                    <dd>@Model.DrustvenaIgra.Naziv</dd>
+
+                    <dt>Žanr</dt>
+                    <dd>@Model.DrustvenaIgra.Zanr</dd>
+
+                    <dt>Trajanje</dt>
+                    <dd>@Model.DrustvenaIgra.TrajanjeMins minuta</dd>
+                </div>
+                <div>
+                    <dt>Min. broj igrača</dt>
+                    <dd>@Model.DrustvenaIgra.MinBrojIgraca</dd>
+
+                    <dt>Max. broj igrača</dt>
+                    <dd>@Model.DrustvenaIgra.MaxBrojIgraca</dd>
+
+                    <dt>Minimalna dob</dt>
+                    <dd>@Model.DrustvenaIgra.MinimalnasDob+ godina</dd>
+                </div>
+            </dl>
+        </div>
+    }
+
+    @if (Model.Slike.Any())
+    {
+        <div class="details-card mt-3">
+            <h2 class="section-title">Slike</h2>
+            <div class="slike-grid">
+                @foreach (var slika in Model.Slike.OrderBy(s => s.RedoslijedPrikaza))
+                {
+                    <div class="slika-item">
+                        <img src="@slika.Putanja" alt="@Model.Naslov" />
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

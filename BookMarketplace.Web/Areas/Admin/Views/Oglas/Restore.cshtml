@@ -1,0 +1,64 @@
+@model Oglas
+
+@{
+    ViewData["Title"] = "Vraćanje oglasa";
+}
+
+<div class="page-container">
+    <div class="page-header">
+        <h1 class="page-title">Vraćanje oglasa</h1>
+        <a class="btn-secondary" asp-area="Admin" asp-controller="Oglas" asp-action="Index">
+            &larr; Natrag na popis
+        </a>
+    </div>
+
+    <div class="restore-card">
+        <p class="restore-info">
+            Jeste li sigurni da želite vratiti ovaj oglas?
+        </p>
+
+        <dl class="entity-details">
+            <dt>Naslov</dt>
+            <dd>@Model.Naslov</dd>
+
+            <dt>Tip oglasa</dt>
+            <dd>@Model.TipOglasa</dd>
+
+            <dt>Cijena</dt>
+            <dd>@Model.Cijena.ToString("N2") €</dd>
+
+            <dt>Trenutni status</dt>
+            <dd>
+                <span class="status-badge status-izbrisan">@Model.Status</span>
+            </dd>
+
+            <dt>Vlasnik</dt>
+            <dd>@Model.Korisnik.ImeIPrezime</dd>
+
+            <dt>Grad</dt>
+            <dd>@Model.Grad.Naziv</dd>
+
+            <dt>Datum objave</dt>
+            <dd>@Model.DatumObjave.ToString("dd.MM.yyyy")</dd>
+        </dl>
+
+        <div class="alert-info">
+            <strong>Što se događa:</strong>
+            <ul>
+                <li>Status oglasa će se promijeniti u <strong>Aktivan</strong></li>
+                <li>Oglas će ponovno biti vidljiv na javnoj stranici</li>
+            </ul>
+        </div>
+
+        <form asp-action="Restore" asp-route-id="@Model.Id" method="post" class="form-actions">
+            @Html.AntiForgeryToken()
+
+            <button type="submit" class="btn-primary">
+                Da, vrati oglas
+            </button>
+            <a class="btn-secondary" asp-area="Admin" asp-controller="Oglas" asp-action="Index">
+                Odustani
+            </a>
+        </form>
+    </div>
+</div>

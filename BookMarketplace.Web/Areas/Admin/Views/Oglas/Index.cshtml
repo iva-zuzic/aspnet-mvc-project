@@ -1,0 +1,91 @@
+@model List<Oglas>
+
+@{
+    ViewData["Title"] = "Oglasi";
+}
+
+<div class="page-container">
+    <div class="page-header">
+        <h1 class="page-title">Oglasi</h1>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <p class="empty-state">Trenutno nema oglasa u sustavu.</p>
+    }
+    else
+    {
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Naslov</th>
+                    <th>Tip</th>
+                    <th>Cijena</th>
+                    <th>Status</th>
+                    <th>Vlasnik</th>
+                    <th>Grad</th>
+                    <th>Datum objave</th>
+                    <th class="actions-col">Akcije</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var oglas in Model)
+                {
+                    var vlasnikObrisan = oglas.Korisnik.DeletedAt != null;
+                    var oglasIzbrisan = oglas.Status == StatusOglasa.Izbrisan;
+                    <tr class="status-@oglas.Status.ToString().ToLower()">
+                        <td>
+                            <a asp-area="Admin" asp-controller="Oglas"
+                            asp-action="Details" asp-route-id="@oglas.Id"
+                            class="oglas-naslov-link">
+                                @oglas.Naslov
+                            </a>
+                        </td>
+                        <td>@oglas.TipOglasa</td>
+                        <td>@oglas.Cijena.ToString("N2") €</td>
+                        <td>
+                            <span class="status-badge status-@oglas.Status.ToString().ToLower()">
+                                @oglas.Status
+                            </span>
+                            @if (oglasIzbrisan && vlasnikObrisan)
+                            {
+                                <small class="status-reason">(vlasnik izbrisan)</small>
+                            }
+                        </td>
+                        <td>
+                            @oglas.Korisnik.ImeIPrezime
+                            @if (vlasnikObrisan)
+                            {
+                                <span class="status-badge status-izbrisan">Izbrisan</span>
+                            }
+                        </td>
+                        <td>@oglas.Grad.Naziv</td>
+                        <td>@oglas.DatumObjave.ToString("dd.MM.yyyy")</td>
+                        <td class="actions-col">
+                            @if (!oglasIzbrisan)
+                            {
+                                <a class="btn-delete"
+                                asp-area="Admin" asp-controller="Oglas"
+                                asp-action="Delete" asp-route-id="@oglas.Id">
+                                    Obriši
+                                </a>
+                            }
+                            else if (!vlasnikObrisan)
+                            {
+                                <a class="btn-restore"
+                                asp-area="Admin" asp-controller="Oglas"
+                                asp-action="Restore" asp-route-id="@oglas.Id">
+                                    Vrati
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

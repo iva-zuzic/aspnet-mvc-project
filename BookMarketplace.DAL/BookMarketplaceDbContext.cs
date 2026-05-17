@@ -141,6 +141,7 @@ public class BookMarketplaceDbContext : DbContext
         );
 
         modelBuilder.Entity<Korisnik>().HasQueryFilter(k => k.DeletedAt == null);
+        modelBuilder.Entity<Oglas>().HasQueryFilter(o => o.Status != StatusOglasa.Izbrisan);
     }    
 
 }
