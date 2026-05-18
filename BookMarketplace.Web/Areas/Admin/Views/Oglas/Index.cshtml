@@ -9,6 +9,21 @@
         <h1 class="page-title">Oglasi</h1>
     </div>
 
+    <div class="tab-bar">
+        <button class="tab-btn active" id="tabAktivni" onclick="prikaziTab('aktivan')">
+            Aktivni (<span id="countAktivni">0</span>)
+        </button>
+        <button class="tab-btn" id="tabNeaktivni" onclick="prikaziTab('neaktivan')">
+            Neaktivni (<span id="countNeaktivni">0</span>)
+        </button>
+        <button class="tab-btn" id="tabProdani" onclick="prikaziTab('prodan')">
+            Prodani (<span id="countProdani">0</span>)
+        </button>
+        <button class="tab-btn" id="tabIzbrisani" onclick="prikaziTab('izbrisan')">
+            Izbrisani (<span id="countIzbrisani">0</span>)
+        </button>
+    </div>
+
     @if (Model.Count == 0)
     {
         <p class="empty-state">Trenutno nema oglasa u sustavu.</p>
@@ -18,6 +33,7 @@
         <table class="data-table">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>Naslov</th>
                     <th>Tip</th>
                     <th>Cijena</th>
@@ -29,25 +45,42 @@
                 </tr>
             </thead>
             <tbody>
+                @{ var redniBroj = 0; }
                 @foreach (var oglas in Model)
                 {
+                    redniBroj++;
                     var vlasnikObrisan = oglas.Korisnik.DeletedAt != null;
                     var oglasIzbrisan = oglas.Status == StatusOglasa.Izbrisan;
-                    <tr class="status-@oglas.Status.ToString().ToLower()">
+                    var mozeRestore = oglasIzbrisan && !vlasnikObrisan;
+
+                    string tab;
+                    if (oglasIzbrisan || vlasnikObrisan)
+                        tab = "izbrisan";
+                    else if (oglas.Status == StatusOglasa.Prodan)
+                        tab = "prodan";
+                    else if (oglas.Status == StatusOglasa.Neaktivan)
+                        tab = "neaktivan";
+                    else
+                        tab = "aktivan";
+
+                    <tr class="status-@oglas.Status.ToString().ToLower() oglas-row"
+                        data-tab="@tab"
+                        data-moze-restore="@(mozeRestore ? "true" : "false")">
+                        <td class="row-number">@redniBroj</td>
                         <td>
                             <a asp-area="Admin" asp-controller="Oglas"
-                            asp-action="Details" asp-route-id="@oglas.Id"
-                            class="oglas-naslov-link">
+                               asp-action="Details" asp-route-id="@oglas.Id"
+                               class="oglas-naslov-link">
                                 @oglas.Naslov
                             </a>
                         </td>
-                        <td>@oglas.TipOglasa</td>
+                        <td>@(oglas.TipOglasa == TipOglasa.Knjiga ? "Knjiga" : "Igra")</td>
                         <td>@oglas.Cijena.ToString("N2") €</td>
                         <td>
                             <span class="status-badge status-@oglas.Status.ToString().ToLower()">
                                 @oglas.Status
                             </span>
-                            @if (oglasIzbrisan && vlasnikObrisan)
+                            @if (vlasnikObrisan)
                             {
                                 <small class="status-reason">(vlasnik izbrisan)</small>
                             }
@@ -62,19 +95,19 @@
                         <td>@oglas.Grad.Naziv</td>
                         <td>@oglas.DatumObjave.ToString("dd.MM.yyyy")</td>
                         <td class="actions-col">
-                            @if (!oglasIzbrisan)
+                            @if (!oglasIzbrisan && !vlasnikObrisan)
                             {
                                 <a class="btn-delete"
-                                asp-area="Admin" asp-controller="Oglas"
-                                asp-action="Delete" asp-route-id="@oglas.Id">
+                                   asp-area="Admin" asp-controller="Oglas"
+                                   asp-action="Delete" asp-route-id="@oglas.Id">
                                     Obriši
                                 </a>
                             }
-                            else if (!vlasnikObrisan)
+                            else if (mozeRestore)
                             {
                                 <a class="btn-restore"
-                                asp-area="Admin" asp-controller="Oglas"
-                                asp-action="Restore" asp-route-id="@oglas.Id">
+                                   asp-area="Admin" asp-controller="Oglas"
+                                   asp-action="Restore" asp-route-id="@oglas.Id">
                                     Vrati
                                 </a>
                             }
@@ -89,3 +122,62 @@
         </table>
     }
 </div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            prikaziTab('aktivan');
+        });
+
+        function prikaziTab(tab) {
+            var $rows = $('.oglas-row');
+            var counts = { aktivan: 0, neaktivan: 0, prodan: 0, izbrisan: 0 };
+
+            $rows.each(function () {
+                var rowTab = $(this).data('tab');
+                counts[rowTab]++;
+            });
+
+            $('#countAktivni').text(counts.aktivan);
+            $('#countNeaktivni').text(counts.neaktivan);
+            $('#countProdani').text(counts.prodan);
+            $('#countIzbrisani').text(counts.izbrisan);
+
+            var redniBroj = 0;
+            $rows.each(function () {
+                if ($(this).data('tab') === tab) {
+                    redniBroj++;
+                    $(this).show();
+                    $(this).find('.row-number').text(redniBroj);
+                } else {
+                    $(this).hide();
+                }
+            });
+
+            if (tab === 'izbrisan') {
+                var $visible = $rows.filter(':visible');
+                $visible.sort(function (a, b) {
+                    var aRestore = $(a).data('moze-restore') === true ? 0 : 1;
+                    var bRestore = $(b).data('moze-restore') === true ? 0 : 1;
+                    return aRestore - bRestore;
+                });
+                $visible.parent().append($visible);
+
+                redniBroj = 0;
+                $visible.each(function () {
+                    redniBroj++;
+                    $(this).find('.row-number').text(redniBroj);
+                });
+            }
+
+            $('.tab-btn').removeClass('active');
+            var tabIdMap = {
+                'aktivan': 'tabAktivni',
+                'neaktivan': 'tabNeaktivni',
+                'prodan': 'tabProdani',
+                'izbrisan': 'tabIzbrisani'
+            };
+            $('#' + tabIdMap[tab]).addClass('active');
+        }
+    </script>
+}

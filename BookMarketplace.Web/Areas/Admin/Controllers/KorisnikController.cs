@@ -24,6 +24,19 @@ public class KorisnikController : Controller
         return View(korisnici);
     }
 
+    public async Task<IActionResult> Details(int id)
+    {
+        var korisnik = await _context.Korisnici
+            .IgnoreQueryFilters()
+            .Include(k => k.Oglasi)
+            .FirstOrDefaultAsync(k => k.Id == id);
+
+        if (korisnik == null)
+            return NotFound();
+
+        return View(korisnik);
+    }
+
     [ActionName("Delete")]
     public async Task<IActionResult> DeleteGet(int id)
     {

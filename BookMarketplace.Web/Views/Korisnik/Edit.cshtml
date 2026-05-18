@@ -1,0 +1,49 @@
+@model BookMarketplace.Web.ViewModels.KorisnikEditModel
+
+@{
+    ViewData["Title"] = "Uredi profil";
+}
+
+<div class="form-container">
+    <div class="form-header">
+        <h1>Uredi profil</h1>
+        <p class="form-subtitle">Izmijenite podatke korisničkog računa.</p>
+    </div>
+
+    <div class="form-card">
+        <form asp-action="Edit" method="post">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" asp-for="Id" />
+
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+            <div class="form-group">
+                <label asp-for="ImeIPrezime" class="form-label"></label>
+                <input asp-for="ImeIPrezime" class="form-input" />
+                <span asp-validation-for="ImeIPrezime" class="validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-input" type="email" />
+                <span asp-validation-for="Email" class="validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Telefon" class="form-label"></label>
+                <input asp-for="Telefon" class="form-input" />
+                <span asp-validation-for="Telefon" class="validation-error"></span>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary btn-large">Spremi promjene</button>
+                <a class="btn-secondary" asp-controller="Korisnik" asp-action="Details" asp-route-id="@Model.Id">Odustani</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

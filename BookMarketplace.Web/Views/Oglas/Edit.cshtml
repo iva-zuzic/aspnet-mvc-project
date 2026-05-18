@@ -1,0 +1,224 @@
+@model BookMarketplace.Web.ViewModels.OglasEditModel
+
+@{
+    ViewData["Title"] = "Uredi oglas";
+}
+
+<div class="form-container">
+    <div class="form-header">
+        <h1>Uredi oglas</h1>
+        <p class="form-subtitle">Izmijenite podatke o svom oglasu.</p>
+    </div>
+
+    <div class="form-card">
+        <form asp-action="Edit" method="post">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="TipOglasa" />
+            <input type="hidden" asp-for="KorisnikId" />
+
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+            <h2 class="section-title">Osnovne informacije</h2>
+
+            <div class="form-group">
+                <label asp-for="Naslov" class="form-label"></label>
+                <input asp-for="Naslov" class="form-input" />
+                <span asp-validation-for="Naslov" class="validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Opis" class="form-label"></label>
+                <textarea asp-for="Opis" class="form-input" rows="4"></textarea>
+                <span asp-validation-for="Opis" class="validation-error"></span>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Cijena" class="form-label"></label>
+                    <input asp-for="Cijena" type="number" step="0.01" class="form-input" />
+                    <span asp-validation-for="Cijena" class="validation-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="DatumObjave" class="form-label"></label>
+                    <input asp-for="DatumObjave" type="date" class="form-input" />
+                    <span asp-validation-for="DatumObjave" class="validation-error"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Vlasnik</label>
+                    <input type="text" class="form-input" value="@Model.KorisnikIme" disabled />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="GradId" class="form-label"></label>
+                    <select asp-for="GradId" asp-items="ViewBag.Gradovi" class="form-input">
+                        <option value="">-- odaberite grad --</option>
+                    </select>
+                    <span asp-validation-for="GradId" class="validation-error"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Tip oglasa</label>
+                    <input type="text" class="form-input" value="@(Model.TipOglasa == BookMarketplace.Model.TipOglasa.Knjiga ? "Knjiga" : "Društvena igra")" disabled />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StanjeArtikla" class="form-label"></label>
+                    <select asp-for="StanjeArtikla" class="form-input">
+                        <option value="">-- odaberite stanje --</option>
+                        <option value="Novo">Novo</option>
+                        <option value="KaoNovo">Kao novo</option>
+                        <option value="Dobro">Dobro</option>
+                        <option value="Prihvatljivo">Prihvatljivo</option>
+                        <option value="Losije">Lošije</option>
+                    </select>
+                    <span asp-validation-for="StanjeArtikla" class="validation-error"></span>
+                </div>
+            </div>
+
+            @if (Model.TipOglasa == BookMarketplace.Model.TipOglasa.Knjiga)
+            {
+                <div class="conditional-section is-visible">
+                    <h2 class="section-title">📖 Podaci o knjizi</h2>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="KnjigaNaziv" class="form-label"></label>
+                            <input asp-for="KnjigaNaziv" class="form-input" />
+                            <span asp-validation-for="KnjigaNaziv" class="validation-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="KnjigaAutor" class="form-label"></label>
+                            <input asp-for="KnjigaAutor" class="form-input" />
+                            <span asp-validation-for="KnjigaAutor" class="validation-error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="KnjigaISBN" class="form-label"></label>
+                            <input asp-for="KnjigaISBN" class="form-input" />
+                            <span asp-validation-for="KnjigaISBN" class="validation-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="KnjigaIzdavac" class="form-label"></label>
+                            <input asp-for="KnjigaIzdavac" class="form-input" />
+                            <span asp-validation-for="KnjigaIzdavac" class="validation-error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="KnjigaGodinaIzdanja" class="form-label"></label>
+                            <input asp-for="KnjigaGodinaIzdanja" type="number" class="form-input" />
+                            <span asp-validation-for="KnjigaGodinaIzdanja" class="validation-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="KnjigaBrojStrana" class="form-label"></label>
+                            <input asp-for="KnjigaBrojStrana" type="number" class="form-input" />
+                            <span asp-validation-for="KnjigaBrojStrana" class="validation-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="KnjigaJezik" class="form-label"></label>
+                            <input asp-for="KnjigaJezik" class="form-input" />
+                            <span asp-validation-for="KnjigaJezik" class="validation-error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="KnjigaZanr" class="form-label"></label>
+                        <select asp-for="KnjigaZanr" class="form-input">
+                            <option value="">-- odaberite žanr --</option>
+                            <option value="Fantastika">Fantastika</option>
+                            <option value="Triler">Triler</option>
+                            <option value="Romansa">Romansa</option>
+                            <option value="ZnanstvenaFantastika">Znanstvena fantastika</option>
+                            <option value="Krimi">Krimi</option>
+                            <option value="Drama">Drama</option>
+                            <option value="Biografija">Biografija</option>
+                            <option value="Strucna">Stručna</option>
+                        </select>
+                        <span asp-validation-for="KnjigaZanr" class="validation-error"></span>
+                    </div>
+                </div>
+            }
+
+            @if (Model.TipOglasa == BookMarketplace.Model.TipOglasa.DrustvenaIgra)
+            {
+                <div class="conditional-section is-visible">
+                    <h2 class="section-title">🎲 Podaci o društvenoj igri</h2>
+
+                    <div class="form-group">
+                        <label asp-for="IgraNaziv" class="form-label"></label>
+                        <input asp-for="IgraNaziv" class="form-input" />
+                        <span asp-validation-for="IgraNaziv" class="validation-error"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="IgraMinBrojIgraca" class="form-label"></label>
+                            <input asp-for="IgraMinBrojIgraca" type="number" class="form-input" />
+                            <span asp-validation-for="IgraMinBrojIgraca" class="validation-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="IgraMaxBrojIgraca" class="form-label"></label>
+                            <input asp-for="IgraMaxBrojIgraca" type="number" class="form-input" />
+                            <span asp-validation-for="IgraMaxBrojIgraca" class="validation-error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="IgraMinimalnaDob" class="form-label"></label>
+                            <input asp-for="IgraMinimalnaDob" type="number" class="form-input" />
+                            <span asp-validation-for="IgraMinimalnaDob" class="validation-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="IgraTrajanjeMins" class="form-label"></label>
+                            <input asp-for="IgraTrajanjeMins" type="number" class="form-input" />
+                            <span asp-validation-for="IgraTrajanjeMins" class="validation-error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="IgraZanr" class="form-label"></label>
+                        <select asp-for="IgraZanr" class="form-input">
+                            <option value="">-- odaberite žanr --</option>
+                            <option value="Strategija">Strategija</option>
+                            <option value="Kooperativna">Kooperativna</option>
+                            <option value="Pustolovinska">Pustolovinska</option>
+                            <option value="Apstraktna">Apstraktna</option>
+                            <option value="Zabavna">Zabavna</option>
+                            <option value="Edukativna">Edukativna</option>
+                        </select>
+                        <span asp-validation-for="IgraZanr" class="validation-error"></span>
+                    </div>
+                </div>
+            }
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary btn-large">Spremi promjene</button>
+                <a class="btn-secondary" asp-controller="@(Model.TipOglasa == BookMarketplace.Model.TipOglasa.Knjiga ? "Knjiga" : "DrustvenaIgra")" asp-action="Details" asp-route-id="@Model.Id">
+                    Odustani
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,30 @@
+@model Grad
+
+@{
+    ViewData["Title"] = Model.Naziv;
+}
+
+<div class="page-container">
+    <div class="page-header">
+        <h1 class="page-title">@Model.Naziv</h1>
+        <a class="btn-secondary" asp-area="Admin" asp-controller="Grad" asp-action="Index">
+            &larr; Natrag na popis
+        </a>
+    </div>
+
+    <dl class="entity-details">
+        <dt>Naziv</dt>
+        <dd>@Model.Naziv</dd>
+
+        <dt>Poštanski broj</dt>
+        <dd>@Model.PostanskiBroj</dd>
+
+        <dt>Broj povezanih oglasa</dt>
+        <dd>@Model.Oglasi.Count</dd>
+    </dl>
+
+    <div class="form-actions">
+        <a class="btn-edit" asp-area="Admin" asp-controller="Grad" asp-action="Edit" asp-route-id="@Model.Id">Uredi</a>
+        <a class="btn-delete" asp-area="Admin" asp-controller="Grad" asp-action="Delete" asp-route-id="@Model.Id">Obriši</a>
+    </div>
+</div>

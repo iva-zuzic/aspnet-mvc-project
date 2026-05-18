@@ -61,6 +61,11 @@
                 <span class="detail-label">Prodava&#269;</span>
                 <span class="detail-value">@Model.Korisnik?.ImeIPrezime</span>
             </div>
+
+            <div class="detail-actions">
+                <a class="btn-primary" asp-controller="Oglas" asp-action="Edit" asp-route-id="@Model.Id">Uredi</a>
+                <a class="btn-danger" asp-controller="Oglas" asp-action="Delete" asp-route-id="@Model.Id">Obriši</a>
+            </div>
         </div>
     </div>
 </div>

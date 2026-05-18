@@ -31,7 +31,13 @@
                 @foreach (var grad in Model)
                 {
                     <tr>
-                        <td>@grad.Naziv</td>
+                        <td>
+                            <a asp-area="Admin" asp-controller="Grad"
+                               asp-action="Details" asp-route-id="@grad.Id"
+                               class="oglas-naslov-link">
+                                @grad.Naziv
+                            </a>
+                        </td>
                         <td>@grad.PostanskiBroj</td>
                         <td>@grad.Oglasi.Count</td>
                         <td class="actions-col">

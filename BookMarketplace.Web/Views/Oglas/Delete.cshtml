@@ -1,0 +1,50 @@
+@model BookMarketplace.Model.Oglas
+
+@{
+    ViewData["Title"] = "Obriši oglas";
+    var naziv = Model.TipOglasa == BookMarketplace.Model.TipOglasa.Knjiga
+        ? Model.Knjiga?.Naziv
+        : Model.DrustvenaIgra?.Naziv;
+    var kontroler = Model.TipOglasa == BookMarketplace.Model.TipOglasa.Knjiga
+        ? "Knjiga" : "DrustvenaIgra";
+}
+
+<div class="form-container">
+    <div class="form-header">
+        <h1>Obriši oglas</h1>
+        <p class="form-subtitle">Jeste li sigurni da želite obrisati ovaj oglas?</p>
+    </div>
+
+    <div class="form-card">
+        <div class="detail-grid">
+            <span class="detail-label">Naslov</span>
+            <span class="detail-value">@Model.Naslov</span>
+
+            <span class="detail-label">Naziv</span>
+            <span class="detail-value">@naziv</span>
+
+            <span class="detail-label">Tip</span>
+            <span class="detail-value">@(Model.TipOglasa == BookMarketplace.Model.TipOglasa.Knjiga ? "Knjiga" : "Društvena igra")</span>
+
+            <span class="detail-label">Cijena</span>
+            <span class="detail-value card-price">@Model.Cijena.ToString("N2") &euro;</span>
+
+            <span class="detail-label">Grad</span>
+            <span class="detail-value">@Model.Grad?.Naziv</span>
+
+            <span class="detail-label">Prodavač</span>
+            <span class="detail-value">@Model.Korisnik?.ImeIPrezime</span>
+        </div>
+
+        <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions">
+                <button type="submit" class="btn-danger btn-large">Obriši</button>
+                <a class="btn-secondary" asp-controller="@kontroler" asp-action="Details" asp-route-id="@Model.Id">
+                    Odustani
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

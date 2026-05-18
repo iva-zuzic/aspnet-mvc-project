@@ -19,7 +19,7 @@ namespace BookMarketplace.Controllers
         public async Task<IActionResult> Index()
         {
             var oglasi = await _context.Oglasi
-                .Where(o => o.TipOglasa == TipOglasa.DrustvenaIgra)
+                .Where(o => o.TipOglasa == TipOglasa.DrustvenaIgra && o.Status == StatusOglasa.Aktivan)
                 .Include(o => o.DrustvenaIgra)
                 .Include(o => o.Grad)
                 .Include(o => o.Korisnik)

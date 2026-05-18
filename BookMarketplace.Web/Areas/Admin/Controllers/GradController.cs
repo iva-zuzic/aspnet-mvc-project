@@ -25,6 +25,18 @@ public class GradController : Controller
         return View(gradovi);
     }
 
+    public async Task<IActionResult> Details(int id)
+    {
+        var grad = await _context.Gradovi
+            .Include(g => g.Oglasi)
+            .FirstOrDefaultAsync(g => g.Id == id);
+
+        if (grad == null)
+            return NotFound();
+
+        return View(grad);
+    }
+
     public IActionResult Create()
     {
         return View();

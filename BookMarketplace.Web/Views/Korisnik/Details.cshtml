@@ -1,0 +1,59 @@
+@model Korisnik
+@{
+    ViewData["Title"] = Model.ImeIPrezime;
+}
+
+<nav class="breadcrumb">
+    <a asp-controller="Korisnik" asp-action="Index">Korisnici</a>
+    <span class="breadcrumb-sep">&rsaquo;</span>
+    <span class="breadcrumb-current">@Model.ImeIPrezime</span>
+</nav>
+
+<div class="detail-card detail-card-full">
+    <div class="detail-info">
+        <div class="detail-grid">
+            <span class="detail-label">Ime i prezime</span>
+            <span class="detail-value">@Model.ImeIPrezime</span>
+
+            <span class="detail-label">Email</span>
+            <span class="detail-value">@Model.Email</span>
+
+            <span class="detail-label">Telefon</span>
+            <span class="detail-value">@Model.Telefon</span>
+
+            <span class="detail-label">Datum registracije</span>
+            <span class="detail-value">@Model.DatumRegistracije.ToString("dd.MM.yyyy")</span>
+
+            <span class="detail-label">Broj oglasa</span>
+            <span class="detail-value">@Model.Oglasi.Count</span>
+        </div>
+
+        <div class="detail-actions">
+            <a class="btn-primary" asp-controller="Korisnik" asp-action="Edit" asp-route-id="@Model.Id">Uredi</a>
+            <a class="btn-danger" asp-controller="Korisnik" asp-action="Delete" asp-route-id="@Model.Id">Obriši</a>
+        </div>
+    </div>
+</div>
+
+@if (Model.Oglasi.Count > 0)
+{
+    <h2 style="margin-top: 2rem;">Oglasi korisnika</h2>
+    <div class="card-grid">
+        @foreach (var oglas in Model.Oglasi)
+        {
+            var isKnjiga = oglas.TipOglasa == TipOglasa.Knjiga;
+            <a class="card @(isKnjiga ? "card-knjiga" : "card-igra")"
+               asp-controller="@(isKnjiga ? "Knjiga" : "DrustvenaIgra")"
+               asp-action="Details"
+               asp-route-id="@oglas.Id">
+                <div class="card-body">
+                    <span class="badge @(isKnjiga ? "badge-knjiga" : "badge-igra")">
+                        @(isKnjiga ? "Knjiga" : "Igra")
+                    </span>
+                    <span class="card-title">@oglas.Naslov</span>
+                    <span class="card-price">@oglas.Cijena.ToString("N2") &euro;</span>
+                </div>
+            </a>
+        }
+    </div>
+}

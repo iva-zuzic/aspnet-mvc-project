@@ -1,0 +1,48 @@
+@model Korisnik
+
+@{
+    ViewData["Title"] = Model.ImeIPrezime;
+}
+
+<div class="page-container">
+    <div class="page-header">
+        <h1 class="page-title">@Model.ImeIPrezime</h1>
+        <a class="btn-secondary" asp-area="Admin" asp-controller="Korisnik" asp-action="Index">
+            &larr; Natrag na popis
+        </a>
+    </div>
+
+    @if (Model.DeletedAt != null)
+    {
+        <div class="alert-warning">
+            <strong>Obrisan:</strong> @Model.DeletedAt.Value.ToString("dd.MM.yyyy HH:mm")
+        </div>
+    }
+
+    <dl class="entity-details">
+        <dt>Ime i prezime</dt>
+        <dd>@Model.ImeIPrezime</dd>
+
+        <dt>Email</dt>
+        <dd>@Model.Email</dd>
+
+        <dt>Telefon</dt>
+        <dd>@Model.Telefon</dd>
+
+        <dt>Datum registracije</dt>
+        <dd>@Model.DatumRegistracije.ToString("dd.MM.yyyy")</dd>
+
+        <dt>Uloga</dt>
+        <dd>@Model.Uloga</dd>
+
+        <dt>Broj oglasa</dt>
+        <dd>@Model.Oglasi.Count</dd>
+    </dl>
+
+    @if (Model.DeletedAt == null)
+    {
+        <div class="form-actions">
+            <a class="btn-delete" asp-area="Admin" asp-controller="Korisnik" asp-action="Delete" asp-route-id="@Model.Id">Obriši</a>
+        </div>
+    }
+</div>

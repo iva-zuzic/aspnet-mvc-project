@@ -1,0 +1,41 @@
+@model Korisnik
+
+@{
+    ViewData["Title"] = "Obriši korisnika";
+}
+
+<div class="form-container">
+    <div class="form-header">
+        <h1>Obriši korisnika</h1>
+        <p class="form-subtitle">Jeste li sigurni da želite obrisati ovaj račun?</p>
+    </div>
+
+    <div class="form-card">
+        <div class="detail-grid">
+            <span class="detail-label">Ime i prezime</span>
+            <span class="detail-value">@Model.ImeIPrezime</span>
+
+            <span class="detail-label">Email</span>
+            <span class="detail-value">@Model.Email</span>
+
+            <span class="detail-label">Broj oglasa</span>
+            <span class="detail-value">@Model.Oglasi.Count</span>
+        </div>
+
+        @if (Model.Oglasi.Any())
+        {
+            <div class="alert-warning" style="margin-top: 1rem; padding: 0.75rem; background: #fff3cd; border-radius: 8px;">
+                <strong>Pažnja:</strong> Brisanjem korisnika svi njegovi oglasi (@Model.Oglasi.Count) bit će označeni kao izbrisani.
+            </div>
+        }
+
+        <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions">
+                <button type="submit" class="btn-danger btn-large">Obriši</button>
+                <a class="btn-secondary" asp-controller="Korisnik" asp-action="Details" asp-route-id="@Model.Id">Odustani</a>
+            </div>
+        </form>
+    </div>
+</div>

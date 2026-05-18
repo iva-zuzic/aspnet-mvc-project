@@ -30,7 +30,13 @@
                 @foreach (var korisnik in Model)
                 {
                     <tr>
-                        <td>@korisnik.ImeIPrezime</td>
+                        <td>
+                            <a asp-area="Admin" asp-controller="Korisnik"
+                               asp-action="Details" asp-route-id="@korisnik.Id"
+                               class="oglas-naslov-link">
+                                @korisnik.ImeIPrezime
+                            </a>
+                        </td>
                         <td>@korisnik.Email</td>
                         <td>@korisnik.Telefon</td>
                         <td>@korisnik.DatumRegistracije.ToString("dd.MM.yyyy")</td>
