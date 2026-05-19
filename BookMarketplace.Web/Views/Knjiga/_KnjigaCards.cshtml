@@ -1,0 +1,37 @@
+@model List<Oglas>
+
+<div class="ajax-result-count" data-count="@Model.Count"></div>
+
+@if (Model.Count == 0)
+{
+    <div class="empty-state">
+        <p>Nema oglasa za knjige koji odgovaraju pretrazi.</p>
+    </div>
+}
+else
+{
+    <div class="card-grid">
+        @foreach (var oglas in Model)
+        {
+            <a class="card card-knjiga"
+               asp-controller="Knjiga"
+               asp-action="Details"
+               asp-route-id="@oglas.Id">
+
+                <div class="book-cover">
+                    <div class="book-cover-inner">
+                        <span class="book-cover-title">@oglas.Knjiga?.Naziv</span>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <span class="card-title">@oglas.Knjiga?.Naziv</span>
+                    <span class="card-subtitle">@oglas.Knjiga?.Autor</span>
+                    <span class="card-subtitle">@oglas.Knjiga?.Zanr</span>
+                    <span class="card-subtitle">@oglas.Grad?.Naziv</span>
+                    <span class="card-price">@oglas.Cijena.ToString("N2") &euro;</span>
+                </div>
+            </a>
+        }
+    </div>
+}

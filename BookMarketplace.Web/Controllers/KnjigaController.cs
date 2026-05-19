@@ -42,5 +42,33 @@ namespace BookMarketplace.Controllers
 
             return View(oglas);
         }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> Search(string? term)
+        {
+            var query = _context.Oglasi
+                .Include(o => o.Knjiga)
+                .Include(o => o.Grad)
+                .Where(o => o.TipOglasa == TipOglasa.Knjiga)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(term))
+            {
+                var searchTerm = term.Trim().ToLower();
+
+                query = query.Where(o =>
+                    o.Knjiga != null &&
+                    (
+                        o.Knjiga.Naziv.ToLower().StartsWith(searchTerm) ||
+                        o.Knjiga.Autor.ToLower().StartsWith(searchTerm)
+                    ));
+            }
+
+            var knjige = await query
+                .OrderBy(o => o.Knjiga!.Naziv)
+                .ToListAsync();
+
+            return PartialView("_KnjigaCards", knjige);
+        }
     }
 }

@@ -1,38 +1,91 @@
 @model List<Oglas>
+
 @{
     ViewData["Title"] = "Knjige";
 }
 
 <div class="page-heading">
     <h1>Knjige</h1>
-    <p>@Model.Count oglasa za knjige</p>
+    <p id="knjigeCount">@Model.Count @(Model.Count == 1 ? "oglas za knjigu" : "oglasa za knjige")</p>
 </div>
 
-@if (Model.Count == 0)
-{
-    <div class="empty-state">
-        <p>Trenutno nema oglasa za knjige.</p>
-    </div>
-}
-else
-{
-    <div class="card-grid">
-        @foreach (var oglas in Model)
-        {
-            <a class="card card-knjiga" asp-controller="Knjiga" asp-action="Details" asp-route-id="@oglas.Id">
-                <div class="book-cover">
-                    <div class="book-cover-inner">
-                        <span class="book-cover-title">@oglas.Knjiga?.Naziv</span>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <span class="card-title">@oglas.Knjiga?.Naziv</span>
-                    <span class="card-subtitle">@oglas.Knjiga?.Autor</span>
-                    <span class="card-subtitle">@oglas.Knjiga?.Zanr</span>
-                    <span class="card-subtitle">@oglas.Grad?.Naziv</span>
-                    <span class="card-price">@oglas.Cijena.ToString("N2") &euro;</span>
-                </div>
-            </a>
-        }
-    </div>
+<div class="form-group search-box">
+    <label for="knjigeSearch" class="form-label">Pretraži knjige</label>
+    <input type="text"
+           id="knjigeSearch"
+           class="form-input"
+           placeholder="Upišite naziv knjige ili autora..."
+           autocomplete="off" />
+
+    <p id="knjigeSearchStatus" class="search-status"></p>
+</div>
+
+<div id="knjigeResults">
+    <partial name="_KnjigaCards" model="Model" />
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            const $search = $('#knjigeSearch');
+            const $results = $('#knjigeResults');
+            const $count = $('#knjigeCount');
+            const $status = $('#knjigeSearchStatus');
+
+            let timer = null;
+            let activeRequest = null;
+
+            function formatBrojKnjiga(count) {
+                return count === 1 ? '1 oglas za knjigu' : count + ' oglasa za knjige';
+            }
+
+            function pretraziKnjige() {
+                const term = $search.val().trim();
+
+                if (activeRequest) {
+                    activeRequest.abort();
+                }
+
+                $status.text('Pretraživanje...');
+
+                activeRequest = $.ajax({
+                    url: '@Url.Action("Search", "Knjiga")',
+                    type: 'GET',
+                    data: { term: term },
+                    success: function (html) {
+                        $results.hide().html(html).fadeIn(200);
+
+                        const count = Number($results.find('.ajax-result-count').data('count'));
+
+                        $count.text(formatBrojKnjiga(count));
+
+                        if (term.length > 0) {
+                            $status.text('Prikazani rezultati za: "' + term + '"');
+                        } else {
+                            $status.text('');
+                        }
+                    },
+                    error: function (xhr, status) {
+                        if (status === 'abort') {
+                            return;
+                        }
+
+                        $results.html(
+                            '<div class="empty-state"><p>Dogodila se greška kod pretrage.</p></div>'
+                        );
+
+                        $status.text('');
+                    }
+                });
+            }
+
+            $search.on('input', function () {
+                clearTimeout(timer);
+
+                timer = setTimeout(function () {
+                    pretraziKnjige();
+                }, 250);
+            });
+        });
+    </script>
 }
