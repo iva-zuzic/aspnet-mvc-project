@@ -148,6 +148,8 @@ public class OglasController : Controller
             model.IgraZanr = oglas.DrustvenaIgra.Zanr;
         }
 
+        var grad = await _context.Gradovi.FirstOrDefaultAsync(g => g.Id == oglas.GradId);
+        ViewBag.GradNaziv = grad?.Naziv ?? "";
         PopuniDropdowne();
         return View(model);
     }
@@ -161,6 +163,8 @@ public class OglasController : Controller
         {
             model.KorisnikIme = (await _context.Korisnici
                 .FirstOrDefaultAsync(k => k.Id == model.KorisnikId))?.ImeIPrezime;
+            var grad = await _context.Gradovi.FirstOrDefaultAsync(g => g.Id == model.GradId);
+            ViewBag.GradNaziv = grad?.Naziv ?? "";
             PopuniDropdowne();
             return View(model);
         }

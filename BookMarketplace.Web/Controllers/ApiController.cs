@@ -1,0 +1,57 @@
+using BookMarketplace.DAL;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+namespace BookMarketplace.Controllers;
+
+[Route("api")]
+public class ApiController : Controller
+{
+    private readonly BookMarketplaceDbContext _context;
+
+    public ApiController(BookMarketplaceDbContext context)
+    {
+        _context = context;
+    }
+
+    [Route("gradovi")]
+    public async Task<IActionResult> SearchGradovi(string term)
+    {
+        if (string.IsNullOrWhiteSpace(term))
+            return Json(new List<object>());
+
+        var rezultati = await _context.Gradovi
+            .Where(g => g.Naziv.ToLower().StartsWith(term))
+            .OrderBy(g => g.Naziv)
+            .Take(10)
+            .Select(g => new 
+            { 
+                id = g.Id, 
+                naziv = g.Naziv, 
+                postanskiBroj = g.PostanskiBroj 
+            })
+            .ToListAsync();
+
+        return Json(rezultati);
+    }
+
+    [Route("korisnici")]
+    public async Task<IActionResult> SearchKorisnici(string term)
+    {
+        if (string.IsNullOrWhiteSpace(term))
+            return Json(new List<object>());
+
+        var rezultati = await _context.Korisnici
+            .Where(k => k.ImeIPrezime.ToLower().StartsWith(term))
+            .OrderBy(k => k.ImeIPrezime)
+            .Take(10)
+            .Select(k => new 
+            { 
+                id = k.Id, 
+                naziv = k.ImeIPrezime 
+            })
+            .ToListAsync();
+
+        return Json(rezultati);
+    }
+}

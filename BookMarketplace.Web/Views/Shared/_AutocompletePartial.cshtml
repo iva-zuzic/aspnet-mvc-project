@@ -1,0 +1,23 @@
+@* Parametri dolaze kroz ViewData *@
+@{
+    var fieldName = ViewData["FieldName"]?.ToString() ?? "Id";
+    var displayName = ViewData["DisplayName"]?.ToString() ?? "";
+    var apiUrl = ViewData["ApiUrl"]?.ToString() ?? "";
+    var selectedId = ViewData["SelectedId"]?.ToString() ?? "";
+    var selectedText = ViewData["SelectedText"]?.ToString() ?? "";
+    var placeholder = ViewData["Placeholder"]?.ToString() ?? "Počnite pisati...";
+    var uniqueId = fieldName.Replace(".", "_");
+}
+
+<div class="autocomplete-wrap" id="wrap-@uniqueId">
+    <input type="hidden" name="@fieldName" id="hidden-@uniqueId" value="@selectedId" />
+    <input type="text"
+           class="form-input autocomplete-input"
+           id="input-@uniqueId"
+           value="@selectedText"
+           placeholder="@placeholder"
+           autocomplete="off"
+           data-api-url="@apiUrl" />
+    <div class="autocomplete-results" id="results-@uniqueId"></div>
+    <span class="field-validation-valid validation-error" data-valmsg-for="@fieldName" data-valmsg-replace="true"></span>
+</div>

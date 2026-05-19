@@ -56,10 +56,14 @@
 
                 <div class="form-group">
                     <label asp-for="GradId" class="form-label"></label>
-                    <select asp-for="GradId" asp-items="ViewBag.Gradovi" class="form-input">
-                        <option value="">-- odaberite grad --</option>
-                    </select>
-                    <span asp-validation-for="GradId" class="validation-error"></span>
+                    @await Html.PartialAsync("_AutocompletePartial", null, new ViewDataDictionary(ViewData) {
+                        { "FieldName", "GradId" },
+                        { "DisplayName", "Grad" },
+                        { "ApiUrl", "/api/gradovi" },
+                        { "SelectedId", Model.GradId.ToString() },
+                        { "SelectedText", ViewBag.GradNaziv?.ToString() ?? "" },
+                        { "Placeholder", "Počnite pisati naziv grada..." }
+                    })
                 </div>
             </div>
 
