@@ -1362,3 +1362,89 @@ a.card:hover {
     font-size: 0.9rem;
     color: #8A6A50;
 }
+
+.nav-search {
+    position: relative;
+    min-width: 260px;
+}
+
+.nav-search-input {
+    width: 100%;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.nav-search-input::placeholder {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.nav-search-input:focus {
+    background-color: #fff;
+    color: #3D2010;
+    border-color: #D47A44;
+}
+
+.nav-search-results {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.4rem);
+    left: 0;
+    right: 0;
+    background-color: #fffaf3;
+    border: 1px solid #D4B896;
+    border-radius: 10px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+    z-index: 2000;
+}
+
+.nav-search-item {
+    display: block;
+    padding: 0.75rem 0.9rem;
+    text-decoration: none;
+    border-bottom: 1px solid #E8D5BD;
+    color: #3D2010;
+}
+
+.nav-search-item:last-child {
+    border-bottom: none;
+}
+
+.nav-search-item:hover {
+    background-color: #FAF0E4;
+}
+
+.nav-search-type {
+    display: inline-block;
+    margin-bottom: 0.25rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    background-color: #F0DDC8;
+    color: #6D4025;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.nav-search-title {
+    display: block;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.nav-search-subtitle {
+    display: block;
+    margin-top: 0.15rem;
+    color: #8A6A50;
+    font-size: 0.82rem;
+}
+
+.nav-search-empty {
+    padding: 0.8rem 0.9rem;
+    color: #8A6A50;
+    font-size: 0.9rem;
+}

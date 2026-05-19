@@ -23,6 +23,15 @@
                     <li><a asp-controller="Poruka" asp-action="Index">Inbox</a></li>
                     <li><a asp-controller="Oglas" asp-action="Create" class="nav-cta">+ Objavi oglas</a></li>
                 </ul>
+                <div class="nav-search">
+                    <input type="text"
+                        id="globalSearchInput"
+                        class="nav-search-input"
+                        placeholder="Pretraži knjige i igre..."
+                        autocomplete="off" />
+
+                    <div id="globalSearchResults" class="nav-search-results"></div>
+                </div>
                 <ul class="nav-auth">
                     <li><a href="#">Prijava</a></li>
                     <li><a href="#">Registracija</a></li>
@@ -44,6 +53,7 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/autocomplete.js" asp-append-version="true"></script>
+    <script src="~/js/global-search.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
 </body>
