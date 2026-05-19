@@ -1,0 +1,27 @@
+@model List<Grad>
+
+<div class="ajax-result-count" data-count="@Model.Count"></div>
+
+@if (Model.Count == 0)
+{
+    <div class="empty-state">
+        <p>Nema gradova koji odgovaraju pretrazi.</p>
+    </div>
+}
+else
+{
+    <div class="card-grid">
+        @foreach (var grad in Model)
+        {
+            <a class="card card-grad" asp-controller="Grad" asp-action="Details" asp-route-id="@grad.Id">
+                <div class="card-body">
+                    <span class="card-title">@grad.Naziv</span>
+                    <span class="card-subtitle">@grad.PostanskiBroj</span>
+                    <span class="card-count">
+                        @grad.Oglasi.Count @(grad.Oglasi.Count == 1 ? "oglas" : "oglasa")
+                    </span>
+                </div>
+            </a>
+        }
+    </div>
+}

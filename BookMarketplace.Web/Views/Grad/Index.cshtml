@@ -1,31 +1,91 @@
 @model List<Grad>
+
 @{
     ViewData["Title"] = "Gradovi";
 }
 
 <div class="page-heading">
     <h1>Gradovi</h1>
-    <p>@Model.Count gradova</p>
+    <p id="gradoviCount">@Model.Count @(Model.Count == 1 ? "grad" : "gradova")</p>
 </div>
 
-@if (Model.Count == 0)
-{
-    <div class="empty-state">
-        <p>Nema dostupnih gradova.</p>
-    </div>
-}
-else
-{
-    <div class="card-grid">
-        @foreach (var grad in Model)
-        {
-            <a class="card card-grad" asp-controller="Grad" asp-action="Details" asp-route-id="@grad.Id">
-                <div class="card-body">
-                    <span class="card-title">@grad.Naziv</span>
-                    <span class="card-subtitle">@grad.PostanskiBroj</span>
-                    <span class="card-count">@grad.Oglasi.Count @(grad.Oglasi.Count == 1 ? "oglas" : "oglasa")</span>
-                </div>
-            </a>
-        }
-    </div>
+<div class="form-group search-box">
+    <label for="gradSearch" class="form-label">Pretraži gradove</label>
+    <input type="text"
+           id="gradSearch"
+           class="form-input"
+           placeholder="Upišite naziv grada ili poštanski broj..."
+           autocomplete="off" />
+
+    <p id="gradSearchStatus" class="search-status"></p>
+</div>
+
+<div id="gradoviResults">
+    <partial name="_GradCards" model="Model" />
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            const $search = $('#gradSearch');
+            const $results = $('#gradoviResults');
+            const $count = $('#gradoviCount');
+            const $status = $('#gradSearchStatus');
+
+            let timer = null;
+            let activeRequest = null;
+
+            function formatBrojGradova(count) {
+                return count === 1 ? '1 grad' : count + ' gradova';
+            }
+
+            function pretraziGradove() {
+                const term = $search.val().trim();
+
+                if (activeRequest) {
+                    activeRequest.abort();
+                }
+
+                $status.text('Pretraživanje...');
+
+                activeRequest = $.ajax({
+                    url: '/gradovi/search',
+                    type: 'GET',
+                    data: { term: term },
+                    success: function (html) {
+                        $results.hide().html(html).fadeIn(200);
+
+                        const count = Number($results.find('.ajax-result-count').data('count'));
+
+                        $count.text(formatBrojGradova(count));
+
+                        if (term.length > 0) {
+                            $status.text('Prikazani rezultati za: "' + term + '"');
+                        } else {
+                            $status.text('');
+                        }
+                    },
+                    error: function (xhr, status) {
+                        if (status === 'abort') {
+                            return;
+                        }
+
+                        $results.html(
+                            '<div class="empty-state"><p>Dogodila se greška kod pretrage.</p></div>'
+                        );
+
+                        $status.text('');
+                    }
+                });
+            }
+
+            $search.on('input', function () {
+                clearTimeout(timer);
+
+                timer = setTimeout(function () {
+                    pretraziGradove();
+                }, 250);
+            });
+        });
+    </script>
 }

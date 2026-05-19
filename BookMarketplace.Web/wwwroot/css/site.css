@@ -1351,3 +1351,14 @@ a.card:hover {
     cursor: default;
 }
 
+.search-box {
+    max-width: 520px;
+    margin: 1.5rem 0 2rem;
+}
+
+.search-status {
+    min-height: 1.2rem;
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+    color: #8A6A50;
+}
