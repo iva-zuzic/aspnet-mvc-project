@@ -15,14 +15,14 @@
                     <span class="nav-brand-icon" aria-hidden="true">&#9783;</span>
                     Books &amp; Games
                 </a>
+
                 <ul class="nav-links">
-                    <li><a asp-controller="Home" asp-action="Index">Po&#269;etna</a></li>
-                    <li><a asp-controller="Grad" asp-action="Index">Gradovi</a></li>
                     <li><a asp-controller="Knjiga" asp-action="Index">Knjige</a></li>
                     <li><a asp-controller="DrustvenaIgra" asp-action="Index">Društvene igre</a></li>
-                    <li><a asp-controller="Poruka" asp-action="Index">Inbox</a></li>
-                    <li><a asp-controller="Oglas" asp-action="Create" class="nav-cta">+ Objavi oglas</a></li>
+                    <li><a asp-controller="Grad" asp-action="Index">Gradovi</a></li>
+                    <li><a asp-controller="Poruka" asp-action="Index">Moj račun</a></li>
                 </ul>
+
                 <div class="nav-search">
                     <input type="text"
                         id="globalSearchInput"
@@ -32,10 +32,10 @@
 
                     <div id="globalSearchResults" class="nav-search-results"></div>
                 </div>
-                <ul class="nav-auth">
-                    <li><a href="#">Prijava</a></li>
-                    <li><a href="#">Registracija</a></li>
-                </ul>
+
+                <a asp-controller="Oglas" asp-action="Create" class="nav-cta">
+                    + Objavi oglas
+                </a>
             </div>
         </nav>
     </header>
