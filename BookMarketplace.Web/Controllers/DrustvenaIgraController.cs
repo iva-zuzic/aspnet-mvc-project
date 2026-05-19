@@ -42,5 +42,30 @@ namespace BookMarketplace.Controllers
 
             return View(oglas);
         }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> Search(string? term)
+        {
+            var query = _context.Oglasi
+                .Include(o => o.DrustvenaIgra)
+                .Include(o => o.Grad)
+                .Where(o => o.TipOglasa == TipOglasa.DrustvenaIgra)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(term))
+            {
+                var searchTerm = term.Trim().ToLower();
+
+                query = query.Where(o =>
+                    o.DrustvenaIgra != null &&
+                    o.DrustvenaIgra.Naziv.ToLower().StartsWith(searchTerm));
+            }
+
+            var igre = await query
+                .OrderBy(o => o.DrustvenaIgra!.Naziv)
+                .ToListAsync();
+
+            return PartialView("_IgraCards", igre);
+        }
     }
 }
