@@ -42,9 +42,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="DatumObjave" class="form-label"></label>
-                    <input asp-for="DatumObjave" type="date" class="form-input" />
-                    <span asp-validation-for="DatumObjave" class="validation-error"></span>
+                    <label asp-for="DatumIsteka" class="form-label"></label>
+
+                    @await Html.PartialAsync("_DateTimePickerPartial", null,
+                        new ViewDataDictionary(ViewData)
+                        {
+                            { "FieldName", "DatumIsteka" },
+                            { "SelectedValue", Model.DatumIsteka }
+                        })
                 </div>
             </div>
 

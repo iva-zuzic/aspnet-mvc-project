@@ -11,6 +11,7 @@ public class Oglas
     public string Opis { get; set; } = string.Empty;
     public decimal Cijena { get; set; }
     public DateTime DatumObjave { get; set; }
+    public DateTime? DatumIsteka { get; set; }
     public DateTime? DatumIzmjene { get; set; }
     public StatusOglasa Status { get; set; }
     public TipOglasa TipOglasa { get; set; }

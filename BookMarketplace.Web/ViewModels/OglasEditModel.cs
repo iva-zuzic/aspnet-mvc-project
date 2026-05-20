@@ -31,10 +31,10 @@ public class OglasEditModel : IValidatableObject
     [Display(Name = "Cijena (€)")]
     public decimal Cijena { get; set; }
 
-    [Required(ErrorMessage = "Datum objave je obavezan.")]
-    [Display(Name = "Datum objave")]
-    [DataType(DataType.Date)]
-    public DateTime DatumObjave { get; set; }
+    [Required(ErrorMessage = "Datum i vrijeme isteka oglasa su obavezni.")]
+    [Display(Name = "Oglas traje do")]
+    [DataType(DataType.DateTime)]
+    public DateTime? DatumIsteka { get; set; }
 
     [Required(ErrorMessage = "Grad je obavezan.")]
     [Display(Name = "Grad")]
@@ -100,6 +100,19 @@ public class OglasEditModel : IValidatableObject
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
+        if (DatumIsteka == null)
+        {
+            yield return new ValidationResult(
+                "Datum i vrijeme isteka oglasa su obavezni.",
+                new[] { nameof(DatumIsteka) });
+        }
+        else if (DatumIsteka <= DateTime.Now)
+        {
+            yield return new ValidationResult(
+                "Datum isteka oglasa mora biti u budućnosti.",
+                new[] { nameof(DatumIsteka) });
+        }
+
         if (TipOglasa == TipOglasa.Knjiga)
         {
             if (string.IsNullOrWhiteSpace(KnjigaNaziv))

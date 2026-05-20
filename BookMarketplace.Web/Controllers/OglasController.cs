@@ -20,7 +20,7 @@ public class OglasController : Controller
     {
         var model = new OglasCreateModel
         {
-            DatumObjave = DateTime.Today
+            DatumIsteka = DateTime.Now.AddDays(30)
         };
 
         PopuniDropdowne();
@@ -42,7 +42,8 @@ public class OglasController : Controller
             Naslov = model.Naslov.Trim(),
             Opis = model.Opis.Trim(),
             Cijena = model.Cijena,
-            DatumObjave = model.DatumObjave,
+            DatumObjave = DateTime.Now,
+            DatumIsteka = model.DatumIsteka,
             Status = StatusOglasa.Aktivan,
             TipOglasa = model.TipOglasa,
             StanjeArtikla = model.StanjeArtikla,
@@ -119,7 +120,7 @@ public class OglasController : Controller
             Naslov = oglas.Naslov,
             Opis = oglas.Opis,
             Cijena = oglas.Cijena,
-            DatumObjave = oglas.DatumObjave,
+            DatumIsteka = oglas.DatumIsteka ?? DateTime.Now.AddDays(30),
             TipOglasa = oglas.TipOglasa,
             StanjeArtikla = oglas.StanjeArtikla,
             KorisnikId = oglas.KorisnikId,
@@ -180,7 +181,7 @@ public class OglasController : Controller
         oglas.Naslov = model.Naslov.Trim();
         oglas.Opis = model.Opis.Trim();
         oglas.Cijena = model.Cijena;
-        oglas.DatumObjave = model.DatumObjave;
+        oglas.DatumIsteka = model.DatumIsteka;
         oglas.StanjeArtikla = model.StanjeArtikla;
         oglas.GradId = model.GradId;
         oglas.DatumIzmjene = DateTime.Now;

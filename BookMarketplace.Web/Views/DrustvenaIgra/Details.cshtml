@@ -55,6 +55,16 @@
 
                 <span class="detail-label">Prodava&#269;</span>
                 <span class="detail-value">@Model.Korisnik?.ImeIPrezime</span>
+
+                <span class="detail-label">Datum objave</span>
+                <span class="detail-value">@Model.DatumObjave.ToString("dd.MM.yyyy. HH:mm")</span>
+
+                <span class="detail-label">Oglas istječe</span>
+                <span class="detail-value">
+                    @(Model.DatumIsteka.HasValue 
+                        ? Model.DatumIsteka.Value.ToString("dd.MM.yyyy. HH:mm") 
+                        : "Nije navedeno")
+                </span>
             </div>
 
             <div class="detail-actions">

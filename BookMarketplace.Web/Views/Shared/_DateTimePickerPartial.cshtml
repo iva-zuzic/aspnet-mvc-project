@@ -1,0 +1,39 @@
+@using System.Globalization
+
+@{
+    var fieldName = ViewData["FieldName"]?.ToString() ?? "DatumIsteka";
+    var selectedValue = ViewData["SelectedValue"];
+
+    DateTime? selectedDate = null;
+
+    if (selectedValue is DateTime date)
+    {
+        selectedDate = date;
+    }
+
+    var uniqueId = fieldName.Replace(".", "_");
+
+    var isoValue = selectedDate.HasValue
+        ? selectedDate.Value.ToString("yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture)
+        : "";
+}
+
+<div class="datetime-picker" id="datetime-wrap-@uniqueId">
+    <input type="hidden"
+           name="@fieldName"
+           id="datetime-hidden-@uniqueId"
+           value="@isoValue" />
+
+    <input type="text"
+           class="form-input datetime-picker-input"
+           id="datetime-display-@uniqueId"
+           data-hidden-id="datetime-hidden-@uniqueId"
+           placeholder="dd.MM.yyyy. HH:mm"
+           autocomplete="off" />
+
+    <small class="datetime-format-hint"></small>
+
+    <span class="validation-error datetime-error"
+          data-valmsg-for="@fieldName"
+          data-valmsg-replace="true"></span>
+</div>
