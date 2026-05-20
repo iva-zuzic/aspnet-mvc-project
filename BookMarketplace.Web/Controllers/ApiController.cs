@@ -21,8 +21,10 @@ public class ApiController : Controller
         if (string.IsNullOrWhiteSpace(term))
             return Json(new List<object>());
 
+        var searchTerm = term.Trim().ToLower();
+
         var rezultati = await _context.Gradovi
-            .Where(g => g.Naziv.ToLower().StartsWith(term))
+            .Where(g => g.Naziv.ToLower().StartsWith(searchTerm))
             .OrderBy(g => g.Naziv)
             .Take(10)
             .Select(g => new 
@@ -42,8 +44,11 @@ public class ApiController : Controller
         if (string.IsNullOrWhiteSpace(term))
             return Json(new List<object>());
 
+        var searchTerm = term.Trim().ToLower();
+
         var rezultati = await _context.Korisnici
-            .Where(k => k.ImeIPrezime.ToLower().StartsWith(term))
+            .Where(k => k.DeletedAt == null)
+            .Where(k => k.ImeIPrezime.ToLower().StartsWith(searchTerm))
             .OrderBy(k => k.ImeIPrezime)
             .Take(10)
             .Select(k => new 
@@ -65,8 +70,12 @@ public class ApiController : Controller
         var searchTerm = term.Trim().ToLower();
 
         var knjige = await _context.Oglasi
-            .Where(o => o.TipOglasa == TipOglasa.Knjiga)
+            .Include(o => o.Korisnik)
             .Include(o => o.Knjiga)
+            .Where(o =>
+                o.TipOglasa == TipOglasa.Knjiga &&
+                o.Status == StatusOglasa.Aktivan &&
+                o.Korisnik.DeletedAt == null)
             .Where(o =>
                 o.Knjiga != null &&
                 (
@@ -86,8 +95,12 @@ public class ApiController : Controller
             .ToListAsync();
 
         var igre = await _context.Oglasi
-            .Where(o => o.TipOglasa == TipOglasa.DrustvenaIgra)
+            .Include(o => o.Korisnik)
             .Include(o => o.DrustvenaIgra)
+            .Where(o =>
+                o.TipOglasa == TipOglasa.DrustvenaIgra &&
+                o.Status == StatusOglasa.Aktivan &&
+                o.Korisnik.DeletedAt == null)
             .Where(o =>
                 o.DrustvenaIgra != null &&
                 o.DrustvenaIgra.Naziv.ToLower().StartsWith(searchTerm))

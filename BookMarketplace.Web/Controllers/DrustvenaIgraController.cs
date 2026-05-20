@@ -35,7 +35,10 @@ namespace BookMarketplace.Controllers
                 .Include(o => o.DrustvenaIgra)
                 .Include(o => o.Grad)
                 .Include(o => o.Korisnik)
-                .FirstOrDefaultAsync(o => o.Id == id && o.TipOglasa == TipOglasa.DrustvenaIgra);
+                .FirstOrDefaultAsync(o =>
+                    o.Id == id &&
+                    o.TipOglasa == TipOglasa.DrustvenaIgra &&
+                    o.Status == StatusOglasa.Aktivan);
 
             if (oglas == null)
                 return NotFound();
@@ -49,7 +52,11 @@ namespace BookMarketplace.Controllers
             var query = _context.Oglasi
                 .Include(o => o.DrustvenaIgra)
                 .Include(o => o.Grad)
-                .Where(o => o.TipOglasa == TipOglasa.DrustvenaIgra)
+                .Include(o => o.Korisnik)
+                .Where(o =>
+                    o.TipOglasa == TipOglasa.DrustvenaIgra &&
+                    o.Status == StatusOglasa.Aktivan &&
+                    o.Korisnik.DeletedAt == null)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(term))

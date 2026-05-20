@@ -19,6 +19,7 @@ public class GradController : Controller
     public async Task<IActionResult> Index()
     {
         var gradovi = await _context.Gradovi
+            .Include(g => g.Oglasi)
             .OrderBy(g => g.Naziv)
             .ToListAsync();
 
