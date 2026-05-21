@@ -169,18 +169,14 @@ public class OglasCreateModel : IValidatableObject
                     new[] { nameof(IgraZanr) });
 
             if (IgraMinimalnaDob == null)
-            {
                 yield return new ValidationResult(
                     "Minimalna dob je obavezna.",
                     new[] { nameof(IgraMinimalnaDob) });
-            }
 
             if (IgraTrajanjeMins == null)
-            {
                 yield return new ValidationResult(
                     "Trajanje igre je obavezno.",
                     new[] { nameof(IgraTrajanjeMins) });
-            }
         }
     }
 }

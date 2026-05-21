@@ -129,6 +129,16 @@ public class OglasEditModel : IValidatableObject
                 yield return new ValidationResult(
                     "Žanr knjige je obavezan.", 
                     new[] { nameof(KnjigaZanr) });
+
+            if (KnjigaGodinaIzdanja == null)
+                yield return new ValidationResult(
+                    "Godina izdanja je obavezna.",
+                    new[] { nameof(KnjigaGodinaIzdanja) });
+
+            if (KnjigaBrojStrana == null)
+                yield return new ValidationResult(
+                    "Broj strana je obavezan.",
+                    new[] { nameof(KnjigaBrojStrana) });
         }
 
         if (TipOglasa == TipOglasa.DrustvenaIgra)
@@ -157,6 +167,16 @@ public class OglasEditModel : IValidatableObject
                 yield return new ValidationResult(
                     "Žanr igre je obavezan.", 
                     new[] { nameof(IgraZanr) });
+
+            if (IgraMinimalnaDob == null)
+                yield return new ValidationResult(
+                    "Minimalna dob je obavezna.",
+                    new[] { nameof(IgraMinimalnaDob) });
+
+            if (IgraTrajanjeMins == null)
+                yield return new ValidationResult(
+                    "Trajanje igre je obavezno.",
+                    new[] { nameof(IgraTrajanjeMins) });
         }
     }
 }
