@@ -116,31 +116,47 @@ public class OglasEditModel : IValidatableObject
         if (TipOglasa == TipOglasa.Knjiga)
         {
             if (string.IsNullOrWhiteSpace(KnjigaNaziv))
-                yield return new ValidationResult("Naziv knjige je obavezan.", new[] { nameof(KnjigaNaziv) });
+                yield return new ValidationResult(
+                    "Naziv knjige je obavezan.", 
+                    new[] { nameof(KnjigaNaziv) });
 
             if (string.IsNullOrWhiteSpace(KnjigaAutor))
-                yield return new ValidationResult("Autor je obavezan.", new[] { nameof(KnjigaAutor) });
+                yield return new ValidationResult(
+                    "Autor je obavezan.", 
+                    new[] { nameof(KnjigaAutor) });
 
             if (KnjigaZanr == null)
-                yield return new ValidationResult("Žanr knjige je obavezan.", new[] { nameof(KnjigaZanr) });
+                yield return new ValidationResult(
+                    "Žanr knjige je obavezan.", 
+                    new[] { nameof(KnjigaZanr) });
         }
 
         if (TipOglasa == TipOglasa.DrustvenaIgra)
         {
             if (string.IsNullOrWhiteSpace(IgraNaziv))
-                yield return new ValidationResult("Naziv igre je obavezan.", new[] { nameof(IgraNaziv) });
+                yield return new ValidationResult(
+                    "Naziv igre je obavezan.", 
+                    new[] { nameof(IgraNaziv) });
 
             if (IgraMinBrojIgraca == null)
-                yield return new ValidationResult("Minimalni broj igrača je obavezan.", new[] { nameof(IgraMinBrojIgraca) });
+                yield return new ValidationResult(
+                    "Minimalni broj igrača je obavezan.", 
+                    new[] { nameof(IgraMinBrojIgraca) });
 
             if (IgraMaxBrojIgraca == null)
-                yield return new ValidationResult("Maksimalni broj igrača je obavezan.", new[] { nameof(IgraMaxBrojIgraca) });
+                yield return new ValidationResult(
+                    "Maksimalni broj igrača je obavezan.", 
+                    new[] { nameof(IgraMaxBrojIgraca) });
 
             if (IgraMinBrojIgraca > IgraMaxBrojIgraca)
-                yield return new ValidationResult("Minimalni broj igrača ne može biti veći od maksimalnog.", new[] { nameof(IgraMinBrojIgraca) });
+                yield return new ValidationResult(
+                    "Minimalni broj igrača ne može biti veći od maksimalnog.", 
+                    new[] { nameof(IgraMinBrojIgraca) });
 
             if (IgraZanr == null)
-                yield return new ValidationResult("Žanr igre je obavezan.", new[] { nameof(IgraZanr) });
+                yield return new ValidationResult(
+                    "Žanr igre je obavezan.", 
+                    new[] { nameof(IgraZanr) });
         }
     }
 }

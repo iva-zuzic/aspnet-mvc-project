@@ -166,3 +166,61 @@ $(function () {
         });
     });
 });
+
+$(function () {
+    $('.localized-datetime').each(function () {
+        const $element = $(this);
+        const isoValue = $element.data('iso');
+
+        if (!isoValue) {
+            $element.text('Nije navedeno');
+            return;
+        }
+
+        const language = navigator.language ? navigator.language.toLowerCase() : 'hr';
+        const isCroatian = language.startsWith('hr');
+
+        function pad(value) {
+            return value.toString().padStart(2, '0');
+        }
+
+        function parseIsoLocal(value) {
+            const match = value.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
+
+            if (!match) {
+                return null;
+            }
+
+            return new Date(
+                Number(match[1]),
+                Number(match[2]) - 1,
+                Number(match[3]),
+                Number(match[4]),
+                Number(match[5])
+            );
+        }
+
+        function formatForDisplay(date) {
+            const day = pad(date.getDate());
+            const month = pad(date.getMonth() + 1);
+            const year = date.getFullYear();
+            const hours = pad(date.getHours());
+            const minutes = pad(date.getMinutes());
+
+            if (isCroatian) {
+                return day + '.' + month + '.' + year + '. ' + hours + ':' + minutes;
+            }
+
+            return month + '/' + day + '/' + year + ' ' + hours + ':' + minutes;
+        }
+
+        const parsedDate = parseIsoLocal(isoValue);
+
+        if (parsedDate === null) {
+            $element.text('Nije navedeno');
+            return;
+        }
+
+        $element.text(formatForDisplay(parsedDate));
+    });
+});

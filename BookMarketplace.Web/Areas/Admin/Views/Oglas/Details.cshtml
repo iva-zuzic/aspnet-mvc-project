@@ -1,3 +1,4 @@
+@using System.Globalization
 @model Oglas
 
 @{
@@ -57,12 +58,30 @@
                 <dd class="price">@Model.Cijena.ToString("N2") €</dd>
 
                 <dt>Datum objave</dt>
-                <dd>@Model.DatumObjave.ToString("dd.MM.yyyy HH:mm")</dd>
+                <dd>
+                    <span class="localized-datetime"
+                        data-iso="@Model.DatumObjave.ToString("yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture)">
+                        @Model.DatumObjave.ToString("dd.MM.yyyy. HH:mm")
+                    </span>
+                </dd>
+
+                <dt>Oglas istječe</dt>
+                <dd>
+                    <span class="localized-datetime"
+                        data-iso="@(Model.DatumIsteka.HasValue ? Model.DatumIsteka.Value.ToString("yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture) : "")">
+                        @(Model.DatumIsteka.HasValue ? Model.DatumIsteka.Value.ToString("dd.MM.yyyy. HH:mm") : "Nije navedeno")
+                    </span>
+                </dd>
 
                 @if (Model.DatumIzmjene.HasValue)
                 {
                     <dt>Posljednja izmjena</dt>
-                    <dd>@Model.DatumIzmjene.Value.ToString("dd.MM.yyyy HH:mm")</dd>
+                    <dd>
+                        <span class="localized-datetime"
+                            data-iso="@Model.DatumIzmjene.Value.ToString("yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture)">
+                            @Model.DatumIzmjene.Value.ToString("dd.MM.yyyy. HH:mm")
+                        </span>
+                    </dd>
                 }
             </dl>
 
