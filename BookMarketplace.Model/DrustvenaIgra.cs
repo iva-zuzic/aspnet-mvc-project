@@ -10,7 +10,7 @@ public class DrustvenaIgra
     public string Naziv { get; set; } = string.Empty;
     public int MinBrojIgraca { get; set; }
     public int MaxBrojIgraca { get; set; }
-    public int MinimalnasDob { get; set; }
+    public int MinimalnaDob { get; set; }
     public int TrajanjeMins { get; set; }
     public ZanrIgre Zanr { get; set; }
 

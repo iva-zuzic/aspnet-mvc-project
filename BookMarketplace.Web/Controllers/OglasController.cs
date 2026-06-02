@@ -72,7 +72,7 @@ public class OglasController : Controller
                 Naziv = model.IgraNaziv?.Trim() ?? string.Empty,
                 MinBrojIgraca = model.IgraMinBrojIgraca ?? 1,
                 MaxBrojIgraca = model.IgraMaxBrojIgraca ?? 1,
-                MinimalnasDob = model.IgraMinimalnaDob ?? 0,
+                MinimalnaDob = model.IgraMinimalnaDob ?? 0,
                 TrajanjeMins = model.IgraTrajanjeMins ?? 0,
                 Zanr = model.IgraZanr ?? ZanrIgre.Zabavna
             };
@@ -144,7 +144,7 @@ public class OglasController : Controller
             model.IgraNaziv = oglas.DrustvenaIgra.Naziv;
             model.IgraMinBrojIgraca = oglas.DrustvenaIgra.MinBrojIgraca;
             model.IgraMaxBrojIgraca = oglas.DrustvenaIgra.MaxBrojIgraca;
-            model.IgraMinimalnaDob = oglas.DrustvenaIgra.MinimalnasDob;
+            model.IgraMinimalnaDob = oglas.DrustvenaIgra.MinimalnaDob;
             model.IgraTrajanjeMins = oglas.DrustvenaIgra.TrajanjeMins;
             model.IgraZanr = oglas.DrustvenaIgra.Zanr;
         }
@@ -202,7 +202,7 @@ public class OglasController : Controller
             oglas.DrustvenaIgra.Naziv = model.IgraNaziv?.Trim() ?? string.Empty;
             oglas.DrustvenaIgra.MinBrojIgraca = model.IgraMinBrojIgraca ?? 1;
             oglas.DrustvenaIgra.MaxBrojIgraca = model.IgraMaxBrojIgraca ?? 1;
-            oglas.DrustvenaIgra.MinimalnasDob = model.IgraMinimalnaDob ?? 0;
+            oglas.DrustvenaIgra.MinimalnaDob = model.IgraMinimalnaDob ?? 0;
             oglas.DrustvenaIgra.TrajanjeMins = model.IgraTrajanjeMins ?? 0;
             oglas.DrustvenaIgra.Zanr = model.IgraZanr ?? ZanrIgre.Zabavna;
         }

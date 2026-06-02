@@ -19,7 +19,7 @@ namespace BookMarketplace.MockRepositories
                     Naziv = "Catan - Osnovna igra",
                     MinBrojIgraca = 3,
                     MaxBrojIgraca = 4,
-                    MinimalnasDob = 10,
+                    MinimalnaDob = 10,
                     TrajanjeMins = 75,
                     Zanr = ZanrIgre.Strategija,
                     OglasId = 2
@@ -30,7 +30,7 @@ namespace BookMarketplace.MockRepositories
                     Naziv = "Ticket to Ride: Europa",
                     MinBrojIgraca = 2,
                     MaxBrojIgraca = 5,
-                    MinimalnasDob = 8,
+                    MinimalnaDob = 8,
                     TrajanjeMins = 60,
                     Zanr = ZanrIgre.Strategija,
                     OglasId = 4
@@ -41,7 +41,7 @@ namespace BookMarketplace.MockRepositories
                     Naziv = "Wingspan",
                     MinBrojIgraca = 1,
                     MaxBrojIgraca = 5,
-                    MinimalnasDob = 10,
+                    MinimalnaDob = 10,
                     TrajanjeMins = 90,
                     Zanr = ZanrIgre.Strategija,
                     OglasId = 6
@@ -52,7 +52,7 @@ namespace BookMarketplace.MockRepositories
                     Naziv = "Dixit",
                     MinBrojIgraca = 3,
                     MaxBrojIgraca = 6,
-                    MinimalnasDob = 8,
+                    MinimalnaDob = 8,
                     TrajanjeMins = 30,
                     Zanr = ZanrIgre.Zabavna,
                     OglasId = 8
@@ -63,7 +63,7 @@ namespace BookMarketplace.MockRepositories
                     Naziv = "Pandemic",
                     MinBrojIgraca = 2,
                     MaxBrojIgraca = 4,
-                    MinimalnasDob = 8,
+                    MinimalnaDob = 8,
                     TrajanjeMins = 45,
                     Zanr = ZanrIgre.Kooperativna,
                     OglasId = 10
@@ -74,7 +74,7 @@ namespace BookMarketplace.MockRepositories
                     Naziv = "7 Wonders",
                     MinBrojIgraca = 2,
                     MaxBrojIgraca = 7,
-                    MinimalnasDob = 10,
+                    MinimalnaDob = 10,
                     TrajanjeMins = 30,
                     Zanr = ZanrIgre.Strategija,
                     OglasId = 16
@@ -85,7 +85,7 @@ namespace BookMarketplace.MockRepositories
                     Naziv = "Codenames",
                     MinBrojIgraca = 2,
                     MaxBrojIgraca = 8,
-                    MinimalnasDob = 10,
+                    MinimalnaDob = 10,
                     TrajanjeMins = 15,
                     Zanr = ZanrIgre.Zabavna,
                     OglasId = 17
@@ -96,7 +96,7 @@ namespace BookMarketplace.MockRepositories
                     Naziv = "Azul",
                     MinBrojIgraca = 2,
                     MaxBrojIgraca = 4,
-                    MinimalnasDob = 8,
+                    MinimalnaDob = 8,
                     TrajanjeMins = 45,
                     Zanr = ZanrIgre.Apstraktna,
                     OglasId = 18
@@ -107,7 +107,7 @@ namespace BookMarketplace.MockRepositories
                     Naziv = "Exploding Kittens",
                     MinBrojIgraca = 2,
                     MaxBrojIgraca = 5,
-                    MinimalnasDob = 7,
+                    MinimalnaDob = 7,
                     TrajanjeMins = 15,
                     Zanr = ZanrIgre.Zabavna,
                     OglasId = 19
@@ -118,7 +118,7 @@ namespace BookMarketplace.MockRepositories
                     Naziv = "Dobble",
                     MinBrojIgraca = 2,
                     MaxBrojIgraca = 8,
-                    MinimalnasDob = 6,
+                    MinimalnaDob = 6,
                     TrajanjeMins = 10,
                     Zanr = ZanrIgre.Zabavna,
                     OglasId = 20

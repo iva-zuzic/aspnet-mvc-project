@@ -175,26 +175,26 @@ public class BookMarketplaceDbContext : DbContext
         );
 
         modelBuilder.Entity<DrustvenaIgra>().HasData(
-            new DrustvenaIgra { Id = 1, Naziv = "Catan - Osnovna igra", MinBrojIgraca = 3, MaxBrojIgraca = 4, MinimalnasDob = 10, TrajanjeMins = 75, Zanr = ZanrIgre.Strategija, OglasId = 2 },
-            new DrustvenaIgra { Id = 2, Naziv = "Ticket to Ride: Europa", MinBrojIgraca = 2, MaxBrojIgraca = 5, MinimalnasDob = 8, TrajanjeMins = 60, Zanr = ZanrIgre.Strategija, OglasId = 4 },
-            new DrustvenaIgra { Id = 3, Naziv = "Wingspan", MinBrojIgraca = 1, MaxBrojIgraca = 5, MinimalnasDob = 10, TrajanjeMins = 90, Zanr = ZanrIgre.Strategija, OglasId = 6 },
-            new DrustvenaIgra { Id = 4, Naziv = "Dixit", MinBrojIgraca = 3, MaxBrojIgraca = 6, MinimalnasDob = 8, TrajanjeMins = 30, Zanr = ZanrIgre.Zabavna, OglasId = 8 },
-            new DrustvenaIgra { Id = 5, Naziv = "Pandemic", MinBrojIgraca = 2, MaxBrojIgraca = 4, MinimalnasDob = 8, TrajanjeMins = 45, Zanr = ZanrIgre.Kooperativna, OglasId = 10 },
-            new DrustvenaIgra { Id = 6, Naziv = "7 Wonders", MinBrojIgraca = 2, MaxBrojIgraca = 7, MinimalnasDob = 10, TrajanjeMins = 30, Zanr = ZanrIgre.Strategija, OglasId = 16 },
-            new DrustvenaIgra { Id = 7, Naziv = "Codenames", MinBrojIgraca = 2, MaxBrojIgraca = 8, MinimalnasDob = 10, TrajanjeMins = 15, Zanr = ZanrIgre.Zabavna, OglasId = 17 },
-            new DrustvenaIgra { Id = 8, Naziv = "Azul", MinBrojIgraca = 2, MaxBrojIgraca = 4, MinimalnasDob = 8, TrajanjeMins = 45, Zanr = ZanrIgre.Apstraktna, OglasId = 18 },
-            new DrustvenaIgra { Id = 9, Naziv = "Exploding Kittens", MinBrojIgraca = 2, MaxBrojIgraca = 5, MinimalnasDob = 7, TrajanjeMins = 15, Zanr = ZanrIgre.Zabavna, OglasId = 19 },
-            new DrustvenaIgra { Id = 10, Naziv = "Dobble", MinBrojIgraca = 2, MaxBrojIgraca = 8, MinimalnasDob = 6, TrajanjeMins = 10, Zanr = ZanrIgre.Zabavna, OglasId = 20 },
-            new DrustvenaIgra { Id = 11, Naziv = "Saboteur", MinBrojIgraca = 3, MaxBrojIgraca = 10, MinimalnasDob = 8, TrajanjeMins = 30, Zanr = ZanrIgre.Zabavna, OglasId = 31 },
-            new DrustvenaIgra { Id = 12, Naziv = "Carcassonne", MinBrojIgraca = 2, MaxBrojIgraca = 5, MinimalnasDob = 7, TrajanjeMins = 45, Zanr = ZanrIgre.Strategija, OglasId = 32 },
-            new DrustvenaIgra { Id = 13, Naziv = "Splendor", MinBrojIgraca = 2, MaxBrojIgraca = 4, MinimalnasDob = 10, TrajanjeMins = 30, Zanr = ZanrIgre.Strategija, OglasId = 33 },
-            new DrustvenaIgra { Id = 14, Naziv = "Monopoly - Zagreb Edition", MinBrojIgraca = 2, MaxBrojIgraca = 6, MinimalnasDob = 8, TrajanjeMins = 120, Zanr = ZanrIgre.Zabavna, OglasId = 34 },
-            new DrustvenaIgra { Id = 15, Naziv = "Uno", MinBrojIgraca = 2, MaxBrojIgraca = 10, MinimalnasDob = 7, TrajanjeMins = 20, Zanr = ZanrIgre.Zabavna, OglasId = 35 },
-            new DrustvenaIgra { Id = 16, Naziv = "Scrabble - Hrvatski", MinBrojIgraca = 2, MaxBrojIgraca = 4, MinimalnasDob = 10, TrajanjeMins = 60, Zanr = ZanrIgre.Edukativna, OglasId = 36 },
-            new DrustvenaIgra { Id = 17, Naziv = "Risk", MinBrojIgraca = 2, MaxBrojIgraca = 6, MinimalnasDob = 10, TrajanjeMins = 180, Zanr = ZanrIgre.Strategija, OglasId = 37 },
-            new DrustvenaIgra { Id = 18, Naziv = "Hanabi", MinBrojIgraca = 2, MaxBrojIgraca = 5, MinimalnasDob = 8, TrajanjeMins = 25, Zanr = ZanrIgre.Kooperativna, OglasId = 38 },
-            new DrustvenaIgra { Id = 19, Naziv = "Kingdomino", MinBrojIgraca = 2, MaxBrojIgraca = 4, MinimalnasDob = 8, TrajanjeMins = 20, Zanr = ZanrIgre.Strategija, OglasId = 39 },
-            new DrustvenaIgra { Id = 20, Naziv = "Trivial Pursuit", MinBrojIgraca = 2, MaxBrojIgraca = 6, MinimalnasDob = 12, TrajanjeMins = 60, Zanr = ZanrIgre.Edukativna, OglasId = 40 }
+            new DrustvenaIgra { Id = 1, Naziv = "Catan - Osnovna igra", MinBrojIgraca = 3, MaxBrojIgraca = 4, MinimalnaDob = 10, TrajanjeMins = 75, Zanr = ZanrIgre.Strategija, OglasId = 2 },
+            new DrustvenaIgra { Id = 2, Naziv = "Ticket to Ride: Europa", MinBrojIgraca = 2, MaxBrojIgraca = 5, MinimalnaDob = 8, TrajanjeMins = 60, Zanr = ZanrIgre.Strategija, OglasId = 4 },
+            new DrustvenaIgra { Id = 3, Naziv = "Wingspan", MinBrojIgraca = 1, MaxBrojIgraca = 5, MinimalnaDob = 10, TrajanjeMins = 90, Zanr = ZanrIgre.Strategija, OglasId = 6 },
+            new DrustvenaIgra { Id = 4, Naziv = "Dixit", MinBrojIgraca = 3, MaxBrojIgraca = 6, MinimalnaDob = 8, TrajanjeMins = 30, Zanr = ZanrIgre.Zabavna, OglasId = 8 },
+            new DrustvenaIgra { Id = 5, Naziv = "Pandemic", MinBrojIgraca = 2, MaxBrojIgraca = 4, MinimalnaDob = 8, TrajanjeMins = 45, Zanr = ZanrIgre.Kooperativna, OglasId = 10 },
+            new DrustvenaIgra { Id = 6, Naziv = "7 Wonders", MinBrojIgraca = 2, MaxBrojIgraca = 7, MinimalnaDob = 10, TrajanjeMins = 30, Zanr = ZanrIgre.Strategija, OglasId = 16 },
+            new DrustvenaIgra { Id = 7, Naziv = "Codenames", MinBrojIgraca = 2, MaxBrojIgraca = 8, MinimalnaDob = 10, TrajanjeMins = 15, Zanr = ZanrIgre.Zabavna, OglasId = 17 },
+            new DrustvenaIgra { Id = 8, Naziv = "Azul", MinBrojIgraca = 2, MaxBrojIgraca = 4, MinimalnaDob = 8, TrajanjeMins = 45, Zanr = ZanrIgre.Apstraktna, OglasId = 18 },
+            new DrustvenaIgra { Id = 9, Naziv = "Exploding Kittens", MinBrojIgraca = 2, MaxBrojIgraca = 5, MinimalnaDob = 7, TrajanjeMins = 15, Zanr = ZanrIgre.Zabavna, OglasId = 19 },
+            new DrustvenaIgra { Id = 10, Naziv = "Dobble", MinBrojIgraca = 2, MaxBrojIgraca = 8, MinimalnaDob = 6, TrajanjeMins = 10, Zanr = ZanrIgre.Zabavna, OglasId = 20 },
+            new DrustvenaIgra { Id = 11, Naziv = "Saboteur", MinBrojIgraca = 3, MaxBrojIgraca = 10, MinimalnaDob = 8, TrajanjeMins = 30, Zanr = ZanrIgre.Zabavna, OglasId = 31 },
+            new DrustvenaIgra { Id = 12, Naziv = "Carcassonne", MinBrojIgraca = 2, MaxBrojIgraca = 5, MinimalnaDob = 7, TrajanjeMins = 45, Zanr = ZanrIgre.Strategija, OglasId = 32 },
+            new DrustvenaIgra { Id = 13, Naziv = "Splendor", MinBrojIgraca = 2, MaxBrojIgraca = 4, MinimalnaDob = 10, TrajanjeMins = 30, Zanr = ZanrIgre.Strategija, OglasId = 33 },
+            new DrustvenaIgra { Id = 14, Naziv = "Monopoly - Zagreb Edition", MinBrojIgraca = 2, MaxBrojIgraca = 6, MinimalnaDob = 8, TrajanjeMins = 120, Zanr = ZanrIgre.Zabavna, OglasId = 34 },
+            new DrustvenaIgra { Id = 15, Naziv = "Uno", MinBrojIgraca = 2, MaxBrojIgraca = 10, MinimalnaDob = 7, TrajanjeMins = 20, Zanr = ZanrIgre.Zabavna, OglasId = 35 },
+            new DrustvenaIgra { Id = 16, Naziv = "Scrabble - Hrvatski", MinBrojIgraca = 2, MaxBrojIgraca = 4, MinimalnaDob = 10, TrajanjeMins = 60, Zanr = ZanrIgre.Edukativna, OglasId = 36 },
+            new DrustvenaIgra { Id = 17, Naziv = "Risk", MinBrojIgraca = 2, MaxBrojIgraca = 6, MinimalnaDob = 10, TrajanjeMins = 180, Zanr = ZanrIgre.Strategija, OglasId = 37 },
+            new DrustvenaIgra { Id = 18, Naziv = "Hanabi", MinBrojIgraca = 2, MaxBrojIgraca = 5, MinimalnaDob = 8, TrajanjeMins = 25, Zanr = ZanrIgre.Kooperativna, OglasId = 38 },
+            new DrustvenaIgra { Id = 19, Naziv = "Kingdomino", MinBrojIgraca = 2, MaxBrojIgraca = 4, MinimalnaDob = 8, TrajanjeMins = 20, Zanr = ZanrIgre.Strategija, OglasId = 39 },
+            new DrustvenaIgra { Id = 20, Naziv = "Trivial Pursuit", MinBrojIgraca = 2, MaxBrojIgraca = 6, MinimalnaDob = 12, TrajanjeMins = 60, Zanr = ZanrIgre.Edukativna, OglasId = 40 }
         );
 
         modelBuilder.Entity<Poruka>().HasData(
