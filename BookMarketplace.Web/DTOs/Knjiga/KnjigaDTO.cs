@@ -3,6 +3,8 @@ namespace BookMarketplace.Web.DTOs.Knjiga;
 public class KnjigaDTO
 {
     public int Id { get; set; }
+    public int OglasId { get; set; }
+
     public string Naziv { get; set; } = string.Empty;
     public string Autor { get; set; } = string.Empty;
     public string ISBN { get; set; } = string.Empty;

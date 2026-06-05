@@ -357,6 +357,7 @@ public class OglasiApiController : ControllerBase
                 : new KnjigaDTO
                 {
                     Id = oglas.Knjiga.Id,
+                    OglasId = oglas.Knjiga.OglasId,
                     Naziv = oglas.Knjiga.Naziv,
                     Autor = oglas.Knjiga.Autor,
                     ISBN = oglas.Knjiga.ISBN,
