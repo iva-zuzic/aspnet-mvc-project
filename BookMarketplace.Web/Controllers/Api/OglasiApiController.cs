@@ -373,6 +373,7 @@ public class OglasiApiController : ControllerBase
                 : new DrustvenaIgraDTO
                 {
                     Id = oglas.DrustvenaIgra.Id,
+                    OglasId = oglas.DrustvenaIgra.OglasId,
                     Naziv = oglas.DrustvenaIgra.Naziv,
                     MinBrojIgraca = oglas.DrustvenaIgra.MinBrojIgraca,
                     MaxBrojIgraca = oglas.DrustvenaIgra.MaxBrojIgraca,
