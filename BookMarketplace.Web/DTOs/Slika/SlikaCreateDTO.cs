@@ -1,9 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace BookMarketplace.Web.DTOs.Slika;
 
-public class SlikaDTO
+public class SlikaCreateDTO
 {
-    public int Id { get; set; }
+    [Required]
     public int OglasId { get; set; }
+
+    [Required]
+    [StringLength(500)]
     public string Putanja { get; set; } = string.Empty;
+
+    [Range(0, 100)]
     public int RedoslijedPrikaza { get; set; }
 }

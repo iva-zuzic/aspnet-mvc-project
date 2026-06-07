@@ -388,6 +388,7 @@ public class OglasiApiController : ControllerBase
                 .Select(s => new SlikaDTO
                 {
                     Id = s.Id,
+                    OglasId = s.OglasId,
                     Putanja = s.Putanja,
                     RedoslijedPrikaza = s.RedoslijedPrikaza
                 })
