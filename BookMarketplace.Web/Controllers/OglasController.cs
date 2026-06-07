@@ -81,6 +81,8 @@ public class OglasController : Controller
         _context.Oglasi.Add(oglas);
         await _context.SaveChangesAsync();
 
+        await SpremiSlikeAsync(oglas.Id, model.Slike);
+
         if (oglas.TipOglasa == TipOglasa.Knjiga)
         {
             return RedirectToAction("Details", "Knjiga", new { id = oglas.Id });
@@ -100,6 +102,71 @@ public class OglasController : Controller
         ViewBag.Gradovi = new SelectList(
             _context.Gradovi.OrderBy(g => g.Naziv),
             "Id", "Naziv");
+    }
+
+    private async Task SpremiSlikeAsync(int oglasId, List<IFormFile>? slike)
+    {
+        if (slike == null || slike.Count == 0)
+        {
+            return;
+        }
+
+        var uploadsPath = Path.Combine(
+            Directory.GetCurrentDirectory(),
+            "wwwroot",
+            "uploads",
+            "oglasi",
+            oglasId.ToString());
+
+        Directory.CreateDirectory(uploadsPath);
+
+        var redoslijed = await _context.Slike.CountAsync(s => s.OglasId == oglasId);
+
+        foreach (var slika in slike)
+        {
+            if (slika == null || slika.Length == 0)
+            {
+                continue;
+            }
+
+            if (!slika.ContentType.StartsWith("image/"))
+            {
+                continue;
+            }
+
+            var ekstenzija = Path.GetExtension(slika.FileName).ToLowerInvariant();
+
+            var dozvoljeneEkstenzije = new[] { ".jpg", ".jpeg", ".png", ".webp", ".gif" };
+
+            if (!dozvoljeneEkstenzije.Contains(ekstenzija))
+            {
+                continue;
+            }
+
+            var fileName = Guid.NewGuid().ToString() + ekstenzija;
+            var filePath = Path.Combine(uploadsPath, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await slika.CopyToAsync(stream);
+            }
+
+            var novaSlika = new Slika
+            {
+                OglasId = oglasId,
+                Putanja = "/uploads/oglasi/" + oglasId + "/" + fileName,
+                FileName = slika.FileName,
+                ContentType = slika.ContentType,
+                FileSize = slika.Length,
+                CreatedAt = DateTime.Now,
+                RedoslijedPrikaza = redoslijed
+            };
+
+            _context.Slike.Add(novaSlika);
+            redoslijed++;
+        }
+
+        await _context.SaveChangesAsync();
     }
 
     [ActionName("Edit")]

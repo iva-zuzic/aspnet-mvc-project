@@ -11,7 +11,7 @@
     </div>
 
     <div class="form-card">
-        <form asp-action="Create" method="post">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
 
             <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
@@ -220,6 +220,14 @@
                     </select>
                     <span asp-validation-for="IgraZanr" class="validation-error"></span>
                 </div>
+            </div>
+
+            <h2 class="section-title">Slike oglasa</h2>
+            <div class="form-group">
+                <label asp-for="Slike" class="form-label"></label>
+                <input asp-for="Slike" type="file" multiple accept="image/*" class="form-input" />
+                <span asp-validation-for="Slike" class="validation-error"></span>
+                <small>Možete odabrati jednu ili više slika oglasa.</small>
             </div>
 
             <div class="form-actions">
