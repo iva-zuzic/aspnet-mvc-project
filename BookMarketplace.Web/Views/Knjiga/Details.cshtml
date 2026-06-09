@@ -15,11 +15,25 @@
 <div class="detail-card detail-card-full">
     <div class="detail-layout">
         <div class="detail-cover">
-            <div class="book-cover book-cover-portrait">
-                <div class="book-cover-inner">
-                    <span class="book-cover-title">@Model.Knjiga?.Naziv</span>
+            @if (Model.Slike.Any())
+            {
+                var glavnaSlika = Model.Slike
+                    .OrderBy(s => s.RedoslijedPrikaza)
+                    .First();
+
+                <img src="@glavnaSlika.Putanja"
+                    alt="@Model.Naslov"
+                    class="detail-image"
+                    style="max-width: 250px; max-height: 350px; object-fit: cover; border-radius: 8px;" />
+            }
+            else
+            {
+                <div class="book-cover book-cover-portrait">
+                    <div class="book-cover-inner">
+                        <span class="book-cover-title">@Model.Knjiga?.Naziv</span>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
         <div class="detail-info">
             <div class="detail-grid">

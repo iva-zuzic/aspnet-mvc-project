@@ -35,6 +35,7 @@ namespace BookMarketplace.Controllers
                 .Include(o => o.Korisnik)
                 .Include(o => o.Grad)
                 .Include(o => o.Knjiga)
+                .Include(o => o.Slike)
                 .FirstOrDefaultAsync(o =>
                     o.Id == id &&
                     o.TipOglasa == TipOglasa.Knjiga &&

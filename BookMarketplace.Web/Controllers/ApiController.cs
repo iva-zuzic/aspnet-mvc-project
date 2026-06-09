@@ -15,7 +15,7 @@ public class ApiController : Controller
         _context = context;
     }
 
-    [Route("gradovi")]
+    [HttpGet("autocomplete/gradovi")]
     public async Task<IActionResult> SearchGradovi(string term)
     {
         if (string.IsNullOrWhiteSpace(term))
@@ -38,7 +38,7 @@ public class ApiController : Controller
         return Json(rezultati);
     }
 
-    [Route("korisnici")]
+    [HttpGet("autocomplete/korisnici")]
     public async Task<IActionResult> SearchKorisnici(string term)
     {
         if (string.IsNullOrWhiteSpace(term))

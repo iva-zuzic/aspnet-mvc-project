@@ -64,7 +64,7 @@
                     @await Html.PartialAsync("_AutocompletePartial", null, new ViewDataDictionary(ViewData) {
                         { "FieldName", "GradId" },
                         { "DisplayName", "Grad" },
-                        { "ApiUrl", "/api/gradovi" },
+                        { "ApiUrl", "/api/autocomplete/gradovi" },
                         { "SelectedId", Model.GradId.ToString() },
                         { "SelectedText", ViewBag.GradNaziv?.ToString() ?? "" },
                         { "Placeholder", "Počnite pisati naziv grada..." }
@@ -228,6 +228,38 @@
     </div>
 </div>
 
+<h2 class="section-title">Slike oglasa</h2>
+
+<div id="slikeList"></div>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(function () {
+            loadSlike();
+        });
+
+        function loadSlike() {
+            $("#slikeList").load("@Url.Action("GetSlike", "Oglas", new { oglasId = Model.Id })");
+        }
+
+        function deleteSlika(id) {
+            if (!confirm("Jeste li sigurni da želite obrisati ovu sliku?")) {
+                return;
+            }
+
+            $.ajax({
+                url: "@Url.Action("DeleteSlika", "Oglas")",
+                method: "POST",
+                data: { id: id },
+                success: function () {
+                    loadSlike();
+                },
+                error: function () {
+                    alert("Greška kod brisanja slike.");
+                }
+            });
+        }
+    </script>
 }

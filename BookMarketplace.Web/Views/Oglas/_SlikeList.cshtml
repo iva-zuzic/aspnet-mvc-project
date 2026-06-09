@@ -1,0 +1,28 @@
+@model IEnumerable<BookMarketplace.Model.Slika>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">Nema dodanih slika.</p>
+}
+else
+{
+    <div class="uploaded-images">
+        @foreach (var slika in Model)
+        {
+            <div class="uploaded-image-card">
+                <img src="@slika.Putanja" alt="@slika.FileName" style="max-width: 150px; max-height: 150px;" />
+
+                <div>
+                    <p>@slika.FileName</p>
+                    <small>@(slika.FileSize / 1024) KB</small>
+                </div>
+
+                <button type="button"
+                        class="btn btn-danger btn-sm"
+                        onclick="deleteSlika(@slika.Id)">
+                    Obriši
+                </button>
+            </div>
+        }
+    </div>
+}

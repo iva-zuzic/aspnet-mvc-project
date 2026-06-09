@@ -317,4 +317,41 @@ public class OglasController : Controller
         else
             return RedirectToAction("Index", "DrustvenaIgra");
     }
+
+    public async Task<IActionResult> GetSlike(int oglasId)
+    {
+        var slike = await _context.Slike
+            .Where(s => s.OglasId == oglasId)
+            .OrderBy(s => s.RedoslijedPrikaza)
+            .ToListAsync();
+
+        return PartialView("_SlikeList", slike);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteSlika(int id)
+    {
+        var slika = await _context.Slike
+            .FirstOrDefaultAsync(s => s.Id == id);
+
+        if (slika == null)
+        {
+            return NotFound();
+        }
+
+        var physicalPath = Path.Combine(
+            Directory.GetCurrentDirectory(),
+            "wwwroot",
+            slika.Putanja.TrimStart('/'));
+
+        if (System.IO.File.Exists(physicalPath))
+        {
+            System.IO.File.Delete(physicalPath);
+        }
+
+        _context.Slike.Remove(slika);
+        await _context.SaveChangesAsync();
+
+        return Json(new { success = true });
+    }
 }

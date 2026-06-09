@@ -57,7 +57,7 @@
                         new ViewDataDictionary(ViewData)
                         {
                             { "FieldName", "KorisnikId" },
-                            { "ApiUrl", "/api/korisnici" },
+                            { "ApiUrl", "/api/autocomplete/korisnici" },
                             { "SelectedId", "" },
                             { "SelectedText", "" },
                             { "Placeholder", "Počnite pisati ime korisnika..." }
@@ -69,7 +69,7 @@
                     @await Html.PartialAsync("_AutocompletePartial", null, new ViewDataDictionary(ViewData) {
                         { "FieldName", "GradId" },
                         { "DisplayName", "Grad" },
-                        { "ApiUrl", "/api/gradovi" },
+                        { "ApiUrl", "/api/autocomplete/gradovi" },
                         { "SelectedId", "" },
                         { "SelectedText", "" },
                         { "Placeholder", "Počnite pisati naziv grada..." }
