@@ -23,6 +23,7 @@ namespace BookMarketplace.Controllers
                 .Include(o => o.Korisnik)
                 .Include(o => o.Grad)
                 .Include(o => o.Knjiga)
+                .Include(o => o.Slike)
                 .ToListAsync();
 
             return View(oglasi);
@@ -54,6 +55,7 @@ namespace BookMarketplace.Controllers
                 .Include(o => o.Knjiga)
                 .Include(o => o.Grad)
                 .Include(o => o.Korisnik)
+                .Include(o => o.Slike)
                 .Where(o =>
                     o.TipOglasa == TipOglasa.Knjiga &&
                     o.Status == StatusOglasa.Aktivan &&

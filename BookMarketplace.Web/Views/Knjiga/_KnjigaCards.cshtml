@@ -18,11 +18,7 @@ else
                asp-action="Details"
                asp-route-id="@oglas.Id">
 
-                <div class="book-cover">
-                    <div class="book-cover-inner">
-                        <span class="book-cover-title">@oglas.Knjiga?.Naziv</span>
-                    </div>
-                </div>
+                <partial name="_OglasCardMedia" model="oglas" />
 
                 <div class="card-body">
                     <span class="card-title">@oglas.Knjiga?.Naziv</span>

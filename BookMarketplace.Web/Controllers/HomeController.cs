@@ -22,12 +22,16 @@ namespace BookMarketplace.Controllers
                 Knjige = await _context.Knjige
                     .Include(k => k.Oglas)
                     .ThenInclude(o => o.Korisnik)
+                    .Include(k => k.Oglas)
+                    .ThenInclude(o => o.Slike)
                     .Where(k => k.Oglas.Status == StatusOglasa.Aktivan && k.Oglas.Korisnik.DeletedAt == null)
                     .ToListAsync()
             ,
                 Igre = await _context.DrustveneIgre
                     .Include(i => i.Oglas)
                     .ThenInclude(o => o.Korisnik)
+                    .Include(i => i.Oglas)
+                    .ThenInclude(o => o.Slike)
                     .Where(i => i.Oglas.Status == StatusOglasa.Aktivan && i.Oglas.Korisnik.DeletedAt == null)
                     .ToListAsync()
             ,
@@ -35,6 +39,7 @@ namespace BookMarketplace.Controllers
                     .Where(o => o.Status == StatusOglasa.Aktivan)
                     .Include(o => o.Grad)
                     .Include(o => o.Korisnik)
+                    .Include(o => o.Slike)
                     .OrderByDescending(o => o.DatumObjave)
                     .ToListAsync()
             };

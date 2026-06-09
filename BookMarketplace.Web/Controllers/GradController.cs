@@ -53,6 +53,7 @@ namespace BookMarketplace.Controllers
         {
             var grad = await _context.Gradovi
                 .Include(g => g.Oglasi)
+                    .ThenInclude(o => o.Slike)
                 .FirstOrDefaultAsync(g => g.Id == id);
 
             if (grad is null)

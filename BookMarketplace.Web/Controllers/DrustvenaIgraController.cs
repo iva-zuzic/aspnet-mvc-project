@@ -23,6 +23,7 @@ namespace BookMarketplace.Controllers
                 .Include(o => o.DrustvenaIgra)
                 .Include(o => o.Grad)
                 .Include(o => o.Korisnik)
+                .Include(o => o.Slike)
                 .ToListAsync();
 
             return View(oglasi);
@@ -35,6 +36,7 @@ namespace BookMarketplace.Controllers
                 .Include(o => o.DrustvenaIgra)
                 .Include(o => o.Grad)
                 .Include(o => o.Korisnik)
+                .Include(o => o.Slike)
                 .FirstOrDefaultAsync(o =>
                     o.Id == id &&
                     o.TipOglasa == TipOglasa.DrustvenaIgra &&
@@ -53,6 +55,7 @@ namespace BookMarketplace.Controllers
                 .Include(o => o.DrustvenaIgra)
                 .Include(o => o.Grad)
                 .Include(o => o.Korisnik)
+                .Include(o => o.Slike)
                 .Where(o =>
                     o.TipOglasa == TipOglasa.DrustvenaIgra &&
                     o.Status == StatusOglasa.Aktivan &&

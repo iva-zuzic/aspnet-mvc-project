@@ -15,15 +15,29 @@
 <div class="detail-card detail-card-full">
     <div class="detail-layout">
         <div class="detail-cover">
-            <div class="game-cover game-cover-portrait">
-                <div class="game-dots game-dots-lg">
-                    <span></span><span></span><span></span><span></span><span></span>
-                    <span></span><span></span><span></span><span></span><span></span>
-                    <span></span><span></span><span></span><span></span><span></span>
-                    <span></span><span></span><span></span><span></span><span></span>
-                    <span></span><span></span><span></span><span></span><span></span>
+            @if (Model.Slike.Any())
+            {
+                var glavnaSlika = Model.Slike
+                    .OrderBy(s => s.RedoslijedPrikaza)
+                    .First();
+
+                <img src="@glavnaSlika.Putanja"
+                    alt="@Model.Naslov"
+                    class="detail-image"
+                    style="max-width: 250px; max-height: 350px; object-fit: cover; border-radius: 8px;" />
+            }
+            else
+            {
+                <div class="game-cover game-cover-portrait">
+                    <div class="game-dots game-dots-lg">
+                        <span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
         <div class="detail-info">
             <div class="detail-grid">

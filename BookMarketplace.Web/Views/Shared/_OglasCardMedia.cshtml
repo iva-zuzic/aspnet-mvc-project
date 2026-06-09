@@ -1,0 +1,38 @@
+@model BookMarketplace.Model.Oglas
+
+@{
+    var isKnjiga = Model.TipOglasa == BookMarketplace.Model.TipOglasa.Knjiga;
+    var naslov = Model.Knjiga?.Naziv
+        ?? Model.DrustvenaIgra?.Naziv
+        ?? Model.Naslov;
+}
+
+<div class="card-media">
+    @if (Model.Slike.Any())
+    {
+        var glavnaSlika = Model.Slike
+            .OrderBy(s => s.RedoslijedPrikaza)
+            .First();
+
+        <img src="@glavnaSlika.Putanja" alt="@naslov" />
+    }
+    else if (isKnjiga)
+    {
+        <div class="book-cover">
+            <div class="book-cover-inner">
+                <span class="book-cover-title">@naslov</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="game-cover">
+            <div class="game-dots">
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+    }
+</div>

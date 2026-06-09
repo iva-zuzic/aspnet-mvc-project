@@ -18,14 +18,7 @@ else
                asp-action="Details"
                asp-route-id="@oglas.Id">
 
-                <div class="game-cover">
-                    <div class="game-dots">
-                        <span></span><span></span><span></span><span></span>
-                        <span></span><span></span><span></span><span></span>
-                        <span></span><span></span><span></span><span></span>
-                        <span></span><span></span><span></span><span></span>
-                    </div>
-                </div>
+                <partial name="_OglasCardMedia" model="oglas" />
 
                 <div class="card-body">
                     <span class="card-title">@oglas.DrustvenaIgra?.Naziv</span>
