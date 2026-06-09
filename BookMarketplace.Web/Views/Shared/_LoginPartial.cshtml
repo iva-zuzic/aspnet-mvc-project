@@ -1,0 +1,23 @@
+@using Microsoft.AspNetCore.Identity
+@using BookMarketplace.Model
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="nav-auth">
+        <span class="nav-user">@User.Identity?.Name</span>
+
+        <form asp-controller="Account" asp-action="Logout" method="post" class="nav-logout-form">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="nav-auth-link">Odjava</button>
+        </form>
+    </div>
+}
+else
+{
+    <div class="nav-auth">
+        <a asp-controller="Account" asp-action="Login" class="nav-auth-link">Prijava</a>
+        <a asp-controller="Account" asp-action="Register" class="nav-auth-link">Registracija</a>
+    </div>
+}

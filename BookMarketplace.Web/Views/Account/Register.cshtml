@@ -1,0 +1,61 @@
+@model BookMarketplace.Web.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Registracija";
+}
+
+<div class="form-container">
+    <div class="form-header">
+        <h1>Registracija</h1>
+        <p class="form-subtitle">Napravite korisnički račun za Books &amp; Games.</p>
+    </div>
+
+    <div class="form-card">
+        <form asp-action="Register" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-input" />
+                <span asp-validation-for="Email" class="validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-input" />
+                <span asp-validation-for="Password" class="validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="form-label"></label>
+                <input asp-for="ConfirmPassword" class="form-input" />
+                <span asp-validation-for="ConfirmPassword" class="validation-error"></span>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="OIB" class="form-label"></label>
+                    <input asp-for="OIB" class="form-input" />
+                    <span asp-validation-for="OIB" class="validation-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="JMBG" class="form-label"></label>
+                    <input asp-for="JMBG" class="form-input" />
+                    <span asp-validation-for="JMBG" class="validation-error"></span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary btn-large">Registriraj se</button>
+                <a asp-controller="Account" asp-action="Login" class="btn-secondary">Već imam račun</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
