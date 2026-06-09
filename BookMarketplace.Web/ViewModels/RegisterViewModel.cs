@@ -4,6 +4,15 @@ namespace BookMarketplace.Web.ViewModels;
 
 public class RegisterViewModel
 {
+    [Required(ErrorMessage = "Ime i prezime su obavezni.")]
+    [StringLength(100, ErrorMessage = "Ime i prezime može imati najviše 100 znakova.")]
+    [Display(Name = "Ime i prezime")]
+    public string ImeIPrezime { get; set; } = string.Empty;
+
+    [StringLength(30, ErrorMessage = "Telefon može imati najviše 30 znakova.")]
+    [Display(Name = "Telefon")]
+    public string? Telefon { get; set; }
+
     [Required(ErrorMessage = "Email je obavezan.")]
     [EmailAddress(ErrorMessage = "Unesite ispravnu email adresu.")]
     [Display(Name = "Email")]

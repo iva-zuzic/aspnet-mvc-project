@@ -3,6 +3,8 @@ using BookMarketplace.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using BookMarketplace.DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookMarketplace.Controllers;
 
@@ -10,13 +12,16 @@ public class AccountController : Controller
 {
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
+    private readonly BookMarketplaceDbContext _context;
 
     public AccountController(
         UserManager<AppUser> userManager,
-        SignInManager<AppUser> signInManager)
+        SignInManager<AppUser> signInManager,
+        BookMarketplaceDbContext context)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _context = context;
     }
 
     [HttpGet]
@@ -48,6 +53,20 @@ public class AccountController : Controller
 
         if (result.Succeeded)
         {
+            var korisnik = new Korisnik
+            {
+                ImeIPrezime = model.ImeIPrezime.Trim(),
+                Email = model.Email.Trim(),
+                Lozinka = string.Empty,
+                Telefon = model.Telefon?.Trim() ?? string.Empty,
+                DatumRegistracije = DateTime.Now,
+                Uloga = UlogaKorisnika.Korisnik,
+                AppUserId = user.Id
+            };
+
+            _context.Korisnici.Add(korisnik);
+            await _context.SaveChangesAsync();
+
             await _userManager.AddToRoleAsync(user, "Korisnik");
             await _signInManager.SignInAsync(user, isPersistent: false);
 
@@ -109,5 +128,53 @@ public class AccountController : Controller
     public IActionResult AccessDenied()
     {
         return View();
+    }
+
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> MyAccount()
+    {
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user == null)
+        {
+            return RedirectToAction(nameof(Login));
+        }
+
+        var korisnik = await _context.Korisnici
+            .Include(k => k.Oglasi)
+            .FirstOrDefaultAsync(k => k.AppUserId == user.Id);
+
+        if (korisnik == null)
+        {
+            korisnik = new Korisnik
+            {
+                ImeIPrezime = user.Email ?? string.Empty,
+                Email = user.Email ?? string.Empty,
+                Lozinka = string.Empty,
+                Telefon = string.Empty,
+                DatumRegistracije = DateTime.Now,
+                Uloga = UlogaKorisnika.Korisnik,
+                AppUserId = user.Id
+            };
+
+            _context.Korisnici.Add(korisnik);
+            await _context.SaveChangesAsync();
+        }
+
+        var roles = await _userManager.GetRolesAsync(user);
+
+        var model = new MyAccountViewModel
+        {
+            Email = user.Email ?? string.Empty,
+            OIB = user.OIB,
+            JMBG = user.JMBG,
+            Roles = roles.ToList(),
+            ImeIPrezime = korisnik.ImeIPrezime,
+            Telefon = korisnik.Telefon,
+            BrojOglasa = korisnik.Oglasi.Count
+        };
+
+        return View(model);
     }
 }

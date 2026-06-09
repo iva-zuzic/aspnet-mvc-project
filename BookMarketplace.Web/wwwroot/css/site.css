@@ -1754,3 +1754,37 @@ a.card:hover {
 .datetime-picker {
     position: relative;
 }
+
+.nav-inner {
+    gap: 0.75rem;
+}
+
+.nav-links li a {
+    white-space: nowrap;
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+}
+
+.nav-search {
+    flex: 0 1 260px;
+    min-width: 220px;
+}
+
+/* --- Moj račun --- */
+
+.account-details {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 0.75rem 1rem;
+    margin: 0;
+}
+
+.account-details dt {
+    font-weight: 700;
+    color: #6B4226;
+}
+
+.account-details dd {
+    margin: 0;
+    color: #3B2114;
+}

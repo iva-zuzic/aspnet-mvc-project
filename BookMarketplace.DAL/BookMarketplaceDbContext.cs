@@ -22,6 +22,12 @@ public class BookMarketplaceDbContext : IdentityDbContext<AppUser>
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<Korisnik>()
+            .HasOne(k => k.AppUser)
+            .WithOne()
+            .HasForeignKey<Korisnik>(k => k.AppUserId)
+            .OnDelete(DeleteBehavior.SetNull);
+
         modelBuilder.Entity<Favorit>()
             .HasKey(f => new { f.KorisnikId, f.OglasId });
 

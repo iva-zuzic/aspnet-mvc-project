@@ -1,0 +1,37 @@
+@model BookMarketplace.Web.ViewModels.MyAccountViewModel
+
+@{
+    ViewData["Title"] = "Moj račun";
+}
+
+<div class="form-container">
+    <div class="form-header">
+        <h1>Moj račun</h1>
+        <p class="form-subtitle">Pregled podataka prijavljenog korisnika.</p>
+    </div>
+
+    <div class="form-card">
+        <dl class="account-details">
+            <dt>Email</dt>
+            <dd>@Model.Email</dd>
+
+            <dt>Ime i prezime</dt>
+            <dd>@Model.ImeIPrezime</dd>
+
+            <dt>Telefon</dt>
+            <dd>@Model.Telefon</dd>
+
+            <dt>OIB</dt>
+            <dd>@Model.OIB</dd>
+
+            <dt>JMBG</dt>
+            <dd>@Model.JMBG</dd>
+
+            <dt>Role</dt>
+            <dd>@(Model.Roles.Any() ? string.Join(", ", Model.Roles) : "Nema dodijeljenih rola")</dd>
+        
+            <dt>Broj oglasa</dt>
+            <dd>@Model.BrojOglasa</dd>
+        </dl>
+    </div>
+</div>

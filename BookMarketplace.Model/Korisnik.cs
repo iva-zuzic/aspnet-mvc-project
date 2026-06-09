@@ -15,6 +15,10 @@ public class Korisnik
 
     public DateTime? DeletedAt { get; set; }
 
+    public string? AppUserId { get; set; }
+
+    public virtual AppUser? AppUser { get; set; }
+
     public virtual ICollection<Oglas> Oglasi { get; set; } = new List<Oglas>();
 
     public virtual ICollection<Favorit> Favoriti { get; set; } = new List<Favorit>();
