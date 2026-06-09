@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using BookMarketplace.Model;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace BookMarketplace.DAL;
 
-public class BookMarketplaceDbContext : DbContext
+public class BookMarketplaceDbContext : IdentityDbContext<AppUser>
 {
     public BookMarketplaceDbContext(DbContextOptions<BookMarketplaceDbContext> options) : base(options)
     {}

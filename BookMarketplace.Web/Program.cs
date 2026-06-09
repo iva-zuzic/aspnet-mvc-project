@@ -1,11 +1,22 @@
 using BookMarketplace.DAL;
 using Microsoft.EntityFrameworkCore;
+using BookMarketplace.Model;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+
 builder.Services.AddDbContext<BookMarketplaceDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BookMarketplaceDbContext")));
+
+builder.Services.AddDefaultIdentity<AppUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+})
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<BookMarketplaceDbContext>();
 
 
 var app = builder.Build();
@@ -22,6 +33,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -34,5 +46,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
-
+app.MapRazorPages();
 app.Run();
