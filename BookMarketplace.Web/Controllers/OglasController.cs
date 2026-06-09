@@ -81,16 +81,9 @@ public class OglasController : Controller
         _context.Oglasi.Add(oglas);
         await _context.SaveChangesAsync();
 
-        await SpremiSlikeAsync(oglas.Id, model.Slike);
+        TempData["SuccessMessage"] = "Oglas je uspješno kreiran. Sada možete dodati slike oglasa.";
 
-        if (oglas.TipOglasa == TipOglasa.Knjiga)
-        {
-            return RedirectToAction("Details", "Knjiga", new { id = oglas.Id });
-        }
-        else
-        {
-            return RedirectToAction("Details", "DrustvenaIgra", new { id = oglas.Id });
-        }
+        return RedirectToAction("Edit", new { id = oglas.Id });
     }
 
     private void PopuniDropdowne()
@@ -351,6 +344,21 @@ public class OglasController : Controller
 
         _context.Slike.Remove(slika);
         await _context.SaveChangesAsync();
+
+        return Json(new { success = true });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UploadSlike(int oglasId, List<IFormFile> slike)
+    {
+        var oglasExists = await _context.Oglasi.AnyAsync(o => o.Id == oglasId);
+
+        if (!oglasExists)
+        {
+            return NotFound();
+        }
+
+        await SpremiSlikeAsync(oglasId, slike);
 
         return Json(new { success = true });
     }

@@ -6,19 +6,24 @@
 }
 else
 {
-    <div class="uploaded-images">
-        @foreach (var slika in Model)
-        {
-            <div class="uploaded-image-card">
-                <img src="@slika.Putanja" alt="@slika.FileName" style="max-width: 150px; max-height: 150px;" />
+    var slike = Model.OrderBy(s => s.RedoslijedPrikaza).ToList();
 
-                <div>
-                    <p>@slika.FileName</p>
-                    <small>@(slika.FileSize / 1024) KB</small>
+    <div class="uploaded-images-grid">
+        @for (int i = 0; i < slike.Count; i++)
+        {
+            var slika = slike[i];
+
+            <div class="uploaded-image-card">
+                <div class="uploaded-image-preview">
+                    <img src="@slika.Putanja" alt="Slika @(i + 1)" />
+                </div>
+
+                <div class="uploaded-image-info">
+                    <p class="uploaded-image-title">Slika @(i + 1)</p>
                 </div>
 
                 <button type="button"
-                        class="btn btn-danger btn-sm"
+                        class="btn-delete-image"
                         onclick="deleteSlika(@slika.Id)">
                     Obriši
                 </button>

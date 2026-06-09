@@ -1,0 +1,70 @@
+@model BookMarketplace.Model.Oglas
+
+@{
+    var isKnjiga = Model.TipOglasa == BookMarketplace.Model.TipOglasa.Knjiga;
+
+    var naslov = Model.Knjiga?.Naziv
+        ?? Model.DrustvenaIgra?.Naziv
+        ?? Model.Naslov;
+
+    var slike = Model.Slike
+        .OrderBy(s => s.RedoslijedPrikaza)
+        .ToList();
+}
+
+<div class="detail-cover">
+    @if (slike.Any())
+    {
+        var glavnaSlika = slike.First();
+
+        <div class="details-image-gallery">
+            <div class="details-main-image-wrapper">
+                <img id="details-main-image"
+                     src="@glavnaSlika.Putanja"
+                     alt="@naslov"
+                     class="details-main-image" />
+            </div>
+
+            @if (slike.Count > 1)
+            {
+                <div class="details-thumbnails">
+                    @foreach (var slika in slike)
+                    {
+                        <button type="button"
+                                class="details-thumbnail"
+                                data-image="@slika.Putanja"
+                                onclick="changeDetailsImage(this)">
+                            <img src="@slika.Putanja" alt="@naslov" />
+                        </button>
+                    }
+                </div>
+            }
+        </div>
+    }
+    else if (isKnjiga)
+    {
+        <div class="book-cover book-cover-portrait">
+            <div class="book-cover-inner">
+                <span class="book-cover-title">@naslov</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="game-cover game-cover-large">
+            <div class="game-dots">
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    function changeDetailsImage(button) {
+        const mainImage = document.getElementById("details-main-image");
+        mainImage.src = button.dataset.image;
+    }
+</script>

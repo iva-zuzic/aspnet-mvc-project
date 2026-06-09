@@ -10,6 +10,34 @@
         <p class="form-subtitle">Izmijenite podatke o svom oglasu.</p>
     </div>
 
+        <section class="image-upload-panel">
+            <h2 class="section-title">Slike oglasa</h2>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+
+            <form action="@Url.Action("UploadSlike", "Oglas")"
+                method="post"
+                enctype="multipart/form-data"
+                class="dropzone image-dropzone"
+                id="oglasDropzone">
+
+                <input type="hidden" name="oglasId" value="@Model.Id" />
+
+                <div class="dz-message">
+                    <strong>Povucite slike ovdje</strong>
+                    <br />
+                    <span>ili kliknite za odabir slika oglasa.</span>
+                </div>
+            </form>
+
+            <div id="slikeList"></div>
+        </section>
+
     <div class="form-card">
         <form asp-action="Edit" method="post">
             @Html.AntiForgeryToken()
@@ -228,16 +256,49 @@
     </div>
 </div>
 
-<h2 class="section-title">Slike oglasa</h2>
-
-<div id="slikeList"></div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 
     <script>
+        Dropzone.autoDiscover = false;
+
         $(function () {
             loadSlike();
+
+            const dropzoneElement = document.getElementById("oglasDropzone");
+
+            if (dropzoneElement && !dropzoneElement.dropzone) {
+                new Dropzone("#oglasDropzone", {
+                    paramName: "slike",
+                    maxFilesize: 5,
+                    acceptedFiles: "image/*",
+                    uploadMultiple: false,
+                    parallelUploads: 3,
+                    addRemoveLinks: true,
+
+                    dictDefaultMessage: "Povucite slike ovdje ili kliknite za odabir.",
+                    dictRemoveFile: "Ukloni",
+                    dictCancelUpload: "Odustani",
+                    dictInvalidFileType: "Dozvoljene su samo slike.",
+                    dictFileTooBig: "Slika je prevelika. Maksimalna veličina je 5 MB.",
+
+                    init: function () {
+                        this.on("success", function () {
+                            loadSlike();
+                        });
+
+                        this.on("queuecomplete", function () {
+                            this.removeAllFiles(true);
+                            loadSlike();
+                        });
+
+                        this.on("error", function () {
+                            alert("Greška kod uploada slike.");
+                        });
+                    }
+                });
+            }
         });
 
         function loadSlike() {

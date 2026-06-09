@@ -98,9 +98,6 @@ public class OglasCreateModel : IValidatableObject
     [Display(Name = "Žanr igre")]
     public ZanrIgre? IgraZanr { get; set; }
 
-    [Display(Name = "Slike oglasa")]
-    public List<IFormFile> Slike { get; set; } = new();
-
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         if (DatumIsteka == null)
