@@ -210,9 +210,16 @@ public class OglasController : Controller
         await _context.SaveChangesAsync();
     }
 
+    [HttpGet]
+    [Authorize(Roles = "Admin,Korisnik")]
     [ActionName("Edit")]
     public async Task<IActionResult> EditGet(int id)
     {
+        if (!await MozeUreditiOglasAsync(id))
+        {
+            return Forbid();
+        }
+
         var oglas = await _context.Oglasi
             .Include(o => o.Korisnik)
             .Include(o => o.Knjiga)
@@ -264,10 +271,16 @@ public class OglasController : Controller
     }
 
     [HttpPost]
-    [ActionName("Edit")]
+    [Authorize(Roles = "Admin,Korisnik")]
     [ValidateAntiForgeryToken]
+    [ActionName("Edit")]
     public async Task<IActionResult> EditPost(OglasEditModel model)
     {
+        if (!await MozeUreditiOglasAsync(model.Id))
+        {
+            return Forbid();
+        }
+
         if (!ModelState.IsValid)
         {
             model.KorisnikIme = (await _context.Korisnici
@@ -323,9 +336,16 @@ public class OglasController : Controller
             return RedirectToAction("Details", "DrustvenaIgra", new { id = oglas.Id });
     }
 
+    [HttpGet]
+    [Authorize(Roles = "Admin,Korisnik")]
     [ActionName("Delete")]
     public async Task<IActionResult> DeleteGet(int id)
     {
+        if (!await MozeUreditiOglasAsync(id))
+        {
+            return Forbid();
+        }
+
         var oglas = await _context.Oglasi
             .Include(o => o.Korisnik)
             .Include(o => o.Grad)
@@ -340,10 +360,16 @@ public class OglasController : Controller
     }
 
     [HttpPost]
-    [ActionName("Delete")]
+    [Authorize(Roles = "Admin,Korisnik")]
     [ValidateAntiForgeryToken]
+    [ActionName("Delete")]
     public async Task<IActionResult> DeletePost(int id)
     {
+        if (!await MozeUreditiOglasAsync(id))
+        {
+            return Forbid();
+        }
+
         var oglas = await _context.Oglasi
             .FirstOrDefaultAsync(o => o.Id == id);
 
@@ -359,8 +385,15 @@ public class OglasController : Controller
             return RedirectToAction("Index", "DrustvenaIgra");
     }
 
+    [HttpGet]
+    [Authorize(Roles = "Admin,Korisnik")]
     public async Task<IActionResult> GetSlike(int oglasId)
     {
+        if (!await MozeUreditiOglasAsync(oglasId))
+        {
+            return Forbid();
+        }
+
         var slike = await _context.Slike
             .Where(s => s.OglasId == oglasId)
             .OrderBy(s => s.RedoslijedPrikaza)
@@ -370,6 +403,7 @@ public class OglasController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin,Korisnik")]
     public async Task<IActionResult> DeleteSlika(int id)
     {
         var slika = await _context.Slike
@@ -378,6 +412,11 @@ public class OglasController : Controller
         if (slika == null)
         {
             return NotFound();
+        }
+
+        if (!await MozeUreditiOglasAsync(slika.OglasId))
+        {
+            return Forbid();
         }
 
         var physicalPath = Path.Combine(
@@ -397,8 +436,14 @@ public class OglasController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin,Korisnik")]
     public async Task<IActionResult> UploadSlike(int oglasId, List<IFormFile> slike)
     {
+        if (!await MozeUreditiOglasAsync(oglasId))
+        {
+            return Forbid();
+        }
+
         var oglasExists = await _context.Oglasi.AnyAsync(o => o.Id == oglasId);
 
         if (!oglasExists)
@@ -409,5 +454,36 @@ public class OglasController : Controller
         await SpremiSlikeAsync(oglasId, slike);
 
         return Json(new { success = true });
+    }
+
+    private async Task<Korisnik?> DohvatiTrenutniKorisnikProfilAsync()
+    {
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user == null)
+        {
+            return null;
+        }
+
+        return await _context.Korisnici
+            .FirstOrDefaultAsync(k => k.AppUserId == user.Id);
+    }
+
+    private async Task<bool> MozeUreditiOglasAsync(int oglasId)
+    {
+        if (User.IsInRole("Admin"))
+        {
+            return true;
+        }
+
+        var korisnik = await DohvatiTrenutniKorisnikProfilAsync();
+
+        if (korisnik == null)
+        {
+            return false;
+        }
+
+        return await _context.Oglasi
+            .AnyAsync(o => o.Id == oglasId && o.KorisnikId == korisnik.Id);
     }
 }

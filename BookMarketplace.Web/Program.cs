@@ -26,6 +26,11 @@ builder.Services.AddDefaultIdentity<AppUser>(options =>
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<BookMarketplaceDbContext>();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/AccessDenied";
+});
 
 var app = builder.Build();
 
