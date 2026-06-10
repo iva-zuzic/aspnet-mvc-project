@@ -51,34 +51,6 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <label asp-for="KorisnikId" class="form-label"></label>
-
-                    @await Html.PartialAsync("_AutocompletePartial", null,
-                        new ViewDataDictionary(ViewData)
-                        {
-                            { "FieldName", "KorisnikId" },
-                            { "ApiUrl", "/api/autocomplete/korisnici" },
-                            { "SelectedId", "" },
-                            { "SelectedText", "" },
-                            { "Placeholder", "Počnite pisati ime korisnika..." }
-                        })
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="GradId" class="form-label"></label>
-                    @await Html.PartialAsync("_AutocompletePartial", null, new ViewDataDictionary(ViewData) {
-                        { "FieldName", "GradId" },
-                        { "DisplayName", "Grad" },
-                        { "ApiUrl", "/api/autocomplete/gradovi" },
-                        { "SelectedId", "" },
-                        { "SelectedText", "" },
-                        { "Placeholder", "Počnite pisati naziv grada..." }
-                    })
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
                     <label asp-for="TipOglasa" class="form-label"></label>
                     <select asp-for="TipOglasa" class="form-input" id="TipOglasaSelect">
                         <option value="">-- odaberite tip --</option>

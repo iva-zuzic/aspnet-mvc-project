@@ -4,6 +4,7 @@ using BookMarketplace.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookMarketplace.DAL.Migrations
 {
     [DbContext(typeof(BookMarketplaceDbContext))]
-    partial class BookMarketplaceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260610185054_AddGradToKorisnikProfile")]
+    partial class AddGradToKorisnikProfile
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,10 +47,6 @@ namespace BookMarketplace.DAL.Migrations
                     b.Property<string>("JMBG")
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
-
-                    b.Property<string>("KorisnickoIme")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -917,10 +916,6 @@ namespace BookMarketplace.DAL.Migrations
                     b.Property<string>("ImeIPrezime")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KorisnickoIme")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Lozinka")
                         .IsRequired()

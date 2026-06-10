@@ -1,0 +1,54 @@
+@model IEnumerable<BookMarketplace.Model.Oglas>
+@using BookMarketplace.Model
+
+@{
+    ViewData["Title"] = "Moji oglasi";
+}
+
+<section class="section-najnoviji">
+    <div class="page-heading">
+        <h1>Moji oglasi</h1>
+        <p>Pregled svih oglasa koje ste objavili.</p>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="form-card">
+            <p>Još nemate objavljenih oglasa.</p>
+
+            <a asp-controller="Oglas" asp-action="Create" class="btn-primary">
+                Objavi prvi oglas
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="card-grid">
+            @foreach (var o in Model)
+            {
+                var isKnjiga = o.TipOglasa == TipOglasa.Knjiga;
+                var cardClass = isKnjiga ? "card-knjiga" : "card-igra";
+
+                <a class="card @cardClass"
+                   asp-controller="@(isKnjiga ? "Knjiga" : "DrustvenaIgra")"
+                   asp-action="Details"
+                   asp-route-id="@o.Id">
+
+                    <partial name="_OglasCardMedia" model="o" />
+
+                    <div class="card-body">
+                        <div>
+                            <span class="badge @(isKnjiga ? "badge-knjiga" : "badge-igra")">
+                                @(isKnjiga ? "Knjiga" : "Igra")
+                            </span>
+                        </div>
+
+                        <span class="card-title">@o.Naslov</span>
+                        <span class="card-subtitle">@o.Opis</span>
+                        <span class="card-price">@o.Cijena.ToString("N2") &euro;</span>
+                    </div>
+                </a>
+            }
+        </div>
+    }
+</section>

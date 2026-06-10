@@ -9,9 +9,19 @@ public class RegisterViewModel
     [Display(Name = "Ime i prezime")]
     public string ImeIPrezime { get; set; } = string.Empty;
 
+    [Required(ErrorMessage = "Korisničko ime je obavezno.")]
+    [StringLength(50, MinimumLength = 3, ErrorMessage = "Korisničko ime mora imati između 3 i 50 znakova.")]
+    [RegularExpression(@"^[a-zA-Z0-9._-]+$", ErrorMessage = "Korisničko ime smije sadržavati samo slova, brojeve, točku, crticu i donju crticu.")]
+    [Display(Name = "Korisničko ime")]
+    public string KorisnickoIme { get; set; } = string.Empty;
+
     [StringLength(30, ErrorMessage = "Telefon može imati najviše 30 znakova.")]
     [Display(Name = "Telefon")]
     public string? Telefon { get; set; }
+
+    [Required(ErrorMessage = "Grad je obavezan.")]
+    [Display(Name = "Grad")]
+    public int GradId { get; set; }
 
     [Required(ErrorMessage = "Email je obavezan.")]
     [EmailAddress(ErrorMessage = "Unesite ispravnu email adresu.")]

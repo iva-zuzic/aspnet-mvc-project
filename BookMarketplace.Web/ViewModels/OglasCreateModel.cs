@@ -28,14 +28,6 @@ public class OglasCreateModel : IValidatableObject
     [DataType(DataType.DateTime)]
     public DateTime? DatumIsteka { get; set; } = DateTime.Now.AddDays(30);
 
-    [Required(ErrorMessage = "Vlasnik oglasa je obavezan.")]
-    [Display(Name = "Vlasnik")]
-    public int KorisnikId { get; set; }
-
-    [Required(ErrorMessage = "Grad je obavezan.")]
-    [Display(Name = "Grad")]
-    public int GradId { get; set; }
-
     [Required(ErrorMessage = "Tip oglasa je obavezan.")]
     [Display(Name = "Tip oglasa")]
     public TipOglasa TipOglasa { get; set; }

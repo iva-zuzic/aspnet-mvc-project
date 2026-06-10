@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using BookMarketplace.DAL;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookMarketplace.Controllers;
 
@@ -28,6 +29,7 @@ public class AccountController : Controller
     [AllowAnonymous]
     public IActionResult Register()
     {
+        PopuniGradove();
         return View();
     }
 
@@ -38,6 +40,7 @@ public class AccountController : Controller
     {
         if (!ModelState.IsValid)
         {
+            PopuniGradove();
             return View(model);
         }
 
@@ -45,6 +48,7 @@ public class AccountController : Controller
         {
             UserName = model.Email,
             Email = model.Email,
+            KorisnickoIme = model.KorisnickoIme.Trim(),
             OIB = model.OIB,
             JMBG = model.JMBG
         };
@@ -56,12 +60,14 @@ public class AccountController : Controller
             var korisnik = new Korisnik
             {
                 ImeIPrezime = model.ImeIPrezime.Trim(),
+                KorisnickoIme = model.KorisnickoIme.Trim(),
                 Email = model.Email.Trim(),
                 Lozinka = string.Empty,
                 Telefon = model.Telefon?.Trim() ?? string.Empty,
                 DatumRegistracije = DateTime.Now,
                 Uloga = UlogaKorisnika.Korisnik,
-                AppUserId = user.Id
+                AppUserId = user.Id,
+                GradId = model.GradId
             };
 
             _context.Korisnici.Add(korisnik);
@@ -78,6 +84,7 @@ public class AccountController : Controller
             ModelState.AddModelError(string.Empty, error.Description);
         }
 
+        PopuniGradove();
         return View(model);
     }
 
@@ -142,7 +149,6 @@ public class AccountController : Controller
         }
 
         var korisnik = await _context.Korisnici
-            .Include(k => k.Oglasi)
             .FirstOrDefaultAsync(k => k.AppUserId == user.Id);
 
         if (korisnik == null)
@@ -150,6 +156,9 @@ public class AccountController : Controller
             korisnik = new Korisnik
             {
                 ImeIPrezime = user.Email ?? string.Empty,
+                KorisnickoIme = !string.IsNullOrWhiteSpace(user.KorisnickoIme)
+                    ? user.KorisnickoIme
+                    : user.Email,
                 Email = user.Email ?? string.Empty,
                 Lozinka = string.Empty,
                 Telefon = string.Empty,
@@ -162,19 +171,71 @@ public class AccountController : Controller
             await _context.SaveChangesAsync();
         }
 
+        var oglasi = await _context.Oglasi
+            .Include(o => o.Knjiga)
+            .Include(o => o.DrustvenaIgra)
+            .Include(o => o.Grad)
+            .Include(o => o.Slike)
+            .Where(o => o.KorisnikId == korisnik.Id)
+            .OrderByDescending(o => o.DatumObjave)
+            .ToListAsync();
+
         var roles = await _userManager.GetRolesAsync(user);
 
         var model = new MyAccountViewModel
         {
+            ImeIPrezime = korisnik.ImeIPrezime,
+            KorisnickoIme = !string.IsNullOrWhiteSpace(korisnik.KorisnickoIme)
+                ? korisnik.KorisnickoIme
+                : user.KorisnickoIme,
             Email = user.Email ?? string.Empty,
             OIB = user.OIB,
             JMBG = user.JMBG,
             Roles = roles.ToList(),
-            ImeIPrezime = korisnik.ImeIPrezime,
             Telefon = korisnik.Telefon,
-            BrojOglasa = korisnik.Oglasi.Count
+            BrojOglasa = oglasi.Count,
+            Oglasi = oglasi
         };
 
         return View(model);
+    }
+
+    private void PopuniGradove()
+    {
+        ViewBag.Gradovi = new SelectList(
+            _context.Gradovi.OrderBy(g => g.Naziv),
+            "Id",
+            "Naziv");
+    }
+
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> MyAds()
+    {
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user == null)
+        {
+            return RedirectToAction(nameof(Login));
+        }
+
+        var korisnik = await _context.Korisnici
+            .FirstOrDefaultAsync(k => k.AppUserId == user.Id);
+
+        if (korisnik == null)
+        {
+            return RedirectToAction(nameof(MyAccount));
+        }
+
+        var oglasi = await _context.Oglasi
+            .Include(o => o.Knjiga)
+            .Include(o => o.DrustvenaIgra)
+            .Include(o => o.Grad)
+            .Include(o => o.Slike)
+            .Where(o => o.KorisnikId == korisnik.Id)
+            .OrderByDescending(o => o.DatumObjave)
+            .ToListAsync();
+
+        return View(oglasi);
     }
 }

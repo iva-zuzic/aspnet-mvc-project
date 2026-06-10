@@ -1,4 +1,5 @@
 @model BookMarketplace.Web.ViewModels.MyAccountViewModel
+@using BookMarketplace.Model
 
 @{
     ViewData["Title"] = "Moj račun";
@@ -12,11 +13,14 @@
 
     <div class="form-card">
         <dl class="account-details">
-            <dt>Email</dt>
-            <dd>@Model.Email</dd>
-
             <dt>Ime i prezime</dt>
             <dd>@Model.ImeIPrezime</dd>
+
+            <dt>Korisničko ime</dt>
+            <dd>@Model.KorisnickoIme</dd>
+
+            <dt>Email</dt>
+            <dd>@Model.Email</dd>
 
             <dt>Telefon</dt>
             <dd>@Model.Telefon</dd>
@@ -29,9 +33,72 @@
 
             <dt>Role</dt>
             <dd>@(Model.Roles.Any() ? string.Join(", ", Model.Roles) : "Nema dodijeljenih rola")</dd>
-        
+
             <dt>Broj oglasa</dt>
             <dd>@Model.BrojOglasa</dd>
         </dl>
     </div>
+
+    <section class="section-najnoviji account-ads-section">
+        <div class="page-heading">
+            <h1>Moji oglasi</h1>
+            <p>Pregled svih oglasa koje ste objavili.</p>
+        </div>
+
+        @if (!Model.Oglasi.Any())
+        {
+            <div class="form-card">
+                <p>Još nemate objavljenih oglasa.</p>
+
+                <a asp-controller="Oglas" asp-action="Create" class="btn-primary">
+                    Objavi prvi oglas
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="card-grid">
+                @foreach (var o in Model.Oglasi)
+                {
+                    var isKnjiga = o.TipOglasa == TipOglasa.Knjiga;
+                    var cardClass = isKnjiga ? "card-knjiga" : "card-igra";
+
+                    <a class="card @cardClass"
+                       asp-controller="@(isKnjiga ? "Knjiga" : "DrustvenaIgra")"
+                       asp-action="Details"
+                       asp-route-id="@o.Id">
+
+                        <partial name="_OglasCardMedia" model="o" />
+
+                        <div class="card-body">
+                            <div>
+                                <span class="badge @(isKnjiga ? "badge-knjiga" : "badge-igra")">
+                                    @(isKnjiga ? "Knjiga" : "Igra")
+                                </span>
+                            </div>
+
+                            <span class="card-title">@o.Naslov</span>
+
+                            @if (isKnjiga)
+                            {
+                                <span class="card-subtitle">@o.Knjiga?.Autor</span>
+                            }
+                            else
+                            {
+                                <span class="card-subtitle">
+                                    @o.DrustvenaIgra?.BrojIgracaPrikaz igrača
+                                    @if (o.DrustvenaIgra?.TrajanjeMins != null)
+                                    {
+                                        <text> · @o.DrustvenaIgra.TrajanjeMins min</text>
+                                    }
+                                </span>
+                            }
+
+                            <span class="card-price">@o.Cijena.ToString("N2") &euro;</span>
+                        </div>
+                    </a>
+                }
+            </div>
+        }
+    </section>
 </div>

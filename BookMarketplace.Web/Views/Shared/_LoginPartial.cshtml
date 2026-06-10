@@ -5,8 +5,16 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
+    var currentUser = await UserManager.GetUserAsync(User);
+    var displayName = currentUser?.KorisnickoIme;
+
+    if (string.IsNullOrWhiteSpace(displayName))
+    {
+        displayName = User.Identity?.Name;
+    }
+
     <div class="nav-auth">
-        <span class="nav-user">@User.Identity?.Name</span>
+        <span class="nav-user">@displayName</span>
 
         <form asp-controller="Account" asp-action="Logout" method="post" class="nav-logout-form">
             @Html.AntiForgeryToken()

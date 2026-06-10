@@ -5,6 +5,9 @@ namespace BookMarketplace.Model;
 
 public class AppUser : IdentityUser
 {
+    [MaxLength(50)]
+    public string? KorisnickoIme { get; set; }
+
     [MaxLength(11)]
     public string? OIB { get; set; }
 

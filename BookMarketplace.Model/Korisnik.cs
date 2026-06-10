@@ -6,6 +6,9 @@ public class Korisnik
 {
     [Key]
     public int Id { get; set; }
+
+    [MaxLength(50)]
+    public string? KorisnickoIme { get; set; }
     public string ImeIPrezime { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string Lozinka { get; set; } = string.Empty;
@@ -18,6 +21,10 @@ public class Korisnik
     public string? AppUserId { get; set; }
 
     public virtual AppUser? AppUser { get; set; }
+
+    public int? GradId { get; set; }
+
+    public virtual Grad? Grad { get; set; }
 
     public virtual ICollection<Oglas> Oglasi { get; set; } = new List<Oglas>();
 

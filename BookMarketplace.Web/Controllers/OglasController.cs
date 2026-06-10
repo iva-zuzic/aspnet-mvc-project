@@ -4,33 +4,81 @@ using BookMarketplace.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace BookMarketplace.Controllers;
 
 public class OglasController : Controller
 {
     private readonly BookMarketplaceDbContext _context;
+    private readonly UserManager<AppUser> _userManager;
 
-    public OglasController(BookMarketplaceDbContext context)
+    public OglasController(BookMarketplaceDbContext context,
+        UserManager<AppUser> userManager)
     {
         _context = context;
+        _userManager = userManager;
     }
 
-    public IActionResult Create()
+    [HttpGet]
+    [Authorize(Roles = "Admin,Korisnik")]
+    public async Task<IActionResult> Create()
     {
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        var korisnik = await _context.Korisnici
+            .Include(k => k.Grad)
+            .FirstOrDefaultAsync(k => k.AppUserId == user.Id);
+
+        if (korisnik == null)
+        {
+            return RedirectToAction("MyAccount", "Account");
+        }
+
+        ViewBag.KorisnikIme = korisnik.ImeIPrezime;
+        ViewBag.GradNaziv = korisnik.Grad?.Naziv;
+
         var model = new OglasCreateModel
         {
             DatumIsteka = DateTime.Now.AddDays(30)
         };
 
-        PopuniDropdowne();
         return View(model);
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin,Korisnik")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(OglasCreateModel model)
     {
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        var korisnik = await _context.Korisnici
+            .FirstOrDefaultAsync(k => k.AppUserId == user.Id);
+
+        if (korisnik == null)
+        {
+            ModelState.AddModelError(string.Empty, "Nije pronađen profil prijavljenog korisnika.");
+            return View(model);
+        }
+
+        if (korisnik.GradId == null)
+        {
+            ModelState.AddModelError(string.Empty, "Prije objave oglasa potrebno je odabrati grad u profilu korisnika.");
+            return View(model);
+        }
+
         if (!ModelState.IsValid)
         {
             PopuniDropdowne();
@@ -47,8 +95,8 @@ public class OglasController : Controller
             Status = StatusOglasa.Aktivan,
             TipOglasa = model.TipOglasa,
             StanjeArtikla = model.StanjeArtikla,
-            KorisnikId = model.KorisnikId,
-            GradId = model.GradId
+            KorisnikId = korisnik.Id,
+            GradId = korisnik.GradId.Value
         };
 
         if (model.TipOglasa == TipOglasa.Knjiga)
