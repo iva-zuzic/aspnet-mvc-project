@@ -1,7 +1,14 @@
 @using System.Globalization
 @model Oglas
+@using System.Security.Claims
 @{
     ViewData["Title"] = Model.DrustvenaIgra?.Naziv ?? Model.Naslov;
+
+    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+    var canManageAd = User.IsInRole("Admin")
+        || (User.Identity?.IsAuthenticated == true
+            && Model.Korisnik?.AppUserId == currentUserId);
 }
 
 <nav class="breadcrumb">
@@ -66,10 +73,18 @@
                 </span>
             </div>
 
-            <div class="detail-actions">
-                <a class="btn-primary" asp-controller="Oglas" asp-action="Edit" asp-route-id="@Model.Id">Uredi</a>
-                <a class="btn-danger" asp-controller="Oglas" asp-action="Delete" asp-route-id="@Model.Id">Obriši</a>
-            </div>
+            @if (canManageAd)
+            {
+                <div class="detail-actions">
+                    <a class="btn-primary" asp-controller="Oglas" asp-action="Edit" asp-route-id="@Model.Id">
+                        Uredi
+                    </a>
+
+                    <a class="btn-danger" asp-controller="Oglas" asp-action="Delete" asp-route-id="@Model.Id">
+                        Obriši
+                    </a>
+                </div>
+            }
         </div>
     </div>
 </div>

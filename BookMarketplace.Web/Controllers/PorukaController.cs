@@ -1,9 +1,11 @@
 using BookMarketplace.DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookMarketplace.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PorukaController : Controller
     {
         private readonly BookMarketplaceDbContext _context;

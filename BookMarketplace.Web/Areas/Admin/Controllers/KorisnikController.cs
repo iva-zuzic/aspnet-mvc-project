@@ -2,10 +2,12 @@ using BookMarketplace.DAL;
 using BookMarketplace.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookMarketplace.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = "Admin")]
 public class KorisnikController : Controller
 {
     private readonly BookMarketplaceDbContext _context;

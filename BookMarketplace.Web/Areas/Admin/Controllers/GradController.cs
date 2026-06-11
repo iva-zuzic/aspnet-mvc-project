@@ -3,10 +3,12 @@ using BookMarketplace.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BookMarketplace.Areas.Admin.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookMarketplace.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = "Admin")]
 public class GradController : Controller
 {
     private readonly BookMarketplaceDbContext _context;

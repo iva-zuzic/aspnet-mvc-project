@@ -2,7 +2,6 @@ using BookMarketplace.DAL;
 using BookMarketplace.Model;
 using BookMarketplace.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -81,7 +80,6 @@ public class OglasController : Controller
 
         if (!ModelState.IsValid)
         {
-            PopuniDropdowne();
             return View(model);
         }
 
@@ -132,17 +130,6 @@ public class OglasController : Controller
         TempData["SuccessMessage"] = "Oglas je uspješno kreiran. Sada možete dodati slike oglasa.";
 
         return RedirectToAction("Edit", new { id = oglas.Id });
-    }
-
-    private void PopuniDropdowne()
-    {
-        ViewBag.Korisnici = new SelectList(
-            _context.Korisnici.OrderBy(k => k.ImeIPrezime),
-            "Id", "ImeIPrezime");
-
-        ViewBag.Gradovi = new SelectList(
-            _context.Gradovi.OrderBy(g => g.Naziv),
-            "Id", "Naziv");
     }
 
     private async Task SpremiSlikeAsync(int oglasId, List<IFormFile>? slike)
@@ -266,7 +253,7 @@ public class OglasController : Controller
 
         var grad = await _context.Gradovi.FirstOrDefaultAsync(g => g.Id == oglas.GradId);
         ViewBag.GradNaziv = grad?.Naziv ?? "";
-        PopuniDropdowne();
+
         return View(model);
     }
 
@@ -287,7 +274,7 @@ public class OglasController : Controller
                 .FirstOrDefaultAsync(k => k.Id == model.KorisnikId))?.ImeIPrezime;
             var grad = await _context.Gradovi.FirstOrDefaultAsync(g => g.Id == model.GradId);
             ViewBag.GradNaziv = grad?.Naziv ?? "";
-            PopuniDropdowne();
+    
             return View(model);
         }
 
