@@ -1,7 +1,7 @@
 using BookMarketplace.DAL;
-using Microsoft.EntityFrameworkCore;
 using BookMarketplace.Model;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +50,7 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
+    var context = scope.ServiceProvider.GetRequiredService<BookMarketplaceDbContext>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
 
@@ -75,24 +76,71 @@ using (var scope = app.Services.CreateScope())
             UserName = adminEmail,
             Email = adminEmail,
             EmailConfirmed = true,
+            KorisnickoIme = "admin",
             OIB = "00000000001",
             JMBG = "0000000000001"
         };
 
         var result = await userManager.CreateAsync(adminUser, adminPassword);
 
-        if (result.Succeeded)
+        if (!result.Succeeded)
         {
-            await userManager.AddToRoleAsync(adminUser, "Admin");
+            throw new Exception("Admin korisnik nije uspješno kreiran.");
         }
     }
-}
+    else
+    {
+        adminUser.UserName = adminEmail;
+        adminUser.Email = adminEmail;
+        adminUser.EmailConfirmed = true;
 
+        if (string.IsNullOrWhiteSpace(adminUser.KorisnickoIme))
+        {
+            adminUser.KorisnickoIme = "admin";
+        }
+
+        await userManager.UpdateAsync(adminUser);
+    }
+
+    if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+    {
+        await userManager.AddToRoleAsync(adminUser, "Admin");
+    }
+
+    var adminProfil = await context.Korisnici
+        .FirstOrDefaultAsync(k => k.AppUserId == adminUser.Id || k.Email == adminEmail);
+
+    if (adminProfil == null)
+    {
+        adminProfil = new Korisnik
+        {
+            ImeIPrezime = "Administrator",
+            KorisnickoIme = "admin",
+            Email = adminEmail,
+            Lozinka = string.Empty,
+            Telefon = string.Empty,
+            DatumRegistracije = DateTime.Now,
+            Uloga = UlogaKorisnika.Admin,
+            AppUserId = adminUser.Id
+        };
+
+        context.Korisnici.Add(adminProfil);
+    }
+    else
+    {
+        adminProfil.ImeIPrezime = "Administrator";
+        adminProfil.KorisnickoIme = "admin";
+        adminProfil.Email = adminEmail;
+        adminProfil.Uloga = UlogaKorisnika.Admin;
+        adminProfil.AppUserId = adminUser.Id;
+    }
+
+    await context.SaveChangesAsync();
+}
 
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -107,11 +155,10 @@ app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-
 app.MapRazorPages();
+
 app.Run();

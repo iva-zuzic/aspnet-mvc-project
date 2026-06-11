@@ -3,7 +3,7 @@
 @model Oglas
 
 @{
-    ViewData["Title"] = Model.Knjiga?.Naziv ?? Model.Naslov;
+    ViewData["Title"] = Model.Naslov;
 
     var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -19,7 +19,7 @@
     <span class="breadcrumb-sep">&rsaquo;</span>
     <span>@Model.Knjiga?.Zanr</span>
     <span class="breadcrumb-sep">&rsaquo;</span>
-    <span class="breadcrumb-current">@Model.Knjiga?.Naziv</span>
+    <span class="breadcrumb-current">@Model.Naslov</span>
 </nav>
 
 <div class="detail-card detail-card-full">
@@ -28,7 +28,7 @@
         <div class="detail-info">
             <div class="detail-grid">
                 <span class="detail-label">Naslov</span>
-                <span class="detail-value">@Model.Knjiga?.Naziv</span>
+                <span class="detail-value">@Model.Naslov</span>
 
                 <span class="detail-label">Autor</span>
                 <span class="detail-value">@Model.Knjiga?.Autor</span>
