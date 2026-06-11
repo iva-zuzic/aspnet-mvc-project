@@ -11,7 +11,7 @@
     </div>
 
     <div class="form-card">
-        <form asp-action="Login" method="post">
+        <form asp-action="Login" asp-route-returnUrl="@ViewBag.ReturnUrl" method="post">
             @Html.AntiForgeryToken()
 
             <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
@@ -40,6 +40,32 @@
                 <a asp-controller="Account" asp-action="Register" class="btn-secondary">Registracija</a>
             </div>
         </form>
+
+        @{
+            var externalLogins = ViewBag.ExternalLogins as IList<Microsoft.AspNetCore.Authentication.AuthenticationScheme>;
+        }
+
+        @if (externalLogins != null && externalLogins.Any())
+        {
+            <div class="external-login-section">
+                <p>ili se prijavite putem vanjskog računa:</p>
+
+                @foreach (var provider in externalLogins)
+                {
+                    <form asp-controller="Account"
+                        asp-action="ExternalLogin"
+                        asp-route-provider="@provider.Name"
+                        asp-route-returnUrl="@ViewBag.ReturnUrl"
+                        method="post">
+                        @Html.AntiForgeryToken()
+
+                        <button type="submit" class="btn-secondary external-login-button">
+                            Prijava putem @provider.DisplayName
+                        </button>
+                    </form>
+                }
+            </div>
+        }
     </div>
 </div>
 

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using BookMarketplace.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace BookMarketplace.Controllers;
 
@@ -90,16 +91,22 @@ public class AccountController : Controller
 
     [HttpGet]
     [AllowAnonymous]
-    public IActionResult Login()
+    public async Task<IActionResult> Login(string? returnUrl = null)
     {
+        ViewBag.ReturnUrl = returnUrl;
+        await PopuniExternalLogine();
+
         return View();
     }
 
     [HttpPost]
     [AllowAnonymous]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Login(LoginViewModel model)
+    public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
     {
+        ViewBag.ReturnUrl = returnUrl;
+        await PopuniExternalLogine();
+
         if (!ModelState.IsValid)
         {
             return View(model);
@@ -113,12 +120,167 @@ public class AccountController : Controller
 
         if (result.Succeeded)
         {
+            if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return LocalRedirect(returnUrl);
+            }
+
             return RedirectToAction("Index", "Home");
         }
 
         ModelState.AddModelError(string.Empty, "Neuspješna prijava. Provjerite email i lozinku.");
 
         return View(model);
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    [ValidateAntiForgeryToken]
+    public IActionResult ExternalLogin(string provider, string? returnUrl = null)
+    {
+        var redirectUrl = Url.Action(
+            nameof(ExternalLoginCallback),
+            "Account",
+            new { returnUrl });
+
+        var properties = _signInManager.ConfigureExternalAuthenticationProperties(
+            provider,
+            redirectUrl);
+
+        return Challenge(properties, provider);
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public async Task<IActionResult> ExternalLoginCallback(string? returnUrl = null, string? remoteError = null)
+    {
+        if (remoteError != null)
+        {
+            ModelState.AddModelError(string.Empty, $"Greška kod vanjske prijave: {remoteError}");
+            await PopuniExternalLogine();
+            return View("Login", new LoginViewModel());
+        }
+
+        var info = await _signInManager.GetExternalLoginInfoAsync();
+
+        if (info == null)
+        {
+            return RedirectToAction(nameof(Login));
+        }
+
+        var signInResult = await _signInManager.ExternalLoginSignInAsync(
+            info.LoginProvider,
+            info.ProviderKey,
+            isPersistent: false,
+            bypassTwoFactor: true);
+
+        if (signInResult.Succeeded)
+        {
+            if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return LocalRedirect(returnUrl);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            ModelState.AddModelError(string.Empty, "Google račun nema dostupnu email adresu.");
+            await PopuniExternalLogine();
+            return View("Login", new LoginViewModel());
+        }
+
+        var user = await _userManager.FindByEmailAsync(email);
+
+        if (user == null)
+        {
+            var name = info.Principal.FindFirstValue(ClaimTypes.Name);
+            var korisnickoIme = email.Split('@')[0];
+
+            user = new AppUser
+            {
+                UserName = email,
+                Email = email,
+                EmailConfirmed = true,
+                KorisnickoIme = korisnickoIme
+            };
+
+            var createResult = await _userManager.CreateAsync(user);
+
+            if (!createResult.Succeeded)
+            {
+                foreach (var error in createResult.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                await PopuniExternalLogine();
+                return View("Login", new LoginViewModel());
+            }
+
+            await _userManager.AddToRoleAsync(user, "Korisnik");
+
+            var korisnik = new Korisnik
+            {
+                ImeIPrezime = !string.IsNullOrWhiteSpace(name) ? name : email,
+                KorisnickoIme = korisnickoIme,
+                Email = email,
+                Lozinka = string.Empty,
+                Telefon = string.Empty,
+                DatumRegistracije = DateTime.Now,
+                Uloga = UlogaKorisnika.Korisnik,
+                AppUserId = user.Id
+            };
+
+            _context.Korisnici.Add(korisnik);
+            await _context.SaveChangesAsync();
+        }
+        else
+        {
+            var korisnikPostoji = await _context.Korisnici
+                .AnyAsync(k => k.AppUserId == user.Id);
+
+            if (!korisnikPostoji)
+            {
+                var name = info.Principal.FindFirstValue(ClaimTypes.Name);
+
+                var korisnik = new Korisnik
+                {
+                    ImeIPrezime = !string.IsNullOrWhiteSpace(name) ? name : email,
+                    KorisnickoIme = user.KorisnickoIme ?? email.Split('@')[0],
+                    Email = email,
+                    Lozinka = string.Empty,
+                    Telefon = string.Empty,
+                    DatumRegistracije = DateTime.Now,
+                    Uloga = UlogaKorisnika.Korisnik,
+                    AppUserId = user.Id
+                };
+
+                _context.Korisnici.Add(korisnik);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        var addLoginResult = await _userManager.AddLoginAsync(user, info);
+
+        if (!addLoginResult.Succeeded)
+        {
+            ModelState.AddModelError(string.Empty, "Google račun nije moguće povezati s korisnikom.");
+            await PopuniExternalLogine();
+            return View("Login", new LoginViewModel());
+        }
+
+        await _signInManager.SignInAsync(user, isPersistent: false);
+
+        if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
+        {
+            return LocalRedirect(returnUrl);
+        }
+
+        return RedirectToAction("Index", "Home");
     }
 
     [HttpPost]
@@ -237,5 +399,10 @@ public class AccountController : Controller
             .ToListAsync();
 
         return View(oglasi);
+    }
+
+    private async Task PopuniExternalLogine()
+    {
+        ViewBag.ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
     }
 }

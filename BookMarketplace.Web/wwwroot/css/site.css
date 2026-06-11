@@ -1799,3 +1799,21 @@ a.card:hover {
     text-align: left;
     margin-bottom: 1rem;
 }
+
+/* --- External login --- */
+
+.external-login-section {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #D8BFA8;
+}
+
+.external-login-section p {
+    margin-bottom: 0.75rem;
+    color: #6B4226;
+}
+
+.external-login-button {
+    width: 100%;
+    justify-content: center;
+}
