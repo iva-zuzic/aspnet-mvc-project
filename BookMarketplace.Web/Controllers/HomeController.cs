@@ -41,6 +41,7 @@ namespace BookMarketplace.Controllers
                     .Include(o => o.Korisnik)
                     .Include(o => o.Slike)
                     .OrderByDescending(o => o.DatumObjave)
+                    .Take(12)
                     .ToListAsync()
             };
 

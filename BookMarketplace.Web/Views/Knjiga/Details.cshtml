@@ -1,6 +1,7 @@
 @using System.Globalization
-@model Oglas
 @using System.Security.Claims
+@model Oglas
+
 @{
     ViewData["Title"] = Model.Knjiga?.Naziv ?? Model.Naslov;
 
@@ -9,6 +10,8 @@
     var canManageAd = User.IsInRole("Admin")
         || (User.Identity?.IsAuthenticated == true
             && Model.Korisnik?.AppUserId == currentUserId);
+
+    var canSendMessage = User.Identity?.IsAuthenticated == true && !canManageAd;
 }
 
 <nav class="breadcrumb">
@@ -82,9 +85,9 @@
                 </span>
             </div>
 
-            @if (canManageAd)
-            {
-                <div class="detail-actions">
+            <div class="detail-actions">
+                @if (canManageAd)
+                {
                     <a class="btn-primary" asp-controller="Oglas" asp-action="Edit" asp-route-id="@Model.Id">
                         Uredi
                     </a>
@@ -92,8 +95,20 @@
                     <a class="btn-danger" asp-controller="Oglas" asp-action="Delete" asp-route-id="@Model.Id">
                         Obriši
                     </a>
-                </div>
-            }
+                }
+                else if (canSendMessage)
+                {
+                    <a class="btn-primary" asp-controller="Poruka" asp-action="Create" asp-route-oglasId="@Model.Id">
+                        Pošalji poruku
+                    </a>
+                }
+                else
+                {
+                    <a class="btn-primary" asp-controller="Account" asp-action="Login">
+                        Prijavi se za slanje poruke
+                    </a>
+                }
+            </div>
         </div>
     </div>
 </div>

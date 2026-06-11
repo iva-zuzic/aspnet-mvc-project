@@ -1,0 +1,75 @@
+@model BookMarketplace.Model.Poruka
+
+@{
+    ViewData["Title"] = "Detalji poruke";
+}
+
+<div class="details-container">
+    <div class="details-header">
+        <h1>Detalji poruke</h1>
+
+        @if (Model.Oglas != null)
+        {
+            <p>
+                Poruka vezana uz oglas:
+                <strong>@Model.Oglas.Naslov</strong>
+            </p>
+        }
+    </div>
+
+    <div class="details-card">
+        <dl class="details-list">
+            <dt>Pošiljatelj</dt>
+            <dd>@(Model.Posiljatelj?.ImeIPrezime ?? "-")</dd>
+
+            <dt>Primatelj</dt>
+            <dd>@(Model.Primatelj?.ImeIPrezime ?? "-")</dd>
+
+            <dt>Datum slanja</dt>
+            <dd>@Model.DatumSlanja.ToString("dd.MM.yyyy. HH:mm")</dd>
+
+            <dt>Status</dt>
+            <dd>
+                @if (Model.Procitano)
+                {
+                    <span>Pročitano</span>
+                }
+                else
+                {
+                    <span>Nepročitano</span>
+                }
+            </dd>
+
+            <dt>Poruka</dt>
+            <dd>@Model.Sadrzaj</dd>
+        </dl>
+
+        <div class="form-actions">
+            <a asp-action="Index" class="btn-secondary">
+                Natrag na poruke
+            </a>
+
+            @if (Model.Oglas != null)
+            {
+                if (Model.Oglas.TipOglasa == BookMarketplace.Model.TipOglasa.Knjiga)
+                {
+                    <a asp-controller="Knjiga"
+                       asp-action="Details"
+                       asp-route-id="@Model.Oglas.Id"
+                       class="btn-primary">
+                        Otvori oglas
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="DrustvenaIgra"
+                       asp-action="Details"
+                       asp-route-id="@Model.Oglas.Id"
+                       class="btn-primary">
+                        Otvori oglas
+                    </a>
+                }
+            }
+        </div>
+    </div>
+</div>

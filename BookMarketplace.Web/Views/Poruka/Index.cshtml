@@ -1,0 +1,89 @@
+@model IEnumerable<BookMarketplace.Model.Poruka>
+
+@{
+    ViewData["Title"] = "Poruke";
+}
+
+<div class="page-header">
+    <h1>Poruke</h1>
+    <p>Pregled poslanih i primljenih poruka vezanih uz oglase.</p>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="empty-state">
+        <p>Trenutno nemate poruka.</p>
+    </div>
+}
+else
+{
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Oglas</th>
+                    <th>Pošiljatelj</th>
+                    <th>Primatelj</th>
+                    <th>Datum</th>
+                    <th>Status</th>
+                    <th>Akcija</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var poruka in Model)
+                {
+                    <tr>
+                        <td>
+                            @if (poruka.Oglas != null)
+                            {
+                                @poruka.Oglas.Naslov
+                            }
+                            else
+                            {
+                                <span>-</span>
+                            }
+                        </td>
+                        <td>
+                            @(poruka.Posiljatelj?.ImeIPrezime ?? "-")
+                        </td>
+                        <td>
+                            @(poruka.Primatelj?.ImeIPrezime ?? "-")
+                        </td>
+                        <td>
+                            @poruka.DatumSlanja.ToString("dd.MM.yyyy. HH:mm")
+                        </td>
+                        <td>
+                            @if (poruka.Procitano)
+                            {
+                                <span>Pročitano</span>
+                            }
+                            else
+                            {
+                                <span>Nepročitano</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@poruka.Id" class="btn-secondary">
+                                Otvori
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

@@ -1,0 +1,48 @@
+@model BookMarketplace.Web.ViewModels.PorukaCreateModel
+
+@{
+    ViewData["Title"] = "Pošalji poruku";
+}
+
+<div class="form-container">
+    <div class="form-header">
+        <h1>Pošalji poruku</h1>
+        <p class="form-subtitle">
+            Šaljete poruku korisniku <strong>@Model.PrimateljIme</strong>
+            za oglas <strong>@Model.OglasNaslov</strong>.
+        </p>
+    </div>
+
+    <div class="form-card">
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" asp-for="OglasId" />
+
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+            <div class="form-group">
+                <label asp-for="Sadrzaj" class="form-label"></label>
+                <textarea asp-for="Sadrzaj"
+                          class="form-input"
+                          rows="6"
+                          placeholder="Npr. Pozdrav, zanima me je li oglas još dostupan?"></textarea>
+                <span asp-validation-for="Sadrzaj" class="validation-error"></span>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary btn-large">
+                    Pošalji poruku
+                </button>
+
+                <a asp-controller="Home" asp-action="Index" class="btn-secondary">
+                    Odustani
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

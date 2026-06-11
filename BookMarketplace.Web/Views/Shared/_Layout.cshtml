@@ -22,6 +22,18 @@
                     <li><a asp-controller="DrustvenaIgra" asp-action="Index">Društvene igre</a></li>
                     <li><a asp-controller="Grad" asp-action="Index">Gradovi</a></li>
                     <li><a asp-controller="Account" asp-action="MyAccount">Moj račun</a></li>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <li>
+                            <a asp-controller="Poruka" asp-action="Index">Poruke</a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>
+                            <a href="/Admin">Admin</a>
+                        </li>
+                    }
                 </ul>
 
                 <div class="nav-search">
