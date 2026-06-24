@@ -17,40 +17,54 @@
                     Books &amp; Games
                 </a>
 
-                <ul class="nav-links">
-                    <li><a asp-controller="Knjiga" asp-action="Index">Knjige</a></li>
-                    <li><a asp-controller="DrustvenaIgra" asp-action="Index">Društvene igre</a></li>
-                    <li><a asp-controller="Grad" asp-action="Index">Gradovi</a></li>
-                    <li><a asp-controller="Account" asp-action="MyAccount">Moj račun</a></li>
-                    @if (User.Identity?.IsAuthenticated == true)
-                    {
-                        <li>
-                            <a asp-controller="Poruka" asp-action="Index">Poruke</a>
-                        </li>
-                    }
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <li>
-                            <a href="/Admin">Admin</a>
-                        </li>
-                    }
-                </ul>
+                <button class="nav-toggle"
+                        type="button"
+                        aria-label="Otvori navigaciju"
+                        aria-controls="primaryNavigation"
+                        aria-expanded="false">
+                    <span class="nav-toggle-line"></span>
+                    <span class="nav-toggle-line"></span>
+                    <span class="nav-toggle-line"></span>
+                </button>
 
-                <div class="nav-search">
-                    <input type="text"
-                        id="globalSearchInput"
-                        class="nav-search-input"
-                        placeholder="Pretraži knjige i igre..."
-                        autocomplete="off" />
+                <div class="nav-menu" id="primaryNavigation">
+                    <ul class="nav-links">
+                        <li><a asp-controller="Knjiga" asp-action="Index">Knjige</a></li>
+                        <li><a asp-controller="DrustvenaIgra" asp-action="Index">Društvene igre</a></li>
+                        <li><a asp-controller="Grad" asp-action="Index">Gradovi</a></li>
+                        <li><a asp-controller="Account" asp-action="MyAccount">Moj račun</a></li>
 
-                    <div id="globalSearchResults" class="nav-search-results"></div>
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li>
+                                <a asp-controller="Poruka" asp-action="Index">Poruke</a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li>
+                                <a href="/Admin">Admin</a>
+                            </li>
+                        }
+                    </ul>
+
+                    <div class="nav-search">
+                        <input type="text"
+                            id="globalSearchInput"
+                            class="nav-search-input"
+                            placeholder="Pretraži knjige i igre..."
+                            autocomplete="off" />
+
+                        <div id="globalSearchResults" class="nav-search-results"></div>
+                    </div>
+
+                    <a asp-controller="Oglas" asp-action="Create" class="nav-cta">
+                        + Objavi oglas
+                    </a>
+
+                    <partial name="_LoginPartial" />
                 </div>
-
-                <a asp-controller="Oglas" asp-action="Create" class="nav-cta">
-                    + Objavi oglas
-                </a>
-
-                <partial name="_LoginPartial" />
             </div>
         </nav>
     </header>
@@ -71,6 +85,7 @@
     <script src="~/js/global-search.js" asp-append-version="true"></script>
     <script src="~/js/datetime-picker.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
 </body>
