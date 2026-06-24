@@ -9,6 +9,8 @@ namespace BookMarketplace.Tests;
 
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
+    private readonly string _databaseName = $"BookMarketplaceTestDb-{Guid.NewGuid()}";
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureServices(services =>
@@ -17,7 +19,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 
             services.AddDbContext<BookMarketplaceDbContext>(options =>
             {
-                options.UseInMemoryDatabase("BookMarketplaceTestDb");
+                options.UseInMemoryDatabase(_databaseName);
             });
         });
     }
