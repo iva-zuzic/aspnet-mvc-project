@@ -1909,3 +1909,97 @@ a.card:hover {
         text-align: center;
     }
 }
+
+/* --- Polished navigation --- */
+
+.site-header {
+    background: linear-gradient(90deg, #5A3018 0%, #6B4226 55%, #7A4728 100%);
+    border-bottom: 1px solid rgba(255, 248, 240, 0.12);
+}
+
+.nav-inner {
+    min-height: 72px;
+}
+
+.nav-brand {
+    font-size: 1.22rem;
+    margin-right: 1.25rem;
+}
+
+.nav-brand-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7px;
+    background: rgba(255, 248, 240, 0.12);
+    color: #FFF8F0;
+}
+
+.nav-links {
+    gap: 0.35rem;
+}
+
+.nav-links li a {
+    padding: 0.55rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.94rem;
+    font-weight: 600;
+    color: rgba(255, 248, 240, 0.92);
+}
+
+.nav-links li a:hover {
+    background: rgba(255, 248, 240, 0.14);
+    color: #FFFFFF;
+}
+
+.nav-search {
+    width: 300px;
+    min-width: 240px;
+}
+
+.nav-search-input {
+    height: 42px;
+    border-radius: 999px;
+    padding: 0 1rem;
+    background: rgba(255, 248, 240, 0.13);
+    border: 1px solid rgba(255, 248, 240, 0.35);
+}
+
+.nav-search-input:focus {
+    background: #FFF8F0;
+    border-color: #F0B07A;
+}
+
+.nav-cta {
+    border-radius: 999px;
+    padding: 0.62rem 1rem;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(201, 125, 78, 0.28);
+}
+
+.nav-auth {
+    gap: 0.35rem;
+}
+
+.nav-auth-link {
+    border-radius: 999px;
+    padding: 0.55rem 0.75rem;
+}
+
+@media (max-width: 1180px) {
+    .nav-inner {
+        min-height: 66px;
+    }
+
+    .nav-menu {
+        background: linear-gradient(180deg, #5A3018 0%, #6B4226 100%);
+    }
+
+    .nav-links li a,
+    .nav-auth-link,
+    .nav-cta {
+        border-radius: 12px;
+    }
+}
